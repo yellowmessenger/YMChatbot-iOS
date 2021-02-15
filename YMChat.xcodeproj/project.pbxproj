@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		917913B225DA4E78001F90CA /* YMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChat.swift */; };
+		917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917913C925DA5CAB001F90CA /* Assets.xcassets */; };
 		9195469025D67F4B0042759F /* YMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9195468625D67F4A0042759F /* YMChat.framework */; };
 		9195469525D67F4B0042759F /* YMChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9195469425D67F4B0042759F /* YMChatTests.swift */; };
 		9195469725D67F4B0042759F /* YMChat.h in Headers */ = {isa = PBXBuildFile; fileRef = 9195468925D67F4A0042759F /* YMChat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		919546A325D67F870042759F /* YMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919546A225D67F870042759F /* YMChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +26,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		917913B125DA4E78001F90CA /* YMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChat.swift; sourceTree = "<group>"; };
+		917913C925DA5CAB001F90CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9195468625D67F4A0042759F /* YMChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YMChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9195468925D67F4A0042759F /* YMChat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMChat.h; sourceTree = "<group>"; };
 		9195468A25D67F4A0042759F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9195468F25D67F4B0042759F /* YMChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YMChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9195469425D67F4B0042759F /* YMChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChatTests.swift; sourceTree = "<group>"; };
 		9195469625D67F4B0042759F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		919546A225D67F870042759F /* YMChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChatViewController.swift; sourceTree = "<group>"; };
+		919546E925D6824B0042759F /* YMChat.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = YMChat.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +60,7 @@
 		9195467C25D67F4A0042759F = {
 			isa = PBXGroup;
 			children = (
+				919546E925D6824B0042759F /* YMChat.podspec */,
 				9195468825D67F4A0042759F /* YMChat */,
 				9195469325D67F4B0042759F /* YMChatTests */,
 				9195468725D67F4A0042759F /* Products */,
@@ -72,6 +80,9 @@
 			isa = PBXGroup;
 			children = (
 				9195468925D67F4A0042759F /* YMChat.h */,
+				917913B125DA4E78001F90CA /* YMChat.swift */,
+				919546A225D67F870042759F /* YMChatViewController.swift */,
+				917913C925DA5CAB001F90CA /* Assets.xcassets */,
 				9195468A25D67F4A0042759F /* Info.plist */,
 			);
 			path = YMChat;
@@ -147,6 +158,7 @@
 				TargetAttributes = {
 					9195468525D67F4A0042759F = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 					9195468E25D67F4B0042759F = {
 						CreatedOnToolsVersion = 12.4;
@@ -177,6 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +207,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				919546A325D67F870042759F /* YMChatViewController.swift in Sources */,
+				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +356,7 @@
 		9195469B25D67F4B0042759F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MS237D8H2K;
@@ -357,6 +373,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yellowmessenger.ymchat.YMChat;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +383,7 @@
 		9195469C25D67F4B0042759F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = MS237D8H2K;
@@ -381,6 +400,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yellowmessenger.ymchat.YMChat;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -389,6 +409,7 @@
 		9195469E25D67F4B0042759F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MS237D8H2K;
 				INFOPLIST_FILE = YMChatTests/Info.plist;
@@ -407,6 +428,7 @@
 		9195469F25D67F4B0042759F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MS237D8H2K;
 				INFOPLIST_FILE = YMChatTests/Info.plist;
