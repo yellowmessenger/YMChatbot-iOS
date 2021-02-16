@@ -40,7 +40,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.source_files  = "YMChat/*.swift"
-  spec.exclude_files = "Classes/Exclude"
+  # spec.exclude_files = "Classes/Exclude"
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
