@@ -9,10 +9,8 @@ import Foundation
 import Speech
 
 protocol SpeechDelegate: AnyObject {
-    func speechPermissionResponseAuthorized()
-    func speechPermissionResponseDenied()
-    func speechPermissionResponseRestricted()
-    func micButtonTappedOnDeniedAuthorization()
+    func micButtonTappedWithAuthorizationDenied()
+    func micButtonTappedWithAuthorizationRestricted()
 
     func newText(_ text: String)
 
@@ -21,15 +19,19 @@ protocol SpeechDelegate: AnyObject {
 }
 
 class SpeechHelper {
+    // Stops listening if user does not speak for 1.5 seconds
+    lazy var stopListeningDebouncer: Debouncer = Debouncer(timeInterval: 1.5)
+
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     private let speechRecognizer = SFSpeechRecognizer(locale: .init(identifier: "en-US"))
     weak var delegate: SpeechDelegate?
 
-    var shouldShowMicButton: Bool {
-        let speechStatus = SFSpeechRecognizer.authorizationStatus()
-        return speechStatus == .authorized || speechStatus == .notDetermined
+    init() {
+        stopListeningDebouncer.handler = {
+            self.stopListening()
+        }
     }
 
     func micButtonTapped() {
@@ -41,7 +43,7 @@ class SpeechHelper {
                 startListening()
             }
         case .denied:
-            delegate?.micButtonTappedOnDeniedAuthorization()
+            delegate?.micButtonTappedWithAuthorizationDenied()
         case .notDetermined:
             askSpeechPermission()
         case .restricted:
@@ -55,35 +57,24 @@ class SpeechHelper {
         SFSpeechRecognizer.requestAuthorization { [weak self] (status) in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                switch status {
-                case .denied: self.delegate?.speechPermissionResponseDenied()
-                case .restricted: self.delegate?.speechPermissionResponseRestricted()
-                case .authorized:
-                    self.delegate?.speechPermissionResponseAuthorized()
+                if status == .authorized {
                     if self.audioEngine.isRunning {
                         self.stopListening()
                     } else {
                         self.startListening()
                     }
-
-                case .notDetermined: break
-                @unknown default: break
                 }
             }
         }
     }
 
     private func startListening() {
-//        showSpeechDisplayTextView()
-//        micButton.isListening = true
         startSpeechReconginzation()
         delegate?.listeningStarted()
     }
 
     private func stopListening() {
         audioEngine.stop()
-//        micButton.isListening = false
-//        speechDisplayTextView.removeFromSuperview()
         recognitionRequest?.endAudio()
         delegate?.listeningCompleted()
     }
@@ -113,28 +104,15 @@ class SpeechHelper {
 
         recognitionRequest.shouldReportPartialResults = true
 
-//        recordDebouncer.renewInterval()
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            guard let self = self else { return }
-            var isFinal = false
-
             if let result = result {
-                // Update the text view with the results.
-                self.delegate?.newText(result.bestTranscription.formattedString)
-//                self.speechDisplayTextView.text = result.bestTranscription.formattedString
-                isFinal = result.isFinal
-//                print("Text \(result.bestTranscription.formattedString)")
+                self?.delegate?.newText(result.bestTranscription.formattedString)
             }
 
-
-            if error != nil || isFinal {
-                // Stop recognizing speech if there is a problem.
-                self.audioEngine.stop()
-                self.recognitionRequest = nil
-                self.recognitionTask = nil
+            if error != nil || (result?.isFinal ?? false) {
+                self?.stopListening()
             }
-//            self.recordDebouncer.renewInterval()
-//            self.restartSpeechTimer()
+            self?.stopListeningDebouncer.renewInterval()
         }
 
         let recordingFormat = inputNode.outputFormat(forBus: 0)

@@ -25,7 +25,6 @@ public class YMChatViewController: UIViewController {
     var webView = WKWebView()
     let config: YMConfig
     let progressView = UIProgressView(progressViewStyle: .default)
-//    lazy var recordDebouncer: Debouncer = Debouncer(timeInterval: 1.5)
 
     init(config: YMConfig) {
         self.config = config
@@ -42,13 +41,10 @@ public class YMChatViewController: UIViewController {
         if config.showCloseButton {
             addCloseButton(tintColor: config.closeButtonColor)
         }
-        if config.enableSpeech, speechHelper.shouldShowMicButton {
+        if config.enableSpeech {
             addMicButton(tintColor: config.micButtonColor)
         }
         addProgressBar()
-//        recordDebouncer.handler = {
-//            self.stopListening()
-//        }
         webView.load(URLRequest(url: config.url))
     }
     
@@ -128,22 +124,16 @@ public class YMChatViewController: UIViewController {
 }
 
 extension YMChatViewController: SpeechDelegate {
-    func micButtonTappedOnDeniedAuthorization() {
-        let alert = UIAlertController(title: "Speech not enabled", message: "Enable speech recognization from Settings", preferredStyle: .alert)
+    func micButtonTappedWithAuthorizationRestricted() {
+        let alert = UIAlertController(title: "Restricted", message: "Your phone has restricted your app from performing speech recognition.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 
-    func speechPermissionResponseAuthorized() {
-        print(#function)
-    }
-
-    func speechPermissionResponseDenied() {
-        print(#function)
-    }
-
-    func speechPermissionResponseRestricted() {
-        print(#function)
+    func micButtonTappedWithAuthorizationDenied() {
+        let alert = UIAlertController(title: "", message: "To enable Speech Recognization enable it from the Settings", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func newText(_ text: String) {
@@ -163,5 +153,5 @@ extension YMChatViewController: SpeechDelegate {
 }
 
 extension YMChatViewController: WKNavigationDelegate {
-    
+    //TODO: Handle this
 }
