@@ -30,6 +30,7 @@ public class YMChatViewController: UIViewController {
         self.config = config
         super.init(nibName: nil, bundle: nil)
         speechHelper.delegate = self
+        modalPresentationStyle = .fullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +48,7 @@ public class YMChatViewController: UIViewController {
         addProgressBar()
         webView.load(URLRequest(url: config.url))
     }
-    
+
     private func addWebView() {
         webView.navigationDelegate = self
         view.addSubview(webView)
@@ -56,7 +57,7 @@ public class YMChatViewController: UIViewController {
         webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func addProgressBar() {
