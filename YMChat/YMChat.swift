@@ -13,10 +13,8 @@ public struct YMConfig {
     
     public var showCloseButton = true
     public var closeButtonColor: UIColor = .white
-           
-    
-//    public var config: [String: String] = [:]
-    public var payload: [String: String] = [:]
+
+    public var payload = [String: String]()
 
     var url: URL {
         guard let botId = botId else { fatalError("`botId` is not set") }
@@ -26,13 +24,26 @@ public struct YMConfig {
         urlComponents.path = "/pwa/live/\(botId)"
         var queryItems = [URLQueryItem]()
         if enableHistory {
-            queryItems += [URLQueryItem(name: "enableHistory", value: "true")]
+            queryItems.append(URLQueryItem(name: "enableHistory", value: "true"))
         }
-        urlComponents.queryItems = [URLQueryItem(name: "enableHistory", value: "true")]
-        return urlComponents.url!
+        if let decodedPayload = decodedPayload {
+            queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
+        }
+        urlComponents.queryItems = queryItems
 
-//        let urlString = "https://app.yellowmessenger.com/pwa/live/\(botId)"
-//        return URL(string: urlString)!
+        return urlComponents.url!
+    }
+
+    /// Payload dict → JSON string  → URL encoding
+    var decodedPayload: String? {
+        var payload = self.payload
+        payload["Platform"] = "iOS-App"
+        guard let data = try? JSONSerialization.data(withJSONObject: payload, options: []),
+             let string = String(data: data, encoding: .utf8),
+             let escapedString = string.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return nil
+        }
+        return escapedString
     }
 }
 

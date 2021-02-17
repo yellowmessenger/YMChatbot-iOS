@@ -17,6 +17,7 @@
 		91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4225DBEA7D007AC38D /* MicButton.swift */; };
 		91CEBE4A25DBF528007AC38D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Image.swift */; };
 		91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */; };
+		91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		91CEBE4225DBEA7D007AC38D /* MicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicButton.swift; sourceTree = "<group>"; };
 		91CEBE4925DBF528007AC38D /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHelper.swift; sourceTree = "<group>"; };
+		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				9195469425D67F4B0042759F /* YMChatTests.swift */,
+				91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */,
 				9195469625D67F4B0042759F /* Info.plist */,
 			);
 			path = YMChatTests;
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9195469525D67F4B0042759F /* YMChatTests.swift in Sources */,
+				91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
