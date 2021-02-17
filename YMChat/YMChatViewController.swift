@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import WebKit
-import Speech
 
 public class YMChatViewController: UIViewController {
     private var micButton = MicButton()
@@ -22,14 +21,16 @@ public class YMChatViewController: UIViewController {
         return textView
     }()
 
+    private let speechHelper = SpeechHelper()
     var webView = WKWebView()
     let config: YMConfig
     let progressView = UIProgressView(progressViewStyle: .default)
-    lazy var recordDebouncer: Debouncer = Debouncer(timeInterval: 1.5)
+//    lazy var recordDebouncer: Debouncer = Debouncer(timeInterval: 1.5)
 
     init(config: YMConfig) {
         self.config = config
         super.init(nibName: nil, bundle: nil)
+        speechHelper.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -41,14 +42,13 @@ public class YMChatViewController: UIViewController {
         if config.showCloseButton {
             addCloseButton(tintColor: config.closeButtonColor)
         }
-        let speechStatus = SFSpeechRecognizer.authorizationStatus()
-        if config.enableSpeech, (speechStatus == .authorized || speechStatus == .notDetermined) {
+        if config.enableSpeech, speechHelper.shouldShowMicButton {
             addMicButton(tintColor: config.micButtonColor)
         }
         addProgressBar()
-        recordDebouncer.handler = {
-            self.stopListening()
-        }
+//        recordDebouncer.handler = {
+//            self.stopListening()
+//        }
         webView.load(URLRequest(url: config.url))
     }
     
@@ -96,127 +96,9 @@ public class YMChatViewController: UIViewController {
     }
 
     @objc func micTapped() {
-        func handleRecordAfterAuthorised() {
-            if audioEngine.isRunning {
-                stopListening()
-            } else {
-                startListening()
-            }
-        }
-
-        switch SFSpeechRecognizer.authorizationStatus() {
-        case .authorized: handleRecordAfterAuthorised()
-        case .denied:
-            let alert = UIAlertController(title: "Speech not enabled", message: "Enable speech recognization from Settings", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        case .notDetermined:
-            askSpeechPermission(onAuthorize: handleRecordAfterAuthorised)
-        case .restricted:
-            // User has restricted access
-            break
-        @unknown default: break
-        }
+        speechHelper.micButtonTapped()
     }
-
-    func askSpeechPermission(onAuthorize: @escaping () -> Void) {
-        SFSpeechRecognizer.requestAuthorization { [weak self] (status) in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch status {
-                case .denied, .restricted:
-                    self.micButton.removeFromSuperview()
-                case .authorized: onAuthorize()
-                case .notDetermined: break
-                @unknown default: break
-                }
-            }
-        }
-    }
-
-    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    private var recognitionTask: SFSpeechRecognitionTask?
-    private let audioEngine = AVAudioEngine()
-    private let speechRecognizer = SFSpeechRecognizer(locale: .init(identifier: "en-US"))
-
-    func startListening() {
-        showSpeechDisplayTextView()
-        micButton.isListening = true
-        startSpeechReconginzation()
-    }
-
-    func stopListening() {
-        audioEngine.stop()
-        micButton.isListening = false
-        speechDisplayTextView.removeFromSuperview()
-        recognitionRequest?.endAudio()
-    }
-
-    func startSpeechReconginzation() {
-        if recognitionTask != nil {
-            recognitionTask?.cancel()
-            recognitionTask = nil
-        }
-
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setMode(AVAudioSession.Mode.measurement)
-            try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            print("audioSession properties weren't set because of an error.")
-        }
-
-        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        let inputNode = audioEngine.inputNode
-        inputNode.removeTap(onBus: 0)
-
-        guard let recognitionRequest = recognitionRequest else {
-            fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
-        }
-
-        recognitionRequest.shouldReportPartialResults = true
-
-        recordDebouncer.renewInterval()
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            guard let self = self else { return }
-            var isFinal = false
-
-            if let result = result {
-                // Update the text view with the results.
-                self.speechDisplayTextView.text = result.bestTranscription.formattedString
-                isFinal = result.isFinal
-                print("Text \(result.bestTranscription.formattedString)")
-            }
-
-
-            if error != nil || isFinal {
-                // Stop recognizing speech if there is a problem.
-                self.audioEngine.stop()
-                self.recognitionRequest = nil
-                self.recognitionTask = nil
-            }
-            self.recordDebouncer.renewInterval()
-//            self.restartSpeechTimer()
-        }
-
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
-            self.recognitionRequest?.append(buffer)
-        }
-
-        audioEngine.prepare()
-
-        do {
-            try audioEngine.start()
-        } catch {
-            print("audioEngine couldn't start because of an error.")
-        }
-
-        speechDisplayTextView.text = "Say something, I'm listening!"
-
-    }
-
+    
     func showSpeechDisplayTextView() {
         self.view.insertSubview(speechDisplayTextView, belowSubview: micButton)
         speechDisplayTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -242,6 +124,41 @@ public class YMChatViewController: UIViewController {
                 progressView.removeFromSuperview()
             }
         }
+    }
+}
+
+extension YMChatViewController: SpeechDelegate {
+    func micButtonTappedOnDeniedAuthorization() {
+        let alert = UIAlertController(title: "Speech not enabled", message: "Enable speech recognization from Settings", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func speechPermissionResponseAuthorized() {
+        print(#function)
+    }
+
+    func speechPermissionResponseDenied() {
+        print(#function)
+    }
+
+    func speechPermissionResponseRestricted() {
+        print(#function)
+    }
+
+    func newText(_ text: String) {
+        speechDisplayTextView.text = text
+    }
+
+    func listeningStarted() {
+        micButton.isListening = true
+        showSpeechDisplayTextView()
+        speechDisplayTextView.text = "Say something, I'm listening!"
+    }
+
+    func listeningCompleted() {
+        micButton.isListening = false
+        speechDisplayTextView.removeFromSuperview()
     }
 }
 
