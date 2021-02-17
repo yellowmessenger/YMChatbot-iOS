@@ -1,60 +1,13 @@
 import UIKit
 
-public struct YMConfig {
-    public var botId: String?
-    
-    public var enableSpeech = false // TODO: Check for default value with Priyank
-    public var micButtonColor: UIColor = .white
-    public var enableHistory = true // TODO: Check for default value with Priyank
-
-//    public var actionBarColor: UIColor // Applicable to Android
-//    public var statusBarColor: UIColor // TODO: Is this required? What does this do?
-//    public var hideCameraForUpload: Bool // Applicable to Android
-    
-    public var showCloseButton = true
-    public var closeButtonColor: UIColor = .white
-
-    public var payload = [String: String]()
-
-    var url: URL {
-        guard let botId = botId else { fatalError("`botId` is not set") }
-        var urlComponents = URLComponents()
-        urlComponents.host = "app.yellowmessenger.com"
-        urlComponents.scheme = "https"
-        urlComponents.path = "/pwa/live/\(botId)"
-        var queryItems = [URLQueryItem]()
-        if enableHistory {
-            queryItems.append(URLQueryItem(name: "enableHistory", value: "true"))
-        }
-        if let decodedPayload = decodedPayload {
-            queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
-        }
-        urlComponents.queryItems = queryItems
-
-        return urlComponents.url!
-    }
-
-    /// Payload dict → JSON string  → URL encoding
-    var decodedPayload: String? {
-        var payload = self.payload
-        payload["Platform"] = "iOS-App"
-        guard let data = try? JSONSerialization.data(withJSONObject: payload, options: []),
-             let string = String(data: data, encoding: .utf8),
-             let escapedString = string.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return nil
-        }
-        return escapedString
-    }
-}
-
 public class YMChat {
     public static var shared = YMChat()
     
     public var viewController: YMChatViewController?
-    public var config = YMConfig()
+    public var config: YMConfig!
     
     public func presentView(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard config.botId != nil else { fatalError("`botid` is not set") }
+        guard config != nil else { fatalError("`config` is nil. Set config before invoking presentView") }
         if self.viewController == nil {
             self.viewController = YMChatViewController(config: config)
         }

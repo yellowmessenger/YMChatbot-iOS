@@ -18,6 +18,7 @@
 		91CEBE4A25DBF528007AC38D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Image.swift */; };
 		91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */; };
 		91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */; };
+		91D25F2C25DD47C400FCCFA4 /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		91CEBE4925DBF528007AC38D /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHelper.swift; sourceTree = "<group>"; };
 		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
+		91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				9195468925D67F4A0042759F /* YMChat.h */,
+				91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */,
 				917913B125DA4E78001F90CA /* YMChat.swift */,
 				919546A225D67F870042759F /* YMChatViewController.swift */,
 				91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */,
@@ -226,6 +229,7 @@
 				91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */,
 				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
 				91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */,
+				91D25F2C25DD47C400FCCFA4 /* YMConfig.swift in Sources */,
 				91CEBE4A25DBF528007AC38D /* Image.swift in Sources */,
 				91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */,
 			);
