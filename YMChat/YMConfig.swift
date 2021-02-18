@@ -7,6 +7,13 @@
 
 import UIKit
 
+func log(_ items: Any...) {
+    if YMChat.shared.config.enableLogging {
+        let output = items.map { "\($0)" }.joined(separator: ", ")
+        Swift.print("YMCHAT :: \(output)")
+    }
+}
+
 open class YMConfig {
     var botId: String
 
@@ -22,6 +29,7 @@ open class YMConfig {
     public var closeButtonColor: UIColor = .white
 
     public var payload = [String: String]()
+    public var enableLogging = false
 
     public init(botId: String) {
         self.botId = botId

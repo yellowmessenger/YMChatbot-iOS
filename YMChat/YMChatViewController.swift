@@ -46,7 +46,7 @@ public class YMChatViewController: UIViewController {
             addMicButton(tintColor: config.micButtonColor)
         }
         addProgressBar()
-        print("URL: \(config.url)")
+        log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
     }
 
@@ -59,12 +59,8 @@ public class YMChatViewController: UIViewController {
 
         let ymHandler = "ymHandler"
         contentController.add(self, name: ymHandler) //TODO: What does this do?
-
         configuration.userContentController = contentController
-
         self.webView = WKWebView(frame: .zero, configuration: configuration)
-
-
 
         webView!.navigationDelegate = self
         view.addSubview(webView!)
@@ -87,15 +83,13 @@ public class YMChatViewController: UIViewController {
     }
     
     func addCloseButton(tintColor: UIColor) {
-        let bundle = Bundle(for: YMChatViewController.self)
-        let image = UIImage(named: "close", in: bundle, compatibleWith: .none)
-        
         let button = UIButton()
-        button.setImage(image, for: .normal)
+        button.setImage(Image.close.uiImage, for: .normal)
         button.tintColor = tintColor
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        let margins = view.layoutMarginsGuide
+        button.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
         button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
         button.addTarget(self, action: #selector(dismisViewController), for: .touchUpInside)
@@ -123,6 +117,7 @@ public class YMChatViewController: UIViewController {
     }
 
     @objc func dismisViewController() {
+        log(#function)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -141,6 +136,7 @@ public class YMChatViewController: UIViewController {
     }
 
     func sendMessageInWebView(text: String) {
+        log(#function)
         webView?.evaluateJavaScript("sendEventFromiOS('\(text)');", completionHandler: nil)
     }
 }
@@ -159,16 +155,19 @@ extension YMChatViewController: SpeechDelegate {
     }
 
     func newText(_ text: String) {
+        log(#function)
         speechDisplayTextView.text = text
     }
 
     func listeningStarted() {
+        log(#function)
         micButton.isListening = true
         showSpeechDisplayTextView()
         speechDisplayTextView.text = "Say something, I'm listening!"
     }
 
     func listeningCompleted() {
+        log(#function)
         micButton.isListening = false
         speechDisplayTextView.removeFromSuperview()
         if !speechDisplayTextView.text.isEmpty {
