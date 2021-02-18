@@ -98,7 +98,7 @@ public class YMChatViewController: UIViewController {
     func addMicButton(tintColor: UIColor) {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
         micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
     }
@@ -123,9 +123,17 @@ public class YMChatViewController: UIViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = config.statusBarColor
     }
-    
+
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return UIStatusBarStyle.lightContent
+        } else {
+            return UIStatusBarStyle.default
+        }
+    }
+
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress", let webView = webView {
             progressView.progress = Float(webView.estimatedProgress)

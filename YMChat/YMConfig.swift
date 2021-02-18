@@ -22,7 +22,7 @@ open class YMConfig {
     public var enableHistory = true // TODO: Check for default value with Priyank
 
 //    public var actionBarColor: UIColor // Applicable to Android
-//    public var statusBarColor: UIColor // TODO: Is this required? What does this do?
+    public var statusBarColor: UIColor = .white
 //    public var hideCameraForUpload: Bool // Applicable to Android
 
     public var showCloseButton = true
