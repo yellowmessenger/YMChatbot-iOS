@@ -22,7 +22,7 @@ public class YMChatViewController: UIViewController {
     }()
 
     private let speechHelper = SpeechHelper()
-    var webView = WKWebView()
+    var webView: WKWebView?
     let config: YMConfig
     let progressView = UIProgressView(progressViewStyle: .default)
 
@@ -46,22 +46,39 @@ public class YMChatViewController: UIViewController {
             addMicButton(tintColor: config.micButtonColor)
         }
         addProgressBar()
-        webView.load(URLRequest(url: config.url))
+        print("URL: \(config.url)")
+        webView?.load(URLRequest(url: config.url))
     }
 
     private func addWebView() {
-        webView.navigationDelegate = self
-        view.addSubview(webView)
-        webView.translatesAutoresizingMaskIntoConstraints = false
+        let configuration = WKWebViewConfiguration()
+        let contentController = WKUserContentController()
+        let js = "function sendEventFromiOS(s){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: 'send-voice-text', data: s }), '*');}"
+        let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        contentController.addUserScript(userScript)
+
+        let ymHandler = "ymHandler"
+        contentController.add(self, name: ymHandler) //TODO: What does this do?
+
+        configuration.userContentController = contentController
+
+        self.webView = WKWebView(frame: .zero, configuration: configuration)
+
+
+
+        webView!.navigationDelegate = self
+        view.addSubview(webView!)
+        webView!.translatesAutoresizingMaskIntoConstraints = false
         let margins = view.layoutMarginsGuide
-        webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        webView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        webView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
+        webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func addProgressBar() {
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        assert(webView != nil, "Progress bar must be added after Webview is initialised")
+        webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         view.addSubview(progressView)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -115,12 +132,16 @@ public class YMChatViewController: UIViewController {
     }
     
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress" {
+        if keyPath == "estimatedProgress", let webView = webView {
             progressView.progress = Float(webView.estimatedProgress)
             if progressView.progress == 1.0 {
                 progressView.removeFromSuperview()
             }
         }
+    }
+
+    func sendMessageInWebView(text: String) {
+        webView?.evaluateJavaScript("sendEventFromiOS('\(text)');", completionHandler: nil)
     }
 }
 
@@ -150,9 +171,16 @@ extension YMChatViewController: SpeechDelegate {
     func listeningCompleted() {
         micButton.isListening = false
         speechDisplayTextView.removeFromSuperview()
+        if !speechDisplayTextView.text.isEmpty {
+            sendMessageInWebView(text: speechDisplayTextView.text)
+        }
     }
 }
 
-extension YMChatViewController: WKNavigationDelegate {
+extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
+    }
+
     //TODO: Handle this
 }

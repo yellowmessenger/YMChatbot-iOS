@@ -74,6 +74,7 @@ class SpeechHelper {
     }
 
     private func stopListening() {
+        guard audioEngine.isRunning else { return }
         audioEngine.stop()
         recognitionRequest?.endAudio()
         delegate?.listeningCompleted()
