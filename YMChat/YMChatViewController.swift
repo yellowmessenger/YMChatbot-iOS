@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import WebKit
 
-public class YMChatViewController: UIViewController {
+open class YMChatViewController: UIViewController {
     private var micButton = MicButton()
 
     private var speechDisplayTextView: UITextView = {
@@ -33,11 +33,11 @@ public class YMChatViewController: UIViewController {
         modalPresentationStyle = .fullScreen
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented. Use init(config:) instead")
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         addWebView()
         if config.showCloseButton {
             addCloseButton(tintColor: config.closeButtonColor)
@@ -121,12 +121,12 @@ public class YMChatViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    public override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.backgroundColor = config.statusBarColor
     }
 
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
         if #available(iOS 13.0, *) {
             return UIStatusBarStyle.lightContent
         } else {
@@ -134,7 +134,7 @@ public class YMChatViewController: UIViewController {
         }
     }
 
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress", let webView = webView {
             progressView.progress = Float(webView.estimatedProgress)
             if progressView.progress == 1.0 {
@@ -185,7 +185,7 @@ extension YMChatViewController: SpeechDelegate {
 }
 
 extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
     }
 
