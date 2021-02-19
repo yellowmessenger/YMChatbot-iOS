@@ -19,7 +19,7 @@ open class YMConfig {
 
     public var enableSpeech = false // TODO: Check for default value with Priyank
     public var micButtonColor: UIColor = .white
-    public var enableHistory = true // TODO: Check for default value with Priyank
+    public var enableHistory = false // TODO: Check for default value with Priyank
 
 //    public var actionBarColor: UIColor // Applicable to Android
     public var statusBarColor: UIColor = .white
@@ -39,8 +39,9 @@ open class YMConfig {
         var urlComponents = URLComponents()
         urlComponents.host = "app.yellowmessenger.com"
         urlComponents.scheme = "https"
-        urlComponents.path = "/pwa/live/\(botId)"
+        urlComponents.path = "/components/public/webviews/mobile-sdk/index.html"
         var queryItems = [URLQueryItem]()
+        queryItems.append(URLQueryItem(name: "botId", value: botId))
         if enableHistory {
             queryItems.append(URLQueryItem(name: "enableHistory", value: "true"))
         }
@@ -57,8 +58,8 @@ open class YMConfig {
         var payload = self.payload
         payload["Platform"] = "iOS-App"
         guard let data = try? JSONSerialization.data(withJSONObject: payload, options: []),
-             let string = String(data: data, encoding: .utf8),
-             let escapedString = string.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+              let string = String(data: data, encoding: .utf8),
+              let escapedString = string.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return nil
         }
         return escapedString
