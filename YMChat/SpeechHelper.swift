@@ -20,7 +20,7 @@ protocol SpeechDelegate: AnyObject {
 
 class SpeechHelper {
     // Stops listening if user does not speak for 1.5 seconds
-    lazy var stopListeningDebouncer: Debouncer = Debouncer(timeInterval: 1.5)
+    lazy var stopListeningDebouncer = Debouncer(timeInterval: 1.5)
 
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -30,6 +30,7 @@ class SpeechHelper {
 
     init() {
         stopListeningDebouncer.handler = {
+            log("Debounce callback invoked")
             self.stopListening()
         }
     }
@@ -75,6 +76,7 @@ class SpeechHelper {
 
     private func stopListening() {
         guard audioEngine.isRunning else { return }
+        stopListeningDebouncer.stop()
         audioEngine.stop()
         recognitionRequest?.endAudio()
         delegate?.listeningCompleted()
@@ -106,14 +108,15 @@ class SpeechHelper {
         recognitionRequest.shouldReportPartialResults = true
 
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+            guard let self = self, self.audioEngine.isRunning else { return }
             if let result = result {
-                self?.delegate?.newText(result.bestTranscription.formattedString)
+                self.delegate?.newText(result.bestTranscription.formattedString)
             }
 
             if error != nil || (result?.isFinal ?? false) {
-                self?.stopListening()
+                self.stopListening()
             }
-            self?.stopListeningDebouncer.renewInterval()
+            self.stopListeningDebouncer.renewInterval()
         }
 
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -130,4 +133,3 @@ class SpeechHelper {
         }
     }
 }
-

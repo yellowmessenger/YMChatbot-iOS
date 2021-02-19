@@ -144,7 +144,7 @@ public class YMChatViewController: UIViewController {
     }
 
     func sendMessageInWebView(text: String) {
-        log(#function)
+        log(#function, text)
         webView?.evaluateJavaScript("sendEventFromiOS('\(text)');", completionHandler: nil)
     }
 }
@@ -163,7 +163,7 @@ extension YMChatViewController: SpeechDelegate {
     }
 
     func newText(_ text: String) {
-        log(#function)
+        log(#function, text)
         speechDisplayTextView.text = text
     }
 
@@ -171,7 +171,7 @@ extension YMChatViewController: SpeechDelegate {
         log(#function)
         micButton.isListening = true
         showSpeechDisplayTextView()
-        speechDisplayTextView.text = "Say something, I'm listening!"
+        speechDisplayTextView.text = ""
     }
 
     func listeningCompleted() {

@@ -10,7 +10,7 @@ import UIKit
 func log(_ items: Any...) {
     if YMChat.shared.config.enableLogging {
         let output = items.map { "\($0)" }.joined(separator: ", ")
-        Swift.print("YMCHAT :: \(output)")
+        Swift.print("\(Date()) YMCHAT :: \(output)")
     }
 }
 
