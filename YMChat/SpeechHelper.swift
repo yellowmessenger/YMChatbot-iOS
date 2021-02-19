@@ -48,7 +48,7 @@ class SpeechHelper {
         case .notDetermined:
             askSpeechPermission()
         case .restricted:
-            // User has restricted access
+            // The device has restricted the app from using Speech Recognizer
             break
         @unknown default: break
         }

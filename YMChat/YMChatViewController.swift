@@ -22,9 +22,9 @@ public class YMChatViewController: UIViewController {
     }()
 
     private let speechHelper = SpeechHelper()
-    var webView: WKWebView?
-    let config: YMConfig
-    let progressView = UIProgressView(progressViewStyle: .default)
+    private var webView: WKWebView?
+    private let config: YMConfig
+    private let progressView = UIProgressView(progressViewStyle: .default)
 
     init(config: YMConfig) {
         self.config = config
@@ -72,7 +72,7 @@ public class YMChatViewController: UIViewController {
         webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    func addProgressBar() {
+    private func addProgressBar() {
         assert(webView != nil, "Progress bar must be added after Webview is initialised")
         webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         view.addSubview(progressView)
@@ -82,7 +82,7 @@ public class YMChatViewController: UIViewController {
         progressView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    func addCloseButton(tintColor: UIColor) {
+    private func addCloseButton(tintColor: UIColor) {
         let button = UIButton()
         button.setImage(Image.close.uiImage, for: .normal)
         button.tintColor = tintColor
@@ -95,7 +95,7 @@ public class YMChatViewController: UIViewController {
         button.addTarget(self, action: #selector(dismisViewController), for: .touchUpInside)
     }
     
-    func addMicButton(tintColor: UIColor) {
+    private func addMicButton(tintColor: UIColor) {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
         micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
@@ -107,7 +107,7 @@ public class YMChatViewController: UIViewController {
         speechHelper.micButtonTapped()
     }
     
-    func showSpeechDisplayTextView() {
+    private func showSpeechDisplayTextView() {
         self.view.insertSubview(speechDisplayTextView, belowSubview: micButton)
         speechDisplayTextView.translatesAutoresizingMaskIntoConstraints = false
         speechDisplayTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
