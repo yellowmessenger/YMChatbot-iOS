@@ -3,9 +3,7 @@
 - [Usage](#usage)
 
 # Installation
-##CocoaPods
-[CocoaPods](http://cocoapods.org) adds supports for Swift and embedded frameworks.
-
+## CocoaPods
 To integrate YMChatbot into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
