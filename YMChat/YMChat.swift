@@ -2,11 +2,16 @@ import UIKit
 
 public struct YMBotEventResponse {
     public let code, data: String
+//    var dataToDict: [String: Any] {
+//
+//    }
 }
 
 public class YMChat: YMChatViewControllerDelegate {
     public static var shared = YMChat()
-    
+
+    public var enableLogging = false
+
     public var viewController: YMChatViewController?
     public var config: YMConfig!
 
