@@ -29,7 +29,6 @@ open class YMChatViewController: UIViewController {
     private let speechHelper = SpeechHelper()
     private var webView: WKWebView?
     private let config: YMConfig
-    private let progressView = UIProgressView(progressViewStyle: .default)
 
     init(config: YMConfig) {
         self.config = config
@@ -50,7 +49,6 @@ open class YMChatViewController: UIViewController {
         if config.enableSpeech {
             addMicButton(tintColor: config.micButtonColor)
         }
-        addProgressBar()
         log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
     }
@@ -76,17 +74,7 @@ open class YMChatViewController: UIViewController {
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
-    private func addProgressBar() {
-        assert(webView != nil, "Progress bar must be added after Webview is initialised")
-        webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        view.addSubview(progressView)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-    
+
     private func addCloseButton(tintColor: UIColor) {
         let button = UIButton()
         button.setImage(Image.close.uiImage, for: .normal)
@@ -136,15 +124,6 @@ open class YMChatViewController: UIViewController {
             return UIStatusBarStyle.lightContent
         } else {
             return UIStatusBarStyle.default
-        }
-    }
-
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress", let webView = webView {
-            progressView.progress = Float(webView.estimatedProgress)
-            if progressView.progress == 1.0 {
-                progressView.removeFromSuperview()
-            }
         }
     }
 
