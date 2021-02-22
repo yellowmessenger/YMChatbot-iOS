@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 import WebKit
 
+protocol YMChatViewControllerDelegate: AnyObject {
+    func eventReceivedFromBot(code: String, data: String)
+}
+
 open class YMChatViewController: UIViewController {
     private var micButton = MicButton()
+    weak var delegate: YMChatViewControllerDelegate?
 
     private var speechDisplayTextView: UITextView = {
         let textView = UITextView()
@@ -186,6 +191,18 @@ extension YMChatViewController: SpeechDelegate {
 
 extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "ymHandler" {
+            guard let dict = message.body as? [String: Any],
+                  let code = dict["code"] as? String,
+                  let data = dict["data"] as? String  else {
+                return
+            }
+            if code == "start-mic-ios" {
+                // Start text to speech
+                // After speech, start listening
+            }
+            delegate?.eventReceivedFromBot(code: code, data: data)
+        }
 
     }
 
