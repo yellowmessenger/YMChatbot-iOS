@@ -48,6 +48,7 @@
 		91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHelper.swift; sourceTree = "<group>"; };
 		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
 		91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfig.swift; sourceTree = "<group>"; };
+		91D8B56025E3BB79005E1405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +73,9 @@
 		9195467C25D67F4A0042759F = {
 			isa = PBXGroup;
 			children = (
-				919546E925D6824B0042759F /* YMChat.podspec */,
 				9195468825D67F4A0042759F /* YMChat */,
+				919546E925D6824B0042759F /* YMChat.podspec */,
+				91D8B56025E3BB79005E1405 /* README.md */,
 				9195469325D67F4B0042759F /* YMChatTests */,
 				9195468725D67F4A0042759F /* Products */,
 			);
