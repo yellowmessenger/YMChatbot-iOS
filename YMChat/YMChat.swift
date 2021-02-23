@@ -1,12 +1,5 @@
 import UIKit
 
-public struct YMBotEventResponse {
-    public let code, data: String
-//    var dataToDict: [String: Any] {
-//
-//    }
-}
-
 public class YMChat: YMChatViewControllerDelegate {
     public static var shared = YMChat()
 
@@ -22,6 +15,14 @@ public class YMChat: YMChatViewControllerDelegate {
         self.viewController = YMChatViewController(config: config)
         self.viewController?.delegate = self
         viewController.present(self.viewController!, animated: animated, completion: completion)
+    }
+
+    public func presentView(animated: Bool = true, completion: (() -> Void)? = nil) {
+        guard let vc = UIApplication.shared.windows.last?.rootViewController else {
+            assertionFailure("View controller not found. Use presentView(on:animated:completion)")
+            return
+        }
+        presentView(on: vc, animated: animated, completion: completion)
     }
 
     public func closeBot() {
