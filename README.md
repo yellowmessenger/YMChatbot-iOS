@@ -12,6 +12,11 @@ pod 'YMChat'
   
 # Usage
 ## Basic
+Import the YMChat framework in Swift file
+```
+import YMChat
+```
+
 Chatbot can be presented with very few steps 
 ```
 let config = YMConfig(botId: "x1234567890")
