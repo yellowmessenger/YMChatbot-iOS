@@ -21,6 +21,9 @@ open class YMConfig {
     public var micButtonColor: UIColor = .white
     public var enableHistory = false // TODO: Check for default value with Priyank
 
+    public var ymAuthenticationToken: String?
+    public var deviceToken: String?
+
 //    public var actionBarColor: UIColor // Applicable to Android
     public var statusBarColor: UIColor = .white
 //    public var hideCameraForUpload: Bool // Applicable to Android
@@ -43,6 +46,12 @@ open class YMConfig {
         queryItems.append(URLQueryItem(name: "botId", value: botId))
         if enableHistory {
             queryItems.append(URLQueryItem(name: "enableHistory", value: "true"))
+        }
+        if let ymAuthToken = ymAuthenticationToken {
+            queryItems.append(URLQueryItem(name: "ymAuthenticationToken", value: ymAuthToken))
+        }
+        if let deviceToken = deviceToken {
+            queryItems.append(URLQueryItem(name: "deviceToken", value: deviceToken))
         }
         if let decodedPayload = decodedPayload {
             queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
