@@ -51,13 +51,17 @@ Chat history can be enabled by setting the `enableHistory` flag present in YMCon
 config.enableHistory = true
 ```
 
-## Show chatbot
-Chat view can be presented on an existing view controller.
+## Present chatbot
+Chat bot can be presented by calling presentView
 ```
-let config = YMConfig(botId: "x1234567890")
-YMChat.shared.presentView(on: self)
+YMChat.shared.presentView()
 ```
-`presentView` function takes the view controller as a parameter that would present the Chat bot
+
+Chat view can also be presented on an existing view controller by passing the view controller as parameter.
+```
+YMChat.shared.presentView(on: self) // self is the current view controller
+```
+Note: When presentView is invoked with no parameter then the view controller is fetched using `UIApplication.shared.windows.last?.rootViewController`
 
 ## Event from bot
 ```
