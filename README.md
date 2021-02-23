@@ -17,7 +17,7 @@ Import the YMChat framework in Swift file
 import YMChat
 ```
 
-Chatbot can be presented with very few steps 
+After the framework is imported the basic bot can be presented with few lines as below 
 ```
 let config = YMConfig(botId: "x1234567890")
 YMChat.shared.config = config
