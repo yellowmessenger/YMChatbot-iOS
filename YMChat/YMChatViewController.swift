@@ -184,6 +184,4 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
         }
 
     }
-
-    //TODO: Handle this
 }
