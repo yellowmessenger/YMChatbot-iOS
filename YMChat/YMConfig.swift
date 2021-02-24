@@ -14,30 +14,30 @@ func log(_ items: Any...) {
     }
 }
 
-open class YMConfig {
+@objc open class YMConfig: NSObject {
     var botId: String
 
-    public var enableSpeech = false // TODO: Check for default value with Priyank
-    public var micButtonColor: UIColor = .white
-    public var enableHistory = false // TODO: Check for default value with Priyank
+    @objc public var enableSpeech = false // TODO: Check for default value with Priyank
+    @objc public var micButtonColor: UIColor = .white
+    @objc public var enableHistory = false // TODO: Check for default value with Priyank
 
-    public var ymAuthenticationToken: String?
-    public var deviceToken: String?
+    @objc public var ymAuthenticationToken: String?
+    @objc public var deviceToken: String?
 
-//    public var actionBarColor: UIColor // Applicable to Android
-    public var statusBarColor: UIColor = .white
-//    public var hideCameraForUpload: Bool // Applicable to Android
+//    @objc public var actionBarColor: UIColor // Applicable to Android
+    @objc public var statusBarColor: UIColor = .white
+//    @objc public var hideCameraForUpload: Bool // Applicable to Android
 
-    public var showCloseButton = true
-    public var closeButtonColor: UIColor = .white
+    @objc public var showCloseButton = true
+    @objc public var closeButtonColor: UIColor = .white
 
-    public var payload = [String: String]()
+    @objc public var payload = [String: String]()
 
-    public init(botId: String) {
+    @objc public init(botId: String) {
         self.botId = botId
     }
 
-    open var url: URL {
+    @objc open var url: URL {
         var urlComponents = URLComponents()
         urlComponents.host = "app.yellowmessenger.com"
         urlComponents.scheme = "https"

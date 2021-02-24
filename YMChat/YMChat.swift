@@ -1,23 +1,28 @@
 import UIKit
 
-public class YMChat: YMChatViewControllerDelegate {
-    public static var shared = YMChat()
+@objc public protocol YMChatDelegate: AnyObject {
+    @objc func onEventFromBot(response: YMBotEventResponse)
+}
 
-    public var enableLogging = false
+@objc public class YMChat: NSObject, YMChatViewControllerDelegate {
+    @objc public static var shared = YMChat()
+    @objc public var delegate: YMChatDelegate?
 
-    public var viewController: YMChatViewController?
-    public var config: YMConfig!
+    @objc public var enableLogging = false
 
-    public var onEventFromBot: ((YMBotEventResponse) -> Void)?
+    @objc public var viewController: YMChatViewController?
+    @objc public var config: YMConfig!
 
-    public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
+//    @objc public var onEventFromBot: ((YMBotEventResponse) -> Void)?
+
+    @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
         guard config != nil else { fatalError("`config` is nil. Set config before invoking presentView") }
         self.viewController = YMChatViewController(config: config)
         self.viewController?.delegate = self
         viewController.present(self.viewController!, animated: animated, completion: completion)
     }
 
-    public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) {
+    @objc public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) {
         guard let vc = UIApplication.shared.windows.last?.rootViewController else {
             assertionFailure("View controller not found. Use presentView(on:animated:completion)")
             return
@@ -25,7 +30,7 @@ public class YMChat: YMChatViewControllerDelegate {
         startChatbot(on: vc, animated: animated, completion: completion)
     }
 
-    public func closeBot() {
+    @objc public func closeBot() {
         viewController?.dismiss(animated: false, completion: {
             self.viewController = nil
         })
@@ -33,6 +38,6 @@ public class YMChat: YMChatViewControllerDelegate {
 
     // MARK: - YMChatViewControllerDelegate
     func eventReceivedFromBot(code: String, data: String) {
-        onEventFromBot?(YMBotEventResponse(code: code, data: data))
+        delegate?.onEventFromBot(response: YMBotEventResponse(code: code, data: data))
     }
 }
