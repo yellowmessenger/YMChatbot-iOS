@@ -10,19 +10,19 @@ public class YMChat: YMChatViewControllerDelegate {
 
     public var onEventFromBot: ((YMBotEventResponse) -> Void)?
 
-    public func presentView(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
+    public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
         guard config != nil else { fatalError("`config` is nil. Set config before invoking presentView") }
         self.viewController = YMChatViewController(config: config)
         self.viewController?.delegate = self
         viewController.present(self.viewController!, animated: animated, completion: completion)
     }
 
-    public func presentView(animated: Bool = true, completion: (() -> Void)? = nil) {
+    public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) {
         guard let vc = UIApplication.shared.windows.last?.rootViewController else {
             assertionFailure("View controller not found. Use presentView(on:animated:completion)")
             return
         }
-        presentView(on: vc, animated: animated, completion: completion)
+        startChatbot(on: vc, animated: animated, completion: completion)
     }
 
     public func closeBot() {
