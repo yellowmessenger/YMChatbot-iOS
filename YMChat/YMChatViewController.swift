@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 protocol YMChatViewControllerDelegate: AnyObject {
-    func eventReceivedFromBot(code: String, data: String)
+    func eventReceivedFromBot(code: String, data: String?)
 }
 
 open class YMChatViewController: UIViewController {
@@ -172,14 +172,14 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "ymHandler" {
             guard let dict = message.body as? [String: Any],
-                  let code = dict["code"] as? String,
-                  let data = dict["data"] as? String  else {
+                  let code = dict["code"] as? String else {
                 return
             }
             if code == "start-mic-ios" {
                 // Start text to speech
                 // After speech, start listening
             }
+            let data = dict["data"] as? String
             delegate?.eventReceivedFromBot(code: code, data: data)
         }
 

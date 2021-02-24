@@ -6,9 +6,10 @@
 //
 
 @objc public class YMBotEventResponse: NSObject {
-    @objc public let code, data: String
+    @objc public let code: String
+    @objc public let data: String?
 
-    init(code: String, data: String) {
+    init(code: String, data: String?) {
         self.code = code
         self.data = data
         super.init()

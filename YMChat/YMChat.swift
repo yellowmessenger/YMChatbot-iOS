@@ -37,7 +37,7 @@ import UIKit
     }
 
     // MARK: - YMChatViewControllerDelegate
-    func eventReceivedFromBot(code: String, data: String) {
+    func eventReceivedFromBot(code: String, data: String?) {
         delegate?.onEventFromBot(response: YMBotEventResponse(code: code, data: data))
     }
 }
