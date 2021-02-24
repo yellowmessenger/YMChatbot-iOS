@@ -27,7 +27,7 @@ Pod::Spec.new do |spec|
 
   spec.platform     = :ios, "10.0"
 
-  spec.source       = { :git => "http://github/kaunteya/YMChat.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/yellowmessenger/YMChatbot-iOS.git", :tag => "#{spec.version}" }
   spec.resources    = ["YMChat/Assets.xcassets"]
 
 
