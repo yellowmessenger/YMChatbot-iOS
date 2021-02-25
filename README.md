@@ -52,37 +52,40 @@ config.enableHistory = true
 ```
 
 ## Present chatbot
-Chat bot can be presented by calling presentView
+Chat bot can be presented by calling `startChatbot()` and passing your view controller as an argument
 ```
-YMChat.shared.presentView()
+YMChat.shared.startChatbot(on: self) // self is the current view controller
+YMChat.shared.startChatbot()
 ```
 
-Chat view can also be presented on an existing view controller by passing the view controller as parameter.
+Chat view can also be presented without parameter
 ```
-YMChat.shared.presentView(on: self) // self is the current view controller
+YMChat.shared.startChatbot()
 ```
 Note: When presentView is invoked with no parameter then the view controller is fetched using `UIApplication.shared.windows.last?.rootViewController`
 
-## Event from bot
+## Close bot
+Bot can be externally closed using `closeBot()` function
 ```
-YMChat.shared.onEventFromBot = { response in
-    print("Event received \(response)")
-    if response.code == "login-user" {
-        // Login
-    }
-}
+YMChat.shared.closeBot()
 ```
 
-Or, a function can be defined and then assigned for code modularity
+## Event from bot
+Events from bot can be handled using delegate pattern.
+
+```
+YMChat.shared.delegate = self
+```
+
+Once the delegate is assigned define the `eventResponse(_:)` function
+
 ```
 func eventResponse(_ response: YMBotEventResponse) {
     print("Event received \(response)")
-    if response.code == "login-user" {
-        //Login
+    if response.code == "example-code" {
+        // Your logic
     }
 }
-
-YMChat.shared.onEventFromBot = eventResponse(_:)
 ```
 
 ## Logging
