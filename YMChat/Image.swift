@@ -12,6 +12,10 @@ enum Image: String {
 
     var uiImage: UIImage {
         let bundle = Bundle(for: YMChatViewController.self)
-        return UIImage(named: self.rawValue, in: bundle, compatibleWith: .none)!
+        if let url = bundle.url(forResource: "YMImages", withExtension: "bundle") {
+            let imageBundle = Bundle(url: url)
+            return UIImage(named: self.rawValue, in: imageBundle, compatibleWith: nil) ?? UIImage()
+        }
+        return UIImage()
     }
 }

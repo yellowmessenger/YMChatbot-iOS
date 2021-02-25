@@ -13,8 +13,6 @@ import UIKit
     @objc public var viewController: YMChatViewController?
     @objc public var config: YMConfig!
 
-//    @objc public var onEventFromBot: ((YMBotEventResponse) -> Void)?
-
     @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
         guard config != nil else { fatalError("`config` is nil. Set config before invoking presentView") }
         self.viewController = YMChatViewController(config: config)
