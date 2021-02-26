@@ -39,6 +39,14 @@ Speech to text can be enabled by setting the enableSpeech flag present in config
 config.enableSpeech = true
 ```
 
+If you are adding Speech recognization, add following snippet to Info.plist of the host app
+```
+<key>NSMicrophoneUsageDescription</key>  
+<string>Your microphone will be used to record your speech when you use the Voice feature.</string>
+<key>NSSpeechRecognitionUsageDescription</key>  
+<string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
+```
+
 ### Payload
 Additional payload can be added in the form of key value pair, which is then appended to the bot
 ```
