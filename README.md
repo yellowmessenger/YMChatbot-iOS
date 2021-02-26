@@ -65,7 +65,7 @@ YMChat.shared.startChatbot()
 Note: When presentView is invoked with no parameter then the view controller is fetched using `UIApplication.shared.windows.last?.rootViewController`
 
 ## Close bot
-Bot can be externally closed using `closeBot()` function
+Bot can be programatically closed using `closeBot()` function
 ```
 YMChat.shared.closeBot()
 ```
