@@ -2,16 +2,16 @@
 - [Installation](#installation)
 - [Usage](#usage)
 
-# Installation
-## CocoaPods
+## Installation
+### CocoaPods
 To integrate YMChatbot into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 pod 'YMChat'
 ```
   
-# Usage
-## Basic
+## Usage
+### Basic
 Import the YMChat framework in Swift file
 ```swift
 import YMChat
@@ -24,16 +24,16 @@ YMChat.shared.config = config
 YMChat.shared.presentView(on: self)
 ```
 
-## YMConfig
+### YMConfig
 YMConfig configures chatbot before it presented on the screen. It is recommended to set appropriate config before presenting the bot
 
-### Initialize
+#### Initialize
 YMConfig requires botID to initialize. All other settings can be changed after config has been initialised
 ```swift
 let config = YMConfig(botId: "x1234567890")
 ```
 
-### Speech to Text
+#### Speech to Text
 Speech to text can be enabled by setting the enableSpeech flag present in config. Default value is `false`
 ```swift
 config.enableSpeech = true
@@ -47,19 +47,19 @@ If you are adding Speech recognization, add following snippet to Info.plist of t
 <string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
 ```
 
-### Payload
+#### Payload
 Additional payload can be added in the form of key value pair, which is then appended to the bot
 ```swift
 config.payload = ["name": "ym.bot.name", "device-type": "mobile"]
 ```
 
-### History
+#### History
 Chat history can be enabled by setting the `enableHistory` flag present in YMConfig. Default value is `false`
 ```swift
 config.enableHistory = true
 ```
 
-## Present chatbot
+### Present chatbot
 Chat bot can be presented by calling `startChatbot()` and passing your view controller as an argument
 ```swift
 YMChat.shared.startChatbot(on: self) // self is the current view controller
@@ -72,13 +72,13 @@ YMChat.shared.startChatbot()
 ```
 Note: When presentView is invoked with no parameter then the view controller is fetched using `UIApplication.shared.windows.last?.rootViewController`
 
-## Close bot
+### Close bot
 Bot can be programatically closed using `closeBot()` function
 ```swift
 YMChat.shared.closeBot()
 ```
 
-## Event from bot
+### Event from bot
 Events from bot can be handled using delegate pattern.
 
 ```swift
@@ -96,7 +96,7 @@ func eventResponse(_ response: YMBotEventResponse) {
 }
 ```
 
-## Logging
+### Logging
 Logging can be enabled to understand the code flow and to fix bugs. It can be enabled from config
 ```swift
 YMChat.shared.enableLogging = true
