@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
 
   spec.author       = "Yellow Messenger"
 
-  spec.platform     = :ios, "10.0"
+  spec.platform     = :ios, "12.0"
 
   spec.source       = { :git => "https://github.com/yellowmessenger/YMChatbot-iOS.git", :tag => "#{spec.version}" }
 
