@@ -182,6 +182,19 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
             let data = dict["data"] as? String
             delegate?.eventReceivedFromBot(code: code, data: data)
         }
+    }
 
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated  {
+            if let url = navigationAction.request.url,
+               UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                decisionHandler(.cancel)
+            } else {
+                decisionHandler(.allow)
+            }
+        } else {
+            decisionHandler(.allow)
+        }
     }
 }
