@@ -96,6 +96,13 @@ func eventResponse(_ response: YMBotEventResponse) {
 }
 ```
 
+## Custom URL configuration (for on premise deployments)
+Base url for the bot can be customized by setting `config.customBaseUrl` parameter. Use the same url used for on-prem deployment.
+
+```swift
+config.customBaseUrl = "<custom_url>"
+```
+
 ### Logging
 Logging can be enabled to understand the code flow and to fix bugs. It can be enabled from config
 ```swift
