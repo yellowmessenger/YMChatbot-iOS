@@ -30,7 +30,7 @@ func log(_ items: Any...) {
 
     @objc public var showCloseButton = true
     @objc public var closeButtonColor: UIColor = .white
-    public var customBaseUrl = "https://app.yellowmessenger.com";
+    @objc public var customBaseUrl = "https://app.yellowmessenger.com";
 
     @objc public var payload = [String: String]()
 
