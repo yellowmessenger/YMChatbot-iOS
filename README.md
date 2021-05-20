@@ -108,3 +108,7 @@ Logging can be enabled to understand the code flow and to fix bugs. It can be en
 ```swift
 YMChat.shared.enableLogging = true
 ```
+
+## Demo App
+A demo has been created to better understand the integration of SDK in iOS app
+[https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp](https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp)
