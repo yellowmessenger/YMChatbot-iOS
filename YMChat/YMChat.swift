@@ -13,19 +13,29 @@ import UIKit
     @objc public var viewController: YMChatViewController?
     @objc public var config: YMConfig!
 
-    @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard config != nil else { fatalError("`config` is nil. Set config before invoking presentView") }
+    func validateConfig() throws {
+        if config == nil {
+            throw NSError(domain: "Config is nil. Set config before invoking startChatbot", code: 0, userInfo: nil)
+        }
+        if config.botId.isEmpty {
+            throw NSError(domain: "Bot id is not set", code: 0, userInfo: nil)
+        }
+        try JSONSerialization.data(withJSONObject: config.payload, options: [])
+    }
+
+    @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) throws {
+        try validateConfig()
         self.viewController = YMChatViewController(config: config)
         self.viewController?.delegate = self
         viewController.present(self.viewController!, animated: animated, completion: completion)
     }
 
-    @objc public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) {
+    @objc public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) throws {
         guard let vc = UIApplication.shared.windows.last?.rootViewController else {
             assertionFailure("View controller not found. Use presentView(on:animated:completion)")
             return
         }
-        startChatbot(on: vc, animated: animated, completion: completion)
+        try startChatbot(on: vc, animated: animated, completion: completion)
     }
 
     @objc public func closeBot() {
