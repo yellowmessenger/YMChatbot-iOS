@@ -1,7 +1,8 @@
 import UIKit
 
 @objc public protocol YMChatDelegate: AnyObject {
-    @objc func onEventFromBot(response: YMBotEventResponse)
+    @objc optional func onEventFromBot(response: YMBotEventResponse)
+    @objc optional func onBotClose()
 }
 
 @objc public class YMChat: NSObject, YMChatViewControllerDelegate {
@@ -36,6 +37,10 @@ import UIKit
 
     // MARK: - YMChatViewControllerDelegate
     func eventReceivedFromBot(code: String, data: String?) {
-        delegate?.onEventFromBot(response: YMBotEventResponse(code: code, data: data))
+        if code == "bot-closed" {
+            delegate?.onBotClose?()
+        } else {
+            delegate?.onEventFromBot?(response: YMBotEventResponse(code: code, data: data))
+        }
     }
 }
