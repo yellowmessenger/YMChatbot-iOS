@@ -11,6 +11,7 @@ import WebKit
 
 protocol YMChatViewControllerDelegate: AnyObject {
     func eventReceivedFromBot(code: String, data: String?)
+    func botCloseButtonTapped()
 }
 
 open class YMChatViewController: UIViewController {
@@ -85,7 +86,7 @@ open class YMChatViewController: UIViewController {
         button.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
         button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
-        button.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
+        button.addTarget(self, action: #selector(botCloseButtonTapped), for: .touchUpInside)
     }
     
     private func addMicButton(tintColor: UIColor) {
@@ -109,9 +110,11 @@ open class YMChatViewController: UIViewController {
         speechDisplayTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    @objc func dismissViewController() {
+    @objc func botCloseButtonTapped() {
         log(#function)
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) { [weak self] in
+            self?.delegate?.botCloseButtonTapped()
+        }
     }
     
     open override func viewDidAppear(_ animated: Bool) {

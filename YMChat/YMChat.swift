@@ -43,4 +43,8 @@ import UIKit
             delegate?.onEventFromBot?(response: YMBotEventResponse(code: code, data: data))
         }
     }
+    
+    func botCloseButtonTapped() {
+        delegate?.onBotClose?()
+    }
 }
