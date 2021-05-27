@@ -19,9 +19,13 @@ import YMChat
 
 After the framework is imported the basic bot can be presented with few lines as below 
 ```swift
-let config = YMConfig(botId: "x1234567890")
-YMChat.shared.config = config
-YMChat.shared.presentView(on: self)
+do {
+    let config = YMConfig(botId: "x1234567890")
+    YMChat.shared.config = config
+    try YMChat.shared.startChatbot(on: self)
+} catch {
+    print("Error occured while loading chatbot \(error)")
+}
 ```
 
 ### YMConfig
@@ -48,10 +52,13 @@ If you are adding Speech recognization, add following snippet to Info.plist of t
 ```
 
 #### Payload
-Additional payload can be added in the form of key value pair, which is then appended to the bot
+Information can be passed from app to bot using payload.
+
+The payload dictionary should be JSON compatible else an error will be thrown
 ```swift
 config.payload = ["name": "ym.bot.name", "device-type": "mobile"]
 ```
+Payload can be used to pass information from host app to bot. For passing data from bot to app refer bot [Bot Events](#bot-events)
 
 #### History
 Chat history can be enabled by setting the `enableHistory` flag present in YMConfig. Default value is `false`
@@ -59,18 +66,45 @@ Chat history can be enabled by setting the `enableHistory` flag present in YMCon
 config.enableHistory = true
 ```
 
-### Present chatbot
-Chat bot can be presented by calling `startChatbot()` and passing your view controller as an argument
+### Start chatbot
+Chat bot can be presented by calling `startChatbot()` method and passing your view controller as an argument
 ```swift
-YMChat.shared.startChatbot(on: self) // self is the current view controller
-YMChat.shared.startChatbot()
+do {
+    try YMChat.shared.startChatbot(on: self)
+} catch {
+    print("Error occured while loading chatbot \(error)")
+}
 ```
 
-Chat view can also be presented without parameter
+Chat view can also be presented without passing view controller as a parameter
 ```swift
-YMChat.shared.startChatbot()
+do {
+    try YMChat.shared.startChatbot()
+} catch {
+    print("Error occured while loading chatbot \(error)")
+}
 ```
 Note: When presentView is invoked with no parameter then the view controller is fetched using `UIApplication.shared.windows.last?.rootViewController`
+
+### Bot Events
+Bot events are used to pass information from bot to app. For passing from app to bot refer [Payload](#payload)
+
+Events from bot can be handled using delegate pattern.
+
+```swift
+YMChat.shared.delegate = self
+```
+
+Once the delegate is assigned define the `eventResponse(_:)` function. The handler class should conform to `YMChatDelegate`
+
+```swift
+func onEventFromBot(_ response: YMBotEventResponse) {
+    print("Event received \(response)")
+    if response.code == "code-from-bot" {
+        print("Even from a bot has been received", response.data)
+    }
+}
+```
 
 ### Close bot
 Bot can be programatically closed using `closeBot()` function
@@ -78,21 +112,12 @@ Bot can be programatically closed using `closeBot()` function
 YMChat.shared.closeBot()
 ```
 
-### Event from bot
-Events from bot can be handled using delegate pattern.
+### Bot close event
 
+Bot close event is separetly sent and it can be handled in following way. The handler class should conform to `YMChatDelegate`
 ```swift
-YMChat.shared.delegate = self
-```
-
-Once the delegate is assigned define the `eventResponse(_:)` function
-
-```swift
-func eventResponse(_ response: YMBotEventResponse) {
-    print("Event received \(response)")
-    if response.code == "example-code" {
-        // Your logic
-    }
+func onBotClose() {
+    print("Bot closed")
 }
 ```
 
