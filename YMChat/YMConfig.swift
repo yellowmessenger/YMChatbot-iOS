@@ -15,7 +15,7 @@ func log(_ items: Any...) {
 }
 
 @objc open class YMConfig: NSObject {
-    var botId: String
+    let botId: String
 
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
     @objc public var micButtonColor: UIColor = .white
@@ -32,7 +32,7 @@ func log(_ items: Any...) {
     @objc public var closeButtonColor: UIColor = .white
     @objc public var customBaseUrl = "https://app.yellowmessenger.com";
 
-    @objc public var payload = [String: String]()
+    @objc public var payload = [String: Any]()
 
     @objc public init(botId: String) {
         self.botId = botId
