@@ -18,7 +18,10 @@ import UIKit
             throw NSError(domain: "Config is nil. Set config before invoking startChatbot", code: 0, userInfo: nil)
         }
         if config.botId.isEmpty {
-            throw NSError(domain: "Bot id is not set", code: 0, userInfo: nil)
+            throw NSError(domain: "Bot id is not set. Please set botId before calling startChatbot()", code: 0, userInfo: nil)
+        }
+        if config.customBaseUrl.isEmpty {
+            throw NSError(domain: "CustomBaseURL is empty. Please set botId before calling startChatbot()", code: 0, userInfo: nil)
         }
         try JSONSerialization.data(withJSONObject: config.payload, options: [])
     }
