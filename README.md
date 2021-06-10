@@ -134,6 +134,26 @@ Logging can be enabled to understand the code flow and to fix bugs. It can be en
 YMChat.shared.enableLogging = true
 ```
 
+## Push Notifications
+YMChat supports firebase notifications. Push notifications needs `authentication token` and `device token`
+
+### Authentication Token
+Authentication token can be set using `ymAuthenticationToken` variable. Auth token can be a unique identifier like email or UUID
+```swift
+config.ymAuthenticationToken = "your-token"
+```
+
+### Device Token
+Device token can be set using `deviceToken` variable. Pass `fcmToken` as a parameter to this method.
+```swift
+config.deviceToken = "your-firebase-device-token"
+```
+
+It is recommended to set authentication token and device token before calling `startChatbot()`
+
+Note: Firebase service account key is required to send notifications. You can share the service account key with us. More info [here](https://developers.google.com/assistant/engagement/notifications#get_a_service_account_key)
+
+
 ## Demo App
 A demo has been created to better understand the integration of SDK in iOS app
 [https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp](https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp)
