@@ -9,7 +9,10 @@ To integrate YMChatbot into your Xcode project using CocoaPods, specify it in yo
 ```ruby
 pod 'YMChat'
 ```
-  
+
+## Supported iOS versions:
+iOS 12, 13 and 14
+
 ## Usage
 ### Basic
 Import the YMChat framework in Swift file
