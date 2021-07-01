@@ -36,7 +36,7 @@ import UIKit
 
     @objc public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) throws {
         guard let vc = UIApplication.shared.windows.last?.rootViewController else {
-            assertionFailure("View controller not found. Use presentView(on:animated:completion)")
+            assertionFailure("View controller not found. Use startChatbot(on:animated:completion)")
             return
         }
         try startChatbot(on: vc, animated: animated, completion: completion)
