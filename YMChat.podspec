@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
 
   spec.homepage     = "http://yellowmessenger.com"
 
-  spec.license      = "Commercial"
+  spec.license      = { :type => "Commercial", :text => "See https://yellow.ai"}
 
   spec.author       = "Yellow Messenger"
 
