@@ -1,6 +1,6 @@
 //
 //  YMConfig.swift
-//  YMChat
+//  YMChat1
 //
 //  Created by Kauntey Suryawanshi on 17/02/21.
 //
@@ -8,7 +8,7 @@
 import UIKit
 
 func log(_ items: Any...) {
-    if YMChat.shared.enableLogging {
+    if YMChatBot.shared.enableLogging {
         let output = items.map { "\($0)" }.joined(separator: ", ")
         Swift.print("\(Date()) YMCHAT :: \(output)")
     }

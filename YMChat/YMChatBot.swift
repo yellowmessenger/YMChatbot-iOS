@@ -5,8 +5,8 @@ import UIKit
     @objc optional func onBotClose()
 }
 
-@objc public class YMChat: NSObject, YMChatViewControllerDelegate {
-    @objc public static var shared = YMChat()
+@objc public class YMChatBot: NSObject, YMChatViewControllerDelegate {
+    @objc public static var shared = YMChatBot()
     @objc public var delegate: YMChatDelegate?
 
     @objc public var enableLogging = false
