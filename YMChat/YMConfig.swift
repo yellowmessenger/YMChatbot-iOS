@@ -39,10 +39,7 @@ func log(_ items: Any...) {
     }
 
     @objc open var url: URL {
-        let bundle = Bundle(for: YMConfig.self)
-        let bundleURL = bundle.url(forResource: "YMImages", withExtension: "bundle")!
-        let imageBundle = Bundle(url: bundleURL)!
-        let localHtml = imageBundle.url(forResource: "index", withExtension: "html")!
+        let localHtml = Bundle.assetBundle.url(forResource: "index", withExtension: "html")!
         var urlComponents = URLComponents(url: localHtml, resolvingAgainstBaseURL: false)!
         
         var queryItems = [URLQueryItem]()

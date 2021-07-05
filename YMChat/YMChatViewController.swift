@@ -78,7 +78,8 @@ open class YMChatViewController: UIViewController {
 
     private func addCloseButton(tintColor: UIColor) {
         let button = UIButton()
-        button.setImage(Image.close.uiImage, for: .normal)
+        let closeImage = UIImage(named: "close", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
+        button.setImage(closeImage, for: .normal)
         button.tintColor = tintColor
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false

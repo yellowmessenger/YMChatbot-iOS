@@ -34,8 +34,9 @@ class MicButton: UIButton {
 
     var isListening = false {
         didSet {
-            let image: Image = isListening ? .stop : .mic
-            setImage(image.uiImage, for: .normal)
+            let imageName: String = isListening ? "stop" : "mic"
+            let image = UIImage(named: imageName, in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
+            setImage(image, for: .normal)
             if isListening {
                 startAnimation()
             } else {
@@ -50,7 +51,8 @@ class MicButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setImage(Image.mic.uiImage, for: .normal)
+        let image = UIImage(named: "mic", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
+        setImage(image, for: .normal)
         backgroundColor = UIColor(red: 6/255.0, green: 151/255.0, blue: 232/255.0, alpha: 1.0)
         layer.cornerRadius = size / 2
     }
