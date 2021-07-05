@@ -15,6 +15,7 @@ xcodebuild -create-xcframework \
   -framework ${IOS_SIMULATOR_PATH}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework \
   -output "./build/${FRAMEWORK_NAME}.xcframework"
 
-pushd build
-zip -vry ${FRAMEWORK_NAME}.xcframework.zip ${FRAMEWORK_NAME}.xcframework/ -x "*.DS_Store"
-popd
+pushd build > /dev/null
+zip -vryq ${FRAMEWORK_NAME}.xcframework.zip ${FRAMEWORK_NAME}.xcframework/ -x "*.DS_Store"
+popd > /dev/null
+echo -e "Done ✅"
