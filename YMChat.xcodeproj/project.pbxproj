@@ -17,7 +17,7 @@
 		91A321EE263AB95A008B4AF3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 91A321ED263AB95A008B4AF3 /* index.html */; };
 		91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE3E25DBDF53007AC38D /* Debounce.swift */; };
 		91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4225DBEA7D007AC38D /* MicButton.swift */; };
-		91CEBE4A25DBF528007AC38D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Image.swift */; };
+		91CEBE4A25DBF528007AC38D /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Bundle.swift */; };
 		91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */; };
 		91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */; };
 		91D25F2C25DD47C400FCCFA4 /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
@@ -48,7 +48,7 @@
 		91A321ED263AB95A008B4AF3 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		91CEBE3E25DBDF53007AC38D /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		91CEBE4225DBEA7D007AC38D /* MicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicButton.swift; sourceTree = "<group>"; };
-		91CEBE4925DBF528007AC38D /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		91CEBE4925DBF528007AC38D /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHelper.swift; sourceTree = "<group>"; };
 		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
 		91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfig.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 				91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */,
 				91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */,
 				91CEBE4225DBEA7D007AC38D /* MicButton.swift */,
-				91CEBE4925DBF528007AC38D /* Image.swift */,
+				91CEBE4925DBF528007AC38D /* Bundle.swift */,
 				91CEBE3E25DBDF53007AC38D /* Debounce.swift */,
 				91A321ED263AB95A008B4AF3 /* index.html */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
@@ -239,7 +239,7 @@
 				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
 				91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */,
 				91D25F2C25DD47C400FCCFA4 /* YMConfig.swift in Sources */,
-				91CEBE4A25DBF528007AC38D /* Image.swift in Sources */,
+				91CEBE4A25DBF528007AC38D /* Bundle.swift in Sources */,
 				91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */,
 				91025FBA25E4EFC800E1EC82 /* YMBotEventResponse.swift in Sources */,
 			);
