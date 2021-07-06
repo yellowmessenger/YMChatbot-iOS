@@ -52,7 +52,6 @@
 		91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHelper.swift; sourceTree = "<group>"; };
 		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
 		91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfig.swift; sourceTree = "<group>"; };
-		91D6DBD1269323250072D29F /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = SOURCE_ROOT; };
 		91D8B56025E3BB79005E1405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,7 +108,6 @@
 				91CEBE3E25DBDF53007AC38D /* Debounce.swift */,
 				91A321ED263AB95A008B4AF3 /* index.html */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
-				91D6DBD1269323250072D29F /* build.sh */,
 				9195468A25D67F4A0042759F /* Info.plist */,
 			);
 			path = YMChat;
