@@ -24,8 +24,8 @@ After the framework is imported the basic bot can be presented with few lines as
 ```swift
 do {
     let config = YMConfig(botId: "x1234567890")
-    YMChatBot.shared.config = config
-    try YMChatBot.shared.startChatbot(on: self)
+    YMChat.shared.config = config
+    try YMChat.shared.startChatbot(on: self)
 } catch {
     print("Error occured while loading chatbot \(error)")
 }
@@ -73,7 +73,7 @@ config.enableHistory = true
 Chat bot can be presented by calling `startChatbot()` method and passing your view controller as an argument
 ```swift
 do {
-    try YMChatBot.shared.startChatbot(on: self)
+    try YMChat.shared.startChatbot(on: self)
 } catch {
     print("Error occured while loading chatbot \(error)")
 }
@@ -82,7 +82,7 @@ do {
 Chat view can also be presented without passing view controller as a parameter
 ```swift
 do {
-    try YMChatBot.shared.startChatbot()
+    try YMChat.shared.startChatbot()
 } catch {
     print("Error occured while loading chatbot \(error)")
 }
@@ -95,7 +95,7 @@ Bot events are used to pass information from bot to app. For passing from app to
 Events from bot can be handled using delegate pattern.
 
 ```swift
-YMChatBot.shared.delegate = self
+YMChat.shared.delegate = self
 ```
 
 Once the delegate is assigned define the `eventResponse(_:)` function. The handler class should conform to `YMChatDelegate`
@@ -112,7 +112,7 @@ func onEventFromBot(_ response: YMBotEventResponse) {
 ### Close bot
 Bot can be programatically closed using `closeBot()` function
 ```swift
-YMChatBot.shared.closeBot()
+YMChat.shared.closeBot()
 ```
 
 ### Bot close event
@@ -134,7 +134,7 @@ config.customBaseUrl = "<custom_url>"
 ### Logging
 Logging can be enabled to understand the code flow and to fix bugs. It can be enabled from config
 ```swift
-YMChatBot.shared.enableLogging = true
+YMChat.shared.enableLogging = true
 ```
 
 ## Push Notifications
