@@ -1,6 +1,6 @@
 //
 //  YMConfig.swift
-//  YMChat1
+//  YMChat
 //
 //  Created by Kauntey Suryawanshi on 17/02/21.
 //

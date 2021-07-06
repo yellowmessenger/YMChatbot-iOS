@@ -10,7 +10,8 @@ import UIKit
 extension Bundle {
     static var assetBundle: Bundle {
         // Returns YMImages bundle if installed using cocoapods
-        // Returns framework self bundle is installed using xcframework
+        // Returns self bundle if installed using xcframework
+        //
         // A separate bundle is required when user integrates statically using cocoapods
         let moduleBundle = Bundle(for: YMChat.self)
         if let url = moduleBundle.url(forResource: "YMImages", withExtension: "bundle"),
