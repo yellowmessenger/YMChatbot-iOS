@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		91025FBA25E4EFC800E1EC82 /* YMBotEventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */; };
-		917913B225DA4E78001F90CA /* YMChatBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChatBot.swift */; };
+		917913B225DA4E78001F90CA /* YMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChat.swift */; };
 		917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917913C925DA5CAB001F90CA /* Assets.xcassets */; };
 		9195469025D67F4B0042759F /* YMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9195468625D67F4A0042759F /* YMChat.framework */; };
 		9195469525D67F4B0042759F /* YMChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9195469425D67F4B0042759F /* YMChatTests.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMBotEventResponse.swift; sourceTree = "<group>"; };
-		917913B125DA4E78001F90CA /* YMChatBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChatBot.swift; sourceTree = "<group>"; };
+		917913B125DA4E78001F90CA /* YMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChat.swift; sourceTree = "<group>"; };
 		917913C925DA5CAB001F90CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9195468625D67F4A0042759F /* YMChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YMChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9195468925D67F4A0042759F /* YMChat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMChat.h; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			children = (
 				9195468925D67F4A0042759F /* YMChat.h */,
 				91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */,
-				917913B125DA4E78001F90CA /* YMChatBot.swift */,
+				917913B125DA4E78001F90CA /* YMChat.swift */,
 				919546A225D67F870042759F /* YMChatViewController.swift */,
 				91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */,
 				91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */,
@@ -238,7 +238,7 @@
 			files = (
 				919546A325D67F870042759F /* YMChatViewController.swift in Sources */,
 				91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */,
-				917913B225DA4E78001F90CA /* YMChatBot.swift in Sources */,
+				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
 				91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */,
 				91D25F2C25DD47C400FCCFA4 /* YMConfig.swift in Sources */,
 				91CEBE4A25DBF528007AC38D /* Image.swift in Sources */,
