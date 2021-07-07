@@ -1,0 +1,65 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Creates xcframework using carthage and its zip file"
+  lane :build_framewor do
+    carthage(command: "build", no_skip_current: true, use_xcframeworks: true)
+    zip(path: "Carthage/Build/YMChat.xcframework", output_path: "Carthage/Build/YMChat.xcframework.zip", verbose: false)
+  end
+
+  desc "Check if the new version is already used in the files"
+  lane :valid_version do |options|
+    target_version = options[:version]
+
+    raise "Xcode project is already at the said version" if get_version_number == target_version
+
+    # if git_tag_exists(tag: target_version)
+    #   raise "git tag already exists. Please delete it and run the command again"
+    # end
+
+    raise "podspec is already at the said version" if version_get_podspec == target_version
+    true
+  end
+
+  desc "Creates release using the version passed"
+  lane :release do |options|
+    target_version = options[:version]
+    raise "The version is missed. Use `fastlane release version:{version_number}`.`" if target_version.nil?
+
+    valid_version(options: target_version)
+
+
+    # ensure git clean
+    # ensure_git_status_clean
+
+    # ensure branch main
+    # ensure_git_branch(branch: 'main')
+    
+    # test if xcode build is successful
+
+    # Update version in Xcode proect
+    increment_build_number # automatically increment by one
+    increment_version_number(version_number: target_version)
+    
+    # podspec update target_version
+    version_bump_podspec(version_number: target_version)
+
+    # pod_lib_lint # not working
+    
+    commit_version_bump(message: "Version bump", include: "YMChat.podspec")
+
+    add_git_tag(tag: target_version)
+    
+    push_to_git_remote # will do push_git_tags also
+
+    # pod_push
+
+    build_framework
+    
+    # create fat framework
+
+    # create release on github with target_version
+    # attach xcframework.zip and fat-framework.zip to the release
+
+  end
+end
