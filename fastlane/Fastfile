@@ -28,12 +28,11 @@ platform :ios do
 
     valid_version(options: target_version)
 
-
     # ensure git clean
-    # ensure_git_status_clean
+    ensure_git_status_clean
 
     # ensure branch main
-    # ensure_git_branch(branch: 'main')
+    ensure_git_branch(branch: 'main')
     
     # test if xcode build is successful
 
@@ -52,7 +51,7 @@ platform :ios do
     
     push_to_git_remote # will do push_git_tags also
 
-    # pod_push
+    pod_push
 
     build_framework
     
