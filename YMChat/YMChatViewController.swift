@@ -76,18 +76,18 @@ open class YMChatViewController: UIViewController {
         webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    private let closeButton = UIButton()
     private func addCloseButton(tintColor: UIColor) {
-        let button = UIButton()
         let closeImage = UIImage(named: "close", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
-        button.setImage(closeImage, for: .normal)
-        button.tintColor = tintColor
-        view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.setImage(closeImage, for: .normal)
+        closeButton.tintColor = tintColor
+        view.addSubview(closeButton)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         let margins = view.layoutMarginsGuide
-        button.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
-        button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        closeButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
+        closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
-        button.addTarget(self, action: #selector(botCloseButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(botCloseButtonTapped), for: .touchUpInside)
     }
     
     private func addMicButton(tintColor: UIColor) {
@@ -170,6 +170,23 @@ extension YMChatViewController: SpeechDelegate {
             sendMessageInWebView(text: speechDisplayTextView.text)
         }
     }
+
+    func handleInternalEvent(code: String) {
+        switch code {
+        case "image-opened":
+            closeButton.isHidden = true
+            if config.enableSpeech {
+                micButton.isHidden = true
+            }
+        case "image-closed":
+            closeButton.isHidden = false
+            if config.enableSpeech {
+                micButton.isHidden = false
+            }
+
+        default: break
+        }
+    }
 }
 
 extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
@@ -183,8 +200,13 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                 // Start text to speech
                 // After speech, start listening
             }
-            let data = dict["data"] as? String
-            delegate?.eventReceivedFromBot(code: code, data: data)
+            let isInternal = dict["internal"] as? Bool ?? false
+            if isInternal {
+                handleInternalEvent(code: code)
+            } else {
+                let data = dict["data"] as? String
+                delegate?.eventReceivedFromBot(code: code, data: data)
+            }
         }
     }
 
