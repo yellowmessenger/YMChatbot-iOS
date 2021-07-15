@@ -1,6 +1,27 @@
 default_platform(:ios)
 
 platform :ios do
+
+
+  desc "Creates fat framework"
+  lane :fat do
+    # xcodebuild -project YMChat.xcodeproj -scheme YMChat -configuration Release -sdk iphoneos CONFIGURATION_BUILD_DIR=build/ clean build
+    xcodebuild(
+      scheme: "YMChat",
+      configuration: "Release",
+      sdk: "iphonesimulator",
+      clean: true,
+      build: true
+    )
+  end
+
+
+
+
+
+
+
+
   desc "Creates xcframework using carthage and its zip file"
   lane :build_framework do
     carthage(command: "build", no_skip_current: true, use_xcframeworks: true)
