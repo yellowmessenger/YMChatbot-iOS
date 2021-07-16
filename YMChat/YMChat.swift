@@ -1,17 +1,19 @@
 import UIKit
 
-@objc public protocol YMChatDelegate: AnyObject {
+@objc(YMChatDelegate)
+public protocol YMChatDelegate {
     @objc optional func onEventFromBot(response: YMBotEventResponse)
     @objc optional func onBotClose()
 }
 
-@objc public class YMChat: NSObject, YMChatViewControllerDelegate {
+@objc(YMChat)
+public class YMChat: NSObject, YMChatViewControllerDelegate {
     @objc public static var shared = YMChat()
     @objc public var delegate: YMChatDelegate?
 
     @objc public var enableLogging = false
 
-    @objc public var viewController: YMChatViewController?
+    var viewController: YMChatViewController?
     @objc public var config: YMConfig!
 
     func validateConfig() throws {

@@ -14,7 +14,8 @@ func log(_ items: Any...) {
     }
 }
 
-@objc open class YMConfig: NSObject {
+@objc(YMConfig)
+open class YMConfig: NSObject {
     let botId: String
 
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
