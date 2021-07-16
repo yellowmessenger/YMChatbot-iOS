@@ -1,4 +1,7 @@
+#!/bin/bash
 # Builds a fat library for a given xcode project (framework)
+
+set -e # Exit script whenever any command fails
 
 IOS_SDK_VERSION="14.5" # xcodebuild -showsdks
 SWIFT_PROJECT_NAME="YMChat"
