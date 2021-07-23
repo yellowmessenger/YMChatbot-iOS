@@ -12,38 +12,32 @@ platform :ios do
     target_version = options[:version]
 
     raise "Xcode project is already at the said version" if get_version_number == target_version
-
-    # if git_tag_exists(tag: target_version)
-    #   raise "git tag already exists. Please delete it and run the command again"
-    # end
-
+    # raise "podspec is already at the said version" if git_tag_exists(tag: target_version)
     raise "podspec is already at the said version" if version_get_podspec == target_version
     true
   end
 
   desc "Creates release using the version passed"
   lane :release do |options|
-    target_version = options[:version]
-    raise "The version is missed. Use `fastlane release version:{version_number}`.`" if target_version.nil?
-
-    valid_version(options: target_version)
-
-    # ensure git clean
+    update_type = options[:update]
+    raise "Use fastlane release bump:(major|minor|path)" unless ['major', 'minor', 'patch'].include? (update_type)
+    
     ensure_git_status_clean
-
-    # ensure branch main
+    
     ensure_git_branch(branch: 'main')
     
     # test if xcode build is successful
-
-    # Update version in Xcode proect
-    increment_build_number # automatically increment by one
-    increment_version_number(version_number: target_version)
     
-    # podspec update target_version
+    # increment_build_number # automatically increment by one
+    target_version = increment_version_number(bump_type: update_type)
+    puts("New version = #{target_version}")
+    valid_version(options: target_version)
+    
+    build_framework
+    
     version_bump_podspec(version_number: target_version)
 
-    # pod_lib_lint # not working
+    pod_lib_lint
     
     commit_version_bump(message: "Version bump", include: "YMChat.podspec")
 
@@ -53,8 +47,6 @@ platform :ios do
 
     pod_push
 
-    build_framework
-    
     # create fat framework
 
     # create release on github with target_version
