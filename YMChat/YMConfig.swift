@@ -33,6 +33,7 @@ func log(_ items: Any...) {
     @objc public var customBaseUrl = "https://app.yellowmessenger.com";
 
     @objc public var payload = [String: Any]()
+    @objc public var customYMConfig = [String: Any]()
 
     @objc public init(botId: String) {
         self.botId = botId

@@ -50,6 +50,16 @@ open class YMChatViewController: UIViewController {
         if config.enableSpeech {
             addMicButton(tintColor: config.micButtonColor)
         }
+        var script = #"window.extraConfig = window.extraConfig || {}; "#
+        for (key, value) in config.customYMConfig {
+            if value is String {
+                script += #"window.extraConfig.\#(key) = "\#(value)"; "#
+            } else {
+                script += #"window.extraConfig.\#(key) = \#(value); "#
+            }
+        }
+        webView!.evaluateJavaScript(script, completionHandler: nil)
+
         log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
     }

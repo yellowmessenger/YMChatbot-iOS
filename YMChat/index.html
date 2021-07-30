@@ -85,6 +85,10 @@
             triggerJourney: payloadJSON.JourneySlug
         };
 
+        for (var key in window.extraConfig) {
+           window.ymConfig[key] = window.extraConfig[key]
+        }
+
         if(payloadJSON.UserId) {
             window.ymConfig.userId = payloadJSON.UserId;
         }
