@@ -14,6 +14,7 @@ protocol YMChatViewControllerDelegate: AnyObject {
     func botCloseButtonTapped()
 }
 
+@objc(YMChatViewController)
 open class YMChatViewController: UIViewController {
     private var micButton = MicButton()
     weak var delegate: YMChatViewControllerDelegate?

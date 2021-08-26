@@ -13,7 +13,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
 
     @objc public var enableLogging = false
 
-    var viewController: YMChatViewController?
+    @objc public var viewController: YMChatViewController?
     @objc public var config: YMConfig!
 
     func validateConfig() throws {
