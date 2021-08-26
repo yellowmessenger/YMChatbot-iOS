@@ -16,11 +16,6 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
-### ios fat
-```
-fastlane ios fat
-```
-Creates xcframework using carthage and its zip file
 ### ios build_framework
 ```
 fastlane ios build_framework
