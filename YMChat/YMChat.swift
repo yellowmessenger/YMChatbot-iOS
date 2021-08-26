@@ -24,15 +24,21 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             throw NSError(domain: "Bot id is not set. Please set botId before calling startChatbot()", code: 0, userInfo: nil)
         }
         if config.customBaseUrl.isEmpty {
-            throw NSError(domain: "CustomBaseURL is empty. Please set botId before calling startChatbot()", code: 0, userInfo: nil)
+            throw NSError(domain: "`customBaseURL` should not be empty.", code: 0, userInfo: nil)
         }
         try JSONSerialization.data(withJSONObject: config.payload, options: [])
     }
 
-    @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) throws {
+    @discardableResult
+    @objc public func initialiseView() throws -> YMChatViewController {
         try validateConfig()
         self.viewController = YMChatViewController(config: config)
         self.viewController?.delegate = self
+        return viewController!
+    }
+
+    @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) throws {
+        try initialiseView()
         viewController.present(self.viewController!, animated: animated, completion: completion)
     }
 

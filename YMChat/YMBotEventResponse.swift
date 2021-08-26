@@ -15,7 +15,7 @@
         super.init()
     }
 
-//    var dataToDict: [String: Any] {
-//
-//    }
+    public override var description: String {
+        "[CODE: \(code) DATA: \(data ?? "NIL")"
+    }
 }

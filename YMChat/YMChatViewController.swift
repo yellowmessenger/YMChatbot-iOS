@@ -67,6 +67,7 @@ class YMChatViewController: UIViewController {
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
         webView!.navigationDelegate = self
+        webView!.uiDelegate = self
         view.addSubview(webView!)
         webView!.translatesAutoresizingMaskIntoConstraints = false
         let margins = view.layoutMarginsGuide
@@ -222,5 +223,16 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
         } else {
             decisionHandler(.allow)
         }
+    }
+}
+
+extension YMChatViewController: WKUIDelegate {
+    // for <buttons> in html that have window.open
+    // https://stackoverflow.com/questions/33190234/wkwebview-and-window-open
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+        return nil
     }
 }

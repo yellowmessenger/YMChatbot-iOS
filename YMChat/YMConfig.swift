@@ -68,10 +68,9 @@ open class YMConfig: NSObject {
         var payload = self.payload
         payload["Platform"] = "iOS-App"
         guard let data = try? JSONSerialization.data(withJSONObject: payload, options: []),
-              let string = String(data: data, encoding: .utf8),
-              let escapedString = string.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+              let jsonString = String(data: data, encoding: .utf8) else {
             return nil
         }
-        return escapedString
+        return jsonString
     }
 }
