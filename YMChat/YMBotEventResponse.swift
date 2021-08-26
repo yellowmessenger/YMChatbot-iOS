@@ -5,7 +5,8 @@
 //  Created by Kauntey Suryawanshi on 23/02/21.
 //
 
-@objc(YMBotEventResponse) public class YMBotEventResponse: NSObject {
+@objc(YMBotEventResponse)
+public class YMBotEventResponse: NSObject {
     @objc public let code: String
     @objc public let data: String?
 
