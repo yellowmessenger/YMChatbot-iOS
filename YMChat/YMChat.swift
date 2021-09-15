@@ -56,15 +56,6 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         })
     }
 
-/*
-    curl --location --request POST 'https://staging.yellowmessenger.com/api/plugin/removeDeviceToken?bot=x1584448798940' \
-    --header 'x-auth-token: 6ecc7380e0d6d058565f447a1150a6dc230dd2ecb4d8ed2f6e1bcc15eec27bb8' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "deviceToken": "cjAPenpXNXk:APA91bEkhYpF0PcKrO5fGzSnOeEk_A20RYirsRRHuVc4RR0Jc8F-7pktA6lnmdAji4MBFDYcW8CDvKP3oHM-ZepxmMNqFkxauLf9L7FWnpSoRWUpRnRBL8lAq8baYd1XQrjtmlAuwayO"
-    }'
-*/
-
     @objc public func unlinkNotificationToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
 
@@ -85,9 +76,14 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         }
         request.httpBody = bodyData
 
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 failure(error!.localizedDescription)
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+                failure("Failed with status \(code)")
                 return
             }
             guard let data = data else {
@@ -107,7 +103,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
                 failure(message)
             }
             failure("Something went wrong")
-        }
+        }.resume()
     }
 
     // MARK: - YMChatViewControllerDelegate
