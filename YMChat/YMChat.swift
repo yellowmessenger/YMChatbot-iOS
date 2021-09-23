@@ -56,6 +56,57 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         })
     }
 
+    @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+        precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
+
+        let url = URL(string: "https://app.yellow.ai/api/plugin/removeDeviceToken")!
+        var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        urlComponent.queryItems = [URLQueryItem(name: "bot", value: botId)]
+
+        var request = URLRequest(url: urlComponent.url!)
+
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.setValue(apiKey, forHTTPHeaderField: "x-auth-token")
+
+
+        let body = ["deviceToken": deviceToken]
+        guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
+            return
+        }
+        request.httpBody = bodyData
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
+                failure(error!.localizedDescription)
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                let code = (response as? HTTPURLResponse)?.statusCode ?? -1
+                failure("Failed with status \(code)")
+                return
+            }
+            guard let data = data else {
+                failure("Response data empty")
+                return
+            }
+            guard let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                failure("Invalid response data")
+                return
+            }
+            if let isSuccess = dict["success"] as? Bool {
+                if isSuccess {
+                    success()
+                    return
+                }
+                let message = dict["message"] as? String ?? "Something went wrong"
+                failure(message)
+                return
+            }
+            failure("Something went wrong")
+        }.resume()
+    }
+
     // MARK: - YMChatViewControllerDelegate
     func eventReceivedFromBot(code: String, data: String?) {
         if code == "bot-closed" {
