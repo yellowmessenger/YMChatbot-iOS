@@ -56,10 +56,10 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         })
     }
 
-    @objc public func unlinkNotificationToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
 
-        let url = URL(string: "https://staging.yellowmessenger.com/api/plugin/removeDeviceToken")!
+        let url = URL(string: "https://app.yellow.ai/api/plugin/removeDeviceToken")!
         var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         urlComponent.queryItems = [URLQueryItem(name: "bot", value: botId)]
 
@@ -101,6 +101,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
                 }
                 let message = dict["message"] as? String ?? "Something went wrong"
                 failure(message)
+                return
             }
             failure("Something went wrong")
         }.resume()
