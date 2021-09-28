@@ -29,9 +29,9 @@ class SpeechHelper {
     weak var delegate: SpeechDelegate?
 
     init() {
-        stopListeningDebouncer.handler = {
+        stopListeningDebouncer.handler = { [weak self] in
             log("Debounce callback invoked")
-            self.stopListening()
+            self?.stopListening()
         }
     }
 

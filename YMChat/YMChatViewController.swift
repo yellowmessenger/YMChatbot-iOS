@@ -62,8 +62,7 @@ open class YMChatViewController: UIViewController {
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
 
-        let ymHandler = "ymHandler"
-        contentController.add(self, name: ymHandler) //TODO: What does this do?
+        contentController.add(LeakAvoider(delegate:self), name: "ymHandler")
         configuration.userContentController = contentController
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
@@ -235,5 +234,21 @@ extension YMChatViewController: WKUIDelegate {
             UIApplication.shared.open(url)
         }
         return nil
+    }
+}
+
+/// WKUserContentController retains its message handler.
+///
+/// https://stackoverflow.com/a/26383032/1311902
+fileprivate class LeakAvoider : NSObject, WKScriptMessageHandler {
+    weak var delegate : WKScriptMessageHandler?
+
+    init(delegate:WKScriptMessageHandler) {
+        self.delegate = delegate
+        super.init()
+    }
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        self.delegate?.userContentController(userContentController, didReceive: message)
     }
 }
