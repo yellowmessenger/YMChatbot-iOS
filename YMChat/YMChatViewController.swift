@@ -42,6 +42,10 @@ open class YMChatViewController: UIViewController {
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented. Use init(config:) instead")
     }
+
+    deinit {
+        webView?.stopLoading()
+    }
     
     open override func viewDidLoad() {
         addWebView()
