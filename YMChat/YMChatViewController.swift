@@ -94,7 +94,7 @@ open class YMChatViewController: UIViewController {
     private func addMicButton(tintColor: UIColor) {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90).isActive = true
         micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
     }
