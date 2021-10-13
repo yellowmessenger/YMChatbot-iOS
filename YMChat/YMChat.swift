@@ -26,6 +26,9 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         if config.customBaseUrl.isEmpty {
             throw NSError(domain: "`customBaseURL` should not be empty.", code: 0, userInfo: nil)
         }
+        if !(config.version == 1 || config.version == 2) {
+            throw NSError(domain: "version can be either 1 or 2", code: 0, userInfo: nil)
+        }
         try JSONSerialization.data(withJSONObject: config.payload, options: [])
     }
 

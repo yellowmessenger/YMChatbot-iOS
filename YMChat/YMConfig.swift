@@ -34,6 +34,7 @@ open class YMConfig: NSObject {
     @objc public var customBaseUrl = "https://app.yellowmessenger.com";
 
     @objc public var payload = [String: Any]()
+    @objc public var version = 1
 
     @objc public init(botId: String) {
         self.botId = botId
@@ -58,6 +59,8 @@ open class YMConfig: NSObject {
         if let decodedPayload = decodedPayload {
             queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
         }
+        queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
+        
         urlComponents.queryItems = queryItems
 
         return urlComponents.url!
