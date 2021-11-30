@@ -20,7 +20,6 @@ open class YMConfig: NSObject {
 
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
     @objc public var micButtonColor: UIColor = .white
-    @objc public var enableHistory = false // TODO: Check for default value with Priyank
 
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
@@ -47,9 +46,6 @@ open class YMConfig: NSObject {
         var queryItems = [URLQueryItem]()
         queryItems.append(URLQueryItem(name: "botId", value: botId))
         queryItems.append(URLQueryItem(name: "customBaseUrl", value: customBaseUrl))
-        if enableHistory {
-            queryItems.append(URLQueryItem(name: "enableHistory", value: "true"))
-        }
         if let ymAuthToken = ymAuthenticationToken {
             queryItems.append(URLQueryItem(name: "ymAuthenticationToken", value: ymAuthToken))
         }
