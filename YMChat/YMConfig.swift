@@ -24,9 +24,8 @@ open class YMConfig: NSObject {
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
 
-//    @objc public var actionBarColor: UIColor // Applicable to Android
     @objc public var statusBarColor: UIColor = .white
-//    @objc public var hideCameraForUpload: Bool // Applicable to Android
+    @objc public var statusBarStyle: UIStatusBarStyle = .default
 
     @objc public var showCloseButton = true
     @objc public var closeButtonColor: UIColor = .white

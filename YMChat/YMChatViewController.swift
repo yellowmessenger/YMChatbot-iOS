@@ -129,11 +129,7 @@ open class YMChatViewController: UIViewController {
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        if #available(iOS 13.0, *) {
-            return UIStatusBarStyle.lightContent
-        } else {
-            return UIStatusBarStyle.default
-        }
+        config.statusBarStyle
     }
 
     func sendMessageInWebView(text: String) {
