@@ -29,8 +29,8 @@ open class YMConfig: NSObject {
 
     @objc public var showCloseButton = true
     @objc public var closeButtonColor: UIColor = .white
-    @objc public var customBaseUrl = "https://app.yellowmessenger.com";
-    @objc public var customLoaderUrl = "https://thumbs.gfycat.com/ImpoliteLivelyGenet-max-1mb.gif";
+    @objc public var customBaseUrl = "https://app.yellowmessenger.com"
+    @objc public var customLoaderUrl = "https://thumbs.gfycat.com/ImpoliteLivelyGenet-max-1mb.gif"
 
     @objc public var payload = [String: Any]()
     @objc public var version = 1
