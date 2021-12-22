@@ -6,16 +6,17 @@
 //
 
 import Foundation
-
+import UIKit
 extension String {
     
     var isImageType: Bool {
-        let imageFormats = ["jpeg", "jpg", "png", "gif", "svg"]
-        
-        if let url = URL(string: self)  {
-            
-            let format = url.pathExtension
-            return imageFormats.contains(format)
+        if let url = URL(string: self) {
+            do {
+                _ = try UIImage(data: Data(contentsOf: url))
+                return true
+            } catch {
+                
+            }
         }
         return false
     }
