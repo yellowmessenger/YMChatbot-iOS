@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F6EA0D627732DB7001F5E88 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6EA0D527732DB7001F5E88 /* String.swift */; };
 		91192B0D26A159CA0033BE15 /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
 		91192B0E26A167E10033BE15 /* YMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919546A225D67F870042759F /* YMChatViewController.swift */; };
 		91192B0F26A169530033BE15 /* YMBotEventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F6EA0D527732DB7001F5E88 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMBotEventResponse.swift; sourceTree = "<group>"; };
 		91192B1026A176B60033BE15 /* fat.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = fat.sh; sourceTree = "<group>"; };
 		917913B125DA4E78001F90CA /* YMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChat.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				91A321ED263AB95A008B4AF3 /* index.html */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
 				9195468A25D67F4A0042759F /* Info.plist */,
+				7F6EA0D527732DB7001F5E88 /* String.swift */,
 			);
 			path = YMChat;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */,
 				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
 				91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */,
+				7F6EA0D627732DB7001F5E88 /* String.swift in Sources */,
 				91CEBE4A25DBF528007AC38D /* Bundle.swift in Sources */,
 				91192B0D26A159CA0033BE15 /* YMConfig.swift in Sources */,
 				91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */,

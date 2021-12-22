@@ -30,6 +30,7 @@ open class YMConfig: NSObject {
     @objc public var showCloseButton = true
     @objc public var closeButtonColor: UIColor = .white
     @objc public var customBaseUrl = "https://app.yellowmessenger.com";
+    @objc public var customLoaderUrl = "https://thumbs.gfycat.com/ImpoliteLivelyGenet-max-1mb.gif";
 
     @objc public var payload = [String: Any]()
     @objc public var version = 1
@@ -45,6 +46,7 @@ open class YMConfig: NSObject {
         var queryItems = [URLQueryItem]()
         queryItems.append(URLQueryItem(name: "botId", value: botId))
         queryItems.append(URLQueryItem(name: "customBaseUrl", value: customBaseUrl))
+        queryItems.append(URLQueryItem(name: "customLoaderUrl", value: customLoaderUrl))
         if let ymAuthToken = ymAuthenticationToken {
             queryItems.append(URLQueryItem(name: "ymAuthenticationToken", value: ymAuthToken))
         }
