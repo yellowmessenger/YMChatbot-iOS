@@ -26,7 +26,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         if config.customBaseUrl.isEmpty {
             throw NSError(domain: "`customBaseURL` should not be empty.", code: 0, userInfo: nil)
         }
-        if config.customLoaderUrl.isEmpty || !config.customLoaderUrl.isImageType {
+        if config.customLoaderUrl.isEmpty || !config.customLoaderUrl.isValidUrl {
             throw NSError(domain: "Please provide valid `customLoaderUrl`", code: 0, userInfo: nil)
         }
         if !(config.version == 1 || config.version == 2) {

@@ -8,15 +8,10 @@
 import Foundation
 import UIKit
 extension String {
-    
-    var isImageType: Bool {
-        if let url = URL(string: self) {
-            do {
-                _ = try UIImage(data: Data(contentsOf: url))
-                return true
-            } catch {
-                
-            }
+
+    var isValidUrl: Bool {
+        if URL(string: self) != nil {
+            return true
         }
         return false
     }
