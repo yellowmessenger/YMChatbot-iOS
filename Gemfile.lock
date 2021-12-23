@@ -270,6 +270,7 @@ GEM
     zeitwerk (2.5.1)
 
 PLATFORMS
+  universal-darwin-21
   x86_64-darwin-20
 
 DEPENDENCIES
@@ -278,4 +279,4 @@ DEPENDENCIES
   rake
 
 BUNDLED WITH
-   2.2.22
+   2.3.1
