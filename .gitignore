@@ -32,3 +32,6 @@ DerivedData/
 
 # scan temporary files
 **/fastlane/test_output
+
+#SPM
+.build/

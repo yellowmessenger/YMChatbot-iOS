@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91192B0D26A159CA0033BE15 /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
-		91192B0E26A167E10033BE15 /* YMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919546A225D67F870042759F /* YMChatViewController.swift */; };
-		91192B0F26A169530033BE15 /* YMBotEventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */; };
-		917913B225DA4E78001F90CA /* YMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChat.swift */; };
+		7F73076A278F572B004ACFBD /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
+		7F73076B278F572B004ACFBD /* YMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChat.swift */; };
+		7F73076C278F572B004ACFBD /* YMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919546A225D67F870042759F /* YMChatViewController.swift */; };
+		7F73076D278F572B004ACFBD /* YMBotEventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */; };
+		7F73076E278F572B004ACFBD /* SpeechHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */; };
+		7F73076F278F572B004ACFBD /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4225DBEA7D007AC38D /* MicButton.swift */; };
+		7F730770278F572B004ACFBD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Bundle.swift */; };
+		7F730771278F572B004ACFBD /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE3E25DBDF53007AC38D /* Debounce.swift */; };
 		917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917913C925DA5CAB001F90CA /* Assets.xcassets */; };
 		9195469025D67F4B0042759F /* YMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9195468625D67F4A0042759F /* YMChat.framework */; };
 		9195469525D67F4B0042759F /* YMChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9195469425D67F4B0042759F /* YMChatTests.swift */; };
 		9195469725D67F4B0042759F /* YMChat.h in Headers */ = {isa = PBXBuildFile; fileRef = 9195468925D67F4A0042759F /* YMChat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91A321EE263AB95A008B4AF3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 91A321ED263AB95A008B4AF3 /* index.html */; };
-		91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE3E25DBDF53007AC38D /* Debounce.swift */; };
-		91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4225DBEA7D007AC38D /* MicButton.swift */; };
-		91CEBE4A25DBF528007AC38D /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Bundle.swift */; };
-		91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */; };
 		91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F730769278F568A004ACFBD /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMBotEventResponse.swift; sourceTree = "<group>"; };
 		91192B1026A176B60033BE15 /* fat.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = fat.sh; sourceTree = "<group>"; };
 		917913B125DA4E78001F90CA /* YMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChat.swift; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 				919546E925D6824B0042759F /* YMChat.podspec */,
 				91192B1026A176B60033BE15 /* fat.sh */,
 				91D8B56025E3BB79005E1405 /* README.md */,
+				7F730769278F568A004ACFBD /* Package.swift */,
 				9195469325D67F4B0042759F /* YMChatTests */,
 				9195468725D67F4A0042759F /* Products */,
 			);
@@ -236,14 +238,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91CEBE3F25DBDF53007AC38D /* Debounce.swift in Sources */,
-				917913B225DA4E78001F90CA /* YMChat.swift in Sources */,
-				91CEBE4325DBEA7D007AC38D /* MicButton.swift in Sources */,
-				91CEBE4A25DBF528007AC38D /* Bundle.swift in Sources */,
-				91192B0D26A159CA0033BE15 /* YMConfig.swift in Sources */,
-				91D25F2125DD213100FCCFA4 /* SpeechHelper.swift in Sources */,
-				91192B0E26A167E10033BE15 /* YMChatViewController.swift in Sources */,
-				91192B0F26A169530033BE15 /* YMBotEventResponse.swift in Sources */,
+				7F73076A278F572B004ACFBD /* YMConfig.swift in Sources */,
+				7F73076B278F572B004ACFBD /* YMChat.swift in Sources */,
+				7F73076C278F572B004ACFBD /* YMChatViewController.swift in Sources */,
+				7F73076D278F572B004ACFBD /* YMBotEventResponse.swift in Sources */,
+				7F73076E278F572B004ACFBD /* SpeechHelper.swift in Sources */,
+				7F73076F278F572B004ACFBD /* MicButton.swift in Sources */,
+				7F730770278F572B004ACFBD /* Bundle.swift in Sources */,
+				7F730771278F572B004ACFBD /* Debounce.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
