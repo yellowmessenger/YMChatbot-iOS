@@ -5,6 +5,8 @@
 //  Created by Kauntey Suryawanshi on 23/02/21.
 //
 
+import Foundation
+
 @objc(YMBotEventResponse)
 public class YMBotEventResponse: NSObject {
     @objc public let code: String
