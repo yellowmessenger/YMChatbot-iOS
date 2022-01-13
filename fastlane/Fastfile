@@ -47,6 +47,16 @@ platform :ios do
 
     pod_push
 
+    # create release on github with target_version
+    github_release = set_github_release(
+      repository_name: "yellowmessenger/YMChatbot-iOS",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: target_version,
+      tag_name: target_version,
+      commitish: "master",
+      upload_assets: ["Carthage/Build/YMChat.xcframework.zip"]
+   )
+
     # create fat framework
 
     # create release on github with target_version
