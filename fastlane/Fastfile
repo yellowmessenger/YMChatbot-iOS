@@ -40,8 +40,6 @@ platform :ios do
     pod_lib_lint
     
     commit_version_bump(message: "Version bump", include: "YMChat.podspec")
-
-    add_git_tag(tag: target_version)
     
     push_to_git_remote # will do push_git_tags also
 
