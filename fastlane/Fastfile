@@ -22,9 +22,9 @@ platform :ios do
     update_type = options[:update]
     raise "Use fastlane release bump:(major|minor|path)" unless ['major', 'minor', 'patch'].include? (update_type)
     
-    # ensure_git_status_clean
+    ensure_git_status_clean
     
-    # ensure_git_branch(branch: 'main')
+    ensure_git_branch(branch: 'main')
     
     # test if xcode build is successful
     
