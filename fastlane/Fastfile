@@ -40,12 +40,20 @@ platform :ios do
     pod_lib_lint
     
     commit_version_bump(message: "Version bump", include: "YMChat.podspec")
-
-    add_git_tag(tag: target_version)
     
     push_to_git_remote # will do push_git_tags also
 
-    pod_push
+    # create release on github with target_version
+    github_release = set_github_release(
+      repository_name: "yellowmessenger/YMChatbot-iOS",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: target_version,
+      tag_name: target_version,
+      commitish: "master",
+      upload_assets: ["Carthage/Build/YMChat.xcframework.zip"]
+   )
+
+   pod_push
 
     # create fat framework
 
