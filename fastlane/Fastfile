@@ -41,6 +41,8 @@ platform :ios do
     
     commit_version_bump(message: "Version bump", include: "YMChat.podspec")
     
+    add_git_tag(tag: target_version)
+    
     push_to_git_remote # will do push_git_tags also
 
     # create release on github with target_version
@@ -49,7 +51,7 @@ platform :ios do
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
-      commitish: "master",
+      commitish: "main",
       upload_assets: ["Carthage/Build/YMChat.xcframework.zip"]
    )
 
