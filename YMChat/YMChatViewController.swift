@@ -184,7 +184,8 @@ extension YMChatViewController: SpeechDelegate {
             if config.enableSpeech {
                 micButton.isHidden = false
             }
-
+        case "close-bot":
+            delegate?.eventReceivedFromBot(code: "bot-closed", data: nil)
         default: break
         }
     }
