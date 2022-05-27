@@ -28,14 +28,17 @@ open class YMChatViewController: UIViewController {
         return textView
     }()
 
-    private let speechHelper = SpeechHelper()
+    private var speechHelper: SpeechHelper?
     private var webView: WKWebView?
     private let config: YMConfig
 
     init(config: YMConfig) {
         self.config = config
         super.init(nibName: nil, bundle: nil)
-        speechHelper.delegate = self
+        if config.enableSpeech {
+            speechHelper = SpeechHelper()
+            speechHelper?.delegate = self
+        }
         modalPresentationStyle = .fullScreen
     }
     
@@ -104,7 +107,7 @@ open class YMChatViewController: UIViewController {
     }
 
     @objc func micTapped() {
-        speechHelper.micButtonTapped()
+        speechHelper?.micButtonTapped()
     }
     
     private func showSpeechDisplayTextView() {
