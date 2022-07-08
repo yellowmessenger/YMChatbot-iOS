@@ -73,7 +73,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
 
         request.httpMethod = "POST"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.setValue(apiKey, forHTTPHeaderField: "x-auth-token")
+        request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
 
 
         let body = ["deviceToken": deviceToken]
