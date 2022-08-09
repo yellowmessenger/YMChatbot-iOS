@@ -58,7 +58,7 @@ open class YMConfig: NSObject {
             queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
         }
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
-        queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: String(disableActionsOnLoad)))
+        queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
         
         urlComponents.queryItems = queryItems
 
