@@ -51,6 +51,7 @@
         var customBaseUrl = getParams(window.location.href)["customBaseUrl"];
         var version = getParams(window.location.href)["version"];
         var customLoaderUrl = getParams(window.location.href)["customLoaderUrl"];
+        var disableActionsOnLoad = getParams(window.location.href)["disableActionsOnLoad"];
         var imageLink = "url(" + customLoaderUrl + ")";
         document.getElementById("se-pre-con").style.backgroundImage = imageLink;
 
@@ -72,6 +73,7 @@
             pwa: true,
             sdk: true,
             ymAuthenticationToken: ymAuthenticationToken,
+            setDisableActionsTimeout: disableActionsOnLoad == 'true',
             deviceToken: deviceToken,
             logging: true,
             handlers: {

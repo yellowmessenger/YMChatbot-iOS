@@ -34,6 +34,7 @@ open class YMConfig: NSObject {
 
     @objc public var payload = [String: Any]()
     @objc public var version = 1
+    @objc public var disableActionsOnLoad = false
 
     @objc public init(botId: String) {
         self.botId = botId
@@ -57,6 +58,7 @@ open class YMConfig: NSObject {
             queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
         }
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
+        queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
         
         urlComponents.queryItems = queryItems
 
