@@ -28,7 +28,7 @@ let package = Package(
             resources: [
                 .copy("index.html"),
                 .copy("index-lite.html"),
-                .copy("widget-min-style.html"),
+                .copy("widget-min-style.css"),
                 .copy("Assets.xcassets")
             ]),
         .testTarget(
