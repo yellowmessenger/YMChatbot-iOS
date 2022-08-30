@@ -27,6 +27,8 @@ let package = Package(
             exclude: ["Info.plist"],
             resources: [
                 .copy("index.html"),
+                .copy("index-lite.html"),
+                .copy("widget-min-style.html"),
                 .copy("Assets.xcassets")
             ]),
         .testTarget(
