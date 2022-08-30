@@ -15,6 +15,8 @@
 		7F73076F278F572B004ACFBD /* MicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4225DBEA7D007AC38D /* MicButton.swift */; };
 		7F730770278F572B004ACFBD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Bundle.swift */; };
 		7F730771278F572B004ACFBD /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE3E25DBDF53007AC38D /* Debounce.swift */; };
+		7FEF988228BE268A0030224F /* index-lite.html in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF988128BE268A0030224F /* index-lite.html */; };
+		7FEF988428BE26A10030224F /* widget-min-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF988328BE26A10030224F /* widget-min-style.css */; };
 		917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917913C925DA5CAB001F90CA /* Assets.xcassets */; };
 		9195469025D67F4B0042759F /* YMChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9195468625D67F4A0042759F /* YMChat.framework */; };
 		9195469525D67F4B0042759F /* YMChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9195469425D67F4B0042759F /* YMChatTests.swift */; };
@@ -35,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		7F730769278F568A004ACFBD /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		7FEF988128BE268A0030224F /* index-lite.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "index-lite.html"; sourceTree = "<group>"; };
+		7FEF988328BE26A10030224F /* widget-min-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "widget-min-style.css"; sourceTree = "<group>"; };
 		91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMBotEventResponse.swift; sourceTree = "<group>"; };
 		91192B1026A176B60033BE15 /* fat.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = fat.sh; sourceTree = "<group>"; };
 		917913B125DA4E78001F90CA /* YMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMChat.swift; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				91CEBE4925DBF528007AC38D /* Bundle.swift */,
 				91CEBE3E25DBDF53007AC38D /* Debounce.swift */,
 				91A321ED263AB95A008B4AF3 /* index.html */,
+				7FEF988128BE268A0030224F /* index-lite.html */,
+				7FEF988328BE26A10030224F /* widget-min-style.css */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
 				9195468A25D67F4A0042759F /* Info.plist */,
 			);
@@ -219,7 +225,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FEF988228BE268A0030224F /* index-lite.html in Resources */,
 				917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */,
+				7FEF988428BE26A10030224F /* widget-min-style.css in Resources */,
 				91A321EE263AB95A008B4AF3 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
