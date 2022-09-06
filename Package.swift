@@ -29,7 +29,7 @@ let package = Package(
                 .copy("index.html"),
                 .copy("index-lite.html"),
                 .copy("widget-min-style.css"),
-                .copy("yellowLoader.gif")
+                .copy("yellowLoader.gif"),
                 .copy("Assets.xcassets")
             ]),
         .testTarget(
