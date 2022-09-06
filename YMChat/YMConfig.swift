@@ -35,13 +35,14 @@ open class YMConfig: NSObject {
     @objc public var payload = [String: Any]()
     @objc public var version = 1
     @objc public var disableActionsOnLoad = false
+    @objc public var useLiteVersion = false
 
     @objc public init(botId: String) {
         self.botId = botId
     }
 
     @objc open var url: URL {
-        let localHtml = Bundle.assetBundle.url(forResource: "index", withExtension: "html")!
+        let localHtml = Bundle.assetBundle.url(forResource: useLiteVersion ? "index-lite" : "index", withExtension: "html")!
         var urlComponents = URLComponents(url: localHtml, resolvingAgainstBaseURL: false)!
         
         var queryItems = [URLQueryItem]()
