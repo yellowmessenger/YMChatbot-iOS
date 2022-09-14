@@ -84,20 +84,20 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         let url = URL(string: "https://app.yellow.ai/api/plugin/removeDeviceToken")!
         var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         urlComponent.queryItems = [URLQueryItem(name: "bot", value: botId)]
-        
+
         var request = URLRequest(url: urlComponent.url!)
-        
+
         request.httpMethod = "POST"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
-        
-        
+
+
         let body = ["deviceToken": deviceToken]
         guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
             return
         }
         request.httpBody = bodyData
-        
+
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 failure(error!.localizedDescription)
