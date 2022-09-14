@@ -81,6 +81,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
     @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
+
         let url = URL(string: "https://app.yellow.ai/api/plugin/removeDeviceToken")!
         var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         urlComponent.queryItems = [URLQueryItem(name: "bot", value: botId)]
