@@ -187,7 +187,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     }
     
     @objc public func registerDevice(apiKey: String, ymConfig: YMConfig, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        precondition(!ymConfig.botId.isEmpty && !apiKey.isEmpty && (ymConfig.deviceToken != nil && !ymConfig.deviceToken!.isEmpty) )
+        precondition(!ymConfig.botId.isEmpty && !apiKey.isEmpty && (ymConfig.deviceToken != nil && !ymConfig.deviceToken!.isEmpty) && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
         
         do {
             try validateConfig(config: ymConfig)
