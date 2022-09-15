@@ -191,19 +191,18 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         
         do {
             try validateConfig(config: ymConfig)
-            let url = URL(string: config.customBaseUrl + "/api/mobile/register")!
+            let url = URL(string: ymConfig.customBaseUrl + "/api/mobile-backend/device-token")!
             var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
             urlComponent.queryItems = [URLQueryItem(name: "bot", value: ymConfig.botId)]
             
             var request = URLRequest(url: urlComponent.url!)
             
-            request.httpMethod = "POST"
+            request.httpMethod = "PUT"
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
             
-            
-            let body = ["token": ymConfig.deviceToken!,
-                        "userId": ymConfig.ymAuthenticationToken!]
+            let body = ["deviceToken": ymConfig.deviceToken!,
+                        "ymAuthenticationToken": ymConfig.ymAuthenticationToken!]
             guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
                 return
             }
@@ -243,14 +242,14 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         }
     }
 
-    @objc public func getUnreadMessageCount(apiKey: String, ymConfig: YMConfig, success: @escaping (String) -> Void, failure: @escaping (String) -> Void) {
+    @objc public func getUnreadMessageCount(apiKey: String, ymConfig: YMConfig, success: @escaping (Int) -> Void, failure: @escaping (String) -> Void) {
         precondition(!ymConfig.botId.isEmpty && !apiKey.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
 
         do {
             try validateConfig(config: ymConfig)
-            let url = URL(string: config.customBaseUrl + "/api/mobile/unreadMessages")!
+            let url = URL(string: ymConfig.customBaseUrl + "/api/mobile-backend/message/unreadMsgs")!
             var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-            urlComponent.queryItems = [URLQueryItem(name: "bot", value: ymConfig.botId)]
+            urlComponent.queryItems = [URLQueryItem(name: "botId", value: ymConfig.botId)]
             
             var request = URLRequest(url: urlComponent.url!)
             
@@ -259,7 +258,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
             
             
-            let body = ["userId": ymConfig.ymAuthenticationToken!]
+            let body = ["ymAuthenticationToken": ymConfig.ymAuthenticationToken!]
             guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
                 return
             }
@@ -284,7 +283,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
                     return
                 }
                 if let isSuccess = dict["success"] as? Bool {
-                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] as? String {
+                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] as? Int {
                         success(unreadCount)
                         return
                     }
