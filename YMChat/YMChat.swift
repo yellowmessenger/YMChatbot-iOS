@@ -249,7 +249,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             try validateConfig(config: ymConfig)
             let url = URL(string: ymConfig.customBaseUrl + "/api/mobile-backend/message/unreadMsgs")!
             var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-            urlComponent.queryItems = [URLQueryItem(name: "botId", value: ymConfig.botId)]
+            urlComponent.queryItems = [URLQueryItem(name: "bot", value: ymConfig.botId)]
             
             var request = URLRequest(url: urlComponent.url!)
             
