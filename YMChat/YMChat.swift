@@ -242,8 +242,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         }
     }
 
-    @objc public func getUnreadMessageCount(apiKey: String, ymConfig: YMConfig, success: @escaping (Int) -> Void, failure: @escaping (String) -> Void) {
-        precondition(!ymConfig.botId.isEmpty && !apiKey.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
+    @objc public func getUnreadMessageCount(ymConfig: YMConfig, success: @escaping (Int) -> Void, failure: @escaping (String) -> Void) {
+        precondition(!ymConfig.botId.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
 
         do {
             try validateConfig(config: ymConfig)
@@ -255,7 +255,6 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             
             request.httpMethod = "POST"
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
             
             
             let body = ["ymAuthenticationToken": ymConfig.ymAuthenticationToken!]
