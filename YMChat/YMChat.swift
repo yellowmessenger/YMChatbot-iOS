@@ -242,7 +242,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         }
     }
 
-    @objc public func getUnreadMessageCount(ymConfig: YMConfig, success: @escaping (String) -> Void, failure: @escaping (String) -> Void) {
+    @objc public func getUnreadMessagesCount(ymConfig: YMConfig, success: @escaping (String) -> Void, failure: @escaping (String) -> Void) {
         precondition(!ymConfig.botId.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
 
         do {
@@ -282,8 +282,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
                     return
                 }
                 if let isSuccess = dict["success"] as? Bool {
-                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] as? String {
-                        success(unreadCount)
+                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] {
+                        success("\(unreadCount)")
                         return
                     }
                     let message = dict["message"] as? String ?? "Something went wrong"
