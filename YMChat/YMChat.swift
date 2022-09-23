@@ -242,8 +242,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         }
     }
 
-    @objc public func getUnreadMessageCount(apiKey: String, ymConfig: YMConfig, success: @escaping (Int) -> Void, failure: @escaping (String) -> Void) {
-        precondition(!ymConfig.botId.isEmpty && !apiKey.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
+    @objc public func getUnreadMessagesCount(ymConfig: YMConfig, success: @escaping (String) -> Void, failure: @escaping (String) -> Void) {
+        precondition(!ymConfig.botId.isEmpty && (ymConfig.ymAuthenticationToken != nil && !ymConfig.ymAuthenticationToken!.isEmpty))
 
         do {
             try validateConfig(config: ymConfig)
@@ -255,7 +255,6 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             
             request.httpMethod = "POST"
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
             
             
             let body = ["ymAuthenticationToken": ymConfig.ymAuthenticationToken!]
@@ -283,8 +282,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
                     return
                 }
                 if let isSuccess = dict["success"] as? Bool {
-                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] as? Int {
-                        success(unreadCount)
+                    if isSuccess, let data = dict["data"] as? [String: Any], let unreadCount = data["unreadCount"] {
+                        success("\(unreadCount)")
                         return
                     }
                     let message = dict["message"] as? String ?? "Something went wrong"
