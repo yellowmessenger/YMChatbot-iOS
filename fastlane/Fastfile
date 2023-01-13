@@ -35,11 +35,13 @@ platform :ios do
     
     build_framework
     
+    log = extract_current_change_log(version: target_version)
+    release_log = update_change_log(log: log)
     version_bump_podspec(version_number: target_version)
 
     pod_lib_lint
     
-    commit_version_bump(message: "Version bump", include: "YMChat.podspec")
+    commit_version_bump(message: "Release #{target_version}", include: ["YMChat.podspec", "CHANGELOG.md"])
     
     add_git_tag(tag: target_version)
     
@@ -49,9 +51,9 @@ platform :ios do
     github_release = set_github_release(
       repository_name: "yellowmessenger/YMChatbot-iOS",
       api_token: ENV["GITHUB_TOKEN"],
-      name: target_version,
+      name: release_log[:title],
       tag_name: target_version,
-      commitish: "main",
+      description: release_log[:text],
       upload_assets: ["Carthage/Build/YMChat.xcframework.zip"]
    )
 
