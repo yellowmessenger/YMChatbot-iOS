@@ -1,14 +1,5 @@
 # Change Log
 
+All notable changes to this project will be documented in this file.
+
 -----
-
-#### New Feature 🚀
-* Fixed Chat Search Analytics Event.
-
-#### Bug Fix 🐛
-* Fixed Chat Search Analytics Event.
-
-#### Remove 🗑️
-* Fixed Chat Search Analytics Event.
-
----
