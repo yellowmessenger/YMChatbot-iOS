@@ -36,3 +36,4 @@ DerivedData/
 #SPM
 .build/
 pre-change.yml
+fastlane/README.md
