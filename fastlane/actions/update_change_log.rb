@@ -6,7 +6,7 @@ module Fastlane
             raise "Invalid log object".red unless !log[:title].empty? and !log[:version].empty?
   
             readme = File.read(params[:changelogfile])
-            log_text = "## [#{log[:title]}](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/#{log[:version]}) (#{Time.now.strftime("%Y-%m-%d")})\n\n"
+            log_text = "## [v#{log[:title]}](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/#{log[:version]}) (#{Time.now.strftime("%Y-%m-%d")})\n\n"
   
             des = ""
             feature = log[:add].map { |i| "* #{i}" }.join("\n") unless log[:add].nil?
