@@ -42,7 +42,7 @@ open class YMConfig: NSObject {
     }
 
     @objc open var url: URL {
-        let localHtml = Bundle.assetBundle.url(forResource: useLiteVersion ? "index-lite" : "index", withExtension: "html")!
+        let localHtml = Bundle.assetBundle.url(forResource: useLiteVersion ? "yellow-index-lite" : "yellow-index", withExtension: "html")!
         var urlComponents = URLComponents(url: localHtml, resolvingAgainstBaseURL: false)!
         
         var queryItems = [URLQueryItem]()

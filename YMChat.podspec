@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "YMChat"
-  spec.version = "1.9.1"
+  spec.version = "1.9.2"
   spec.summary = "The World’s Leading CX Automation Platform"
   spec.homepage = "https://yellow.ai"
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.source = { :git => "https://github.com/yellowmessenger/YMChatbot-iOS.git", :tag => "#{spec.version}" }
 
   spec.resource_bundles = {
-      'YMImages' => ['YMChat/Assets.xcassets', 'YMChat/index.html', 'YMChat/index-lite.html', 'YMChat/widget-min-style.css', 'YMChat/yellowLoader.gif']
+      'YMImages' => ['YMChat/Assets.xcassets', 'YMChat/yellow-index.html', 'YMChat/yellow-index-lite.html', 'YMChat/widget-min-style.css', 'YMChat/yellowLoader.gif']
   }
 
   spec.source_files = "YMChat/*.swift"
