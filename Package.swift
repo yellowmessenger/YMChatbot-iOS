@@ -26,8 +26,8 @@ let package = Package(
             path: "YMChat",
             exclude: ["Info.plist"],
             resources: [
-                .copy("index.html"),
-                .copy("index-lite.html"),
+                .copy("yellow-index.html"),
+                .copy("yellow-index-lite.html"),
                 .copy("widget-min-style.css"),
                 .copy("yellowLoader.gif"),
                 .copy("Assets.xcassets")
