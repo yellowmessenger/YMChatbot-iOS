@@ -24,7 +24,7 @@ platform :ios do
     
     ensure_git_status_clean
     
-    ensure_git_branch(branch: 'main')
+    ensure_git_branch(branch: '^release/.*$')
     
     # test if xcode build is successful
     
