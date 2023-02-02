@@ -19,21 +19,7 @@ DerivedData/
 *.xcuserstate
 *.playgrounddata
 
-
-# fast lane
-# fastlane specific
-**/fastlane/report.xml
-
-# deliver temporary files
-**/fastlane/Preview.html
-
-# snapshot generated screenshots
-**/fastlane/screenshots
-
-# scan temporary files
-**/fastlane/test_output
-
 #SPM
 .build/
 pre-change.yml
-fastlane/README.md
+fastlane
