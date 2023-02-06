@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "YMChat"
-  spec.version = "1.9.2"
+  spec.version = "1.9.3"
   spec.summary = "The World’s Leading CX Automation Platform"
   spec.homepage = "https://yellow.ai"
 
