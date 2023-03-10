@@ -73,9 +73,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     }
 
     @objc public func closeBot() {
-        viewController?.dismiss(animated: false, completion: {
-            self.viewController = nil
-        })
+        viewController?.dismiss(animated: false)
+        viewController = nil
     }
 
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
