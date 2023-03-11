@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ## [v1.9.4](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.9.4) (2023-03-11)
 
 #### Bug Fix 🐛
-* Resolved SPM Distributon Issue
+* Fixed `closeBot` issue
 
 ---
 
