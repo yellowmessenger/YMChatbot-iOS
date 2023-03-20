@@ -77,8 +77,12 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         viewController = nil
     }
 
-    @objc public func reloadBot() {
-        viewController?.reloadWebView()
+    @objc public func reloadBot() throws {
+        try validateConfig()
+        guard let viewController = viewController else {
+            throw NSError(domain: "startChatbot before reloading the bot.", code: 0, userInfo: nil)
+        }
+        viewController.reloadWebView()
     }
 
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
