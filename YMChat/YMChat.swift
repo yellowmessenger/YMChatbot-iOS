@@ -77,6 +77,10 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         viewController = nil
     }
 
+    @objc public func reloadBot() {
+        viewController?.reloadWebView()
+    }
+
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
     @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
