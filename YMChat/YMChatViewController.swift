@@ -62,6 +62,10 @@ open class YMChatViewController: UIViewController {
         webView?.load(URLRequest(url: config.url))
     }
 
+    func reloadWebView() {
+        webView?.load(URLRequest(url: config.url))
+    }
+
     private func addWebView() {
         let configuration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
