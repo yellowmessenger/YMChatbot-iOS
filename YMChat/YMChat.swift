@@ -13,7 +13,7 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
 
     @objc public var enableLogging = false
 
-    @objc public var viewController: YMChatViewController?
+    @objc weak public var viewController: YMChatViewController?
     @objc public var config: YMConfig!
 
     func validateConfig() throws {
@@ -54,14 +54,15 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     @discardableResult
     @objc public func initialiseView() throws -> YMChatViewController {
         try validateConfig()
-        self.viewController = YMChatViewController(config: config)
-        self.viewController?.delegate = self
-        return viewController!
+        let viewController = YMChatViewController(config: config)
+        viewController.delegate = self
+        self.viewController = viewController
+        return viewController
     }
 
     @objc public func startChatbot(on viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) throws {
-        try initialiseView()
-        viewController.present(self.viewController!, animated: animated, completion: completion)
+        let ymChatViewController = try initialiseView()
+        viewController.present(ymChatViewController, animated: animated, completion: completion)
     }
 
     @objc public func startChatbot(animated: Bool = true, completion: (() -> Void)? = nil) throws {
