@@ -19,7 +19,7 @@ open class YMConfig: NSObject {
     let botId: String
 
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
-    @objc public var micButtonColor: UIColor = .white
+    @objc public var micButtonColor: UIColor = .black
 
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
