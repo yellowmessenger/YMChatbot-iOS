@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.10.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.10.1) (2023-03-23)
+
+#### Bug Fix 🐛
+* Mic button issue fixed.
+
+---
+
 ## [v1.10.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.10.0) (2023-03-21)
 
 #### New Feature 🚀
