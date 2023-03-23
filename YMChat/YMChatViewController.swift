@@ -16,7 +16,7 @@ protocol YMChatViewControllerDelegate: AnyObject {
 
 @objc(YMChatViewController)
 open class YMChatViewController: UIViewController {
-    private var micButton = MicButton()
+    private var micButton: MicButton
     weak var delegate: YMChatViewControllerDelegate?
 
     private var speechDisplayTextView: UITextView = {
@@ -34,6 +34,7 @@ open class YMChatViewController: UIViewController {
 
     init(config: YMConfig) {
         self.config = config
+        self.micButton = MicButton(config.micButtonColor)
         super.init(nibName: nil, bundle: nil)
         if config.enableSpeech {
             speechHelper = SpeechHelper()
@@ -56,7 +57,7 @@ open class YMChatViewController: UIViewController {
             addCloseButton(tintColor: config.closeButtonColor)
         }
         if config.enableSpeech {
-            addMicButton(tintColor: config.micButtonColor)
+            addMicButton()
         }
         log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
@@ -102,7 +103,7 @@ open class YMChatViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(botCloseButtonTapped), for: .touchUpInside)
     }
     
-    private func addMicButton(tintColor: UIColor) {
+    private func addMicButton() {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
         micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90).isActive = true

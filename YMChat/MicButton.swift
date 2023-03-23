@@ -8,40 +8,14 @@
 import UIKit
 
 class MicButton: UIButton {
-    private let size: CGFloat = 50
-
-    private let rotationAnimation: CABasicAnimation = {
-        let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.fromValue = 0
-        animation.toValue = Double.pi * 2
-        animation.duration = 1
-        animation.isCumulative = true
-        animation.repeatCount = Float.greatestFiniteMagnitude
-        return animation
-    }()
-
-    private lazy var animationLayer: CAShapeLayer = {
-        let path = UIBezierPath(arcCenter: CGPoint(x: size / 2, y: size / 2), radius: (size / 2) - 5, startAngle: 0, endAngle: 5, clockwise: true)
-        let layer = CAShapeLayer()
-        layer.fillColor = UIColor.clear.cgColor
-        layer.lineWidth = 2
-        layer.strokeColor = UIColor.white.cgColor
-        layer.path = path.cgPath
-        layer.bounds = CGRect(x: 0, y: 0, width: size, height: size)
-        layer.position = CGPoint(x: 25, y: 25)
-        return layer
-    }()
+    private let size: CGFloat = 24
+    private let color: UIColor
 
     var isListening = false {
         didSet {
             let imageName: String = isListening ? "stop" : "mic"
             let image = UIImage(named: imageName, in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
             setImage(image, for: .normal)
-            if isListening {
-                startAnimation()
-            } else {
-                stopAnimation()
-            }
         }
     }
 
@@ -49,22 +23,14 @@ class MicButton: UIButton {
         CGSize(width: size, height: size)
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(_ color: UIColor) {
+        self.color = color
+        super.init(frame: .zero)
         let image = UIImage(named: "mic", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
         setImage(image, for: .normal)
-        backgroundColor = UIColor(red: 6/255.0, green: 151/255.0, blue: 232/255.0, alpha: 1.0)
+        backgroundColor = .clear
+        tintColor = color
         layer.cornerRadius = size / 2
-    }
-
-    private func startAnimation() {
-        layer.addSublayer(animationLayer)
-        animationLayer.add(rotationAnimation, forKey: "rotationAnimation")
-    }
-
-    private func stopAnimation() {
-        animationLayer.removeAllAnimations()
-        animationLayer.removeFromSuperlayer()
     }
 
     required init?(coder: NSCoder) {

@@ -274,6 +274,7 @@ GEM
     zeitwerk (2.5.3)
 
 PLATFORMS
+  ruby
   universal-darwin-21
   x86_64-darwin-20
   x86_64-darwin-22
