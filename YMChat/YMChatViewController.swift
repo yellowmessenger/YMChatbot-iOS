@@ -114,26 +114,16 @@ open class YMChatViewController: UIViewController {
 
     @objc func micButtonDragged(gesture: UIPanGestureRecognizer){
         let location = gesture.location(in: self.view)
-                let draggedView = gesture.view
-                draggedView?.center = location
-                
-                if gesture.state == .ended {
-                    if self.micButton.frame.midX >= self.view.layer.frame.width / 2 {
-                        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-                            self.micButton.center.x = self.view.layer.frame.width - 40
-                        }, completion: nil)
-                    }else{
-                        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-                            self.micButton.center.x = 40
-                        }, completion: nil)
-                    }
-                    
-                    if self.micButton.frame.midY >= self.view.layer.frame.height - 115 {
-                        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-                            self.micButton.center.y = self.view.layer.frame.height - 115
-                        }, completion: nil)
-                    }
-                }
+        let draggedView = gesture.view
+        draggedView?.center = location
+
+        if gesture.state == .ended {
+            if self.micButton.frame.midY >= self.view.layer.frame.height - 115 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.y = self.view.layer.frame.height - 115
+                }, completion: nil)
+            }
+        }
     }
 
     @objc func micTapped() {
