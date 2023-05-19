@@ -127,10 +127,31 @@ open class YMChatViewController: UIViewController {
                     self.micButton.center.y = self.view.layer.frame.height - 115
                 }, completion: nil)
             }
+            
+            if self.micButton.frame.midX >= self.view.layer.frame.width - 35 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.x = self.view.layer.frame.width - 35
+                }, completion: nil)
+            } else if self.micButton.frame.midX <= 35 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.x = 35
+                }, completion: nil)
+            }
 
             let translation = gesture.translation(in: micButton)
             micRightConstraint?.constant += translation.x
             micBottomConstraint?.constant += translation.y
+            if micRightConstraint!.constant > -10 {
+                micRightConstraint?.constant = -10
+            } else if micRightConstraint!.constant < (-1 * self.view.frame.width) + 60 {
+                micRightConstraint?.constant = (-1 * self.view.frame.width) + 60
+            }
+            
+            if micBottomConstraint!.constant > -90 {
+                micBottomConstraint?.constant = -90
+            } else if micBottomConstraint!.constant < (-1 * self.view.frame.height) + 120 {
+                micBottomConstraint?.constant = (-1 * self.view.frame.height) + 120
+            }
         }
     }
 
