@@ -32,6 +32,9 @@ open class YMChatViewController: UIViewController {
     private var webView: WKWebView?
     private let config: YMConfig
 
+    private var micBottomConstraint: NSLayoutConstraint?
+    private var micRightConstraint: NSLayoutConstraint?
+
     init(config: YMConfig) {
         self.config = config
         self.micButton = MicButton(config.enableSpeechConfig)
@@ -106,8 +109,9 @@ open class YMChatViewController: UIViewController {
     private func addMicButton() {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90).isActive = true
-        micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90)
+        micRightConstraint = micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)
+        NSLayoutConstraint.activate([micBottomConstraint!, micRightConstraint!])
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
         micButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(micButtonDragged)))
     }
@@ -123,6 +127,10 @@ open class YMChatViewController: UIViewController {
                     self.micButton.center.y = self.view.layer.frame.height - 115
                 }, completion: nil)
             }
+
+            let translation = gesture.translation(in: micButton)
+            micRightConstraint?.constant += translation.x
+            micBottomConstraint?.constant += translation.y
         }
     }
 
