@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.11.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.0) (2023-05-19)
+
+#### New Feature 🚀
+* Floating Mic Button added
+
+---
+
 ## [v1.10.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.10.1) (2023-03-23)
 
 #### Bug Fix 🐛

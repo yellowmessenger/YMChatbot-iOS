@@ -32,9 +32,12 @@ open class YMChatViewController: UIViewController {
     private var webView: WKWebView?
     private let config: YMConfig
 
+    private var micBottomConstraint: NSLayoutConstraint?
+    private var micRightConstraint: NSLayoutConstraint?
+
     init(config: YMConfig) {
         self.config = config
-        self.micButton = MicButton(config.micButtonColor)
+        self.micButton = MicButton(config.enableSpeechConfig)
         super.init(nibName: nil, bundle: nil)
         if config.enableSpeech {
             speechHelper = SpeechHelper()
@@ -106,9 +109,50 @@ open class YMChatViewController: UIViewController {
     private func addMicButton() {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90).isActive = true
-        micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90)
+        micRightConstraint = micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)
+        NSLayoutConstraint.activate([micBottomConstraint!, micRightConstraint!])
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
+        micButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(micButtonDragged)))
+    }
+
+    @objc func micButtonDragged(gesture: UIPanGestureRecognizer){
+        let location = gesture.location(in: self.view)
+        let draggedView = gesture.view
+        draggedView?.center = location
+
+        if gesture.state == .ended {
+            if self.micButton.frame.midY >= self.view.layer.frame.height - 115 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.y = self.view.layer.frame.height - 115
+                }, completion: nil)
+            }
+            
+            if self.micButton.frame.midX >= self.view.layer.frame.width - 35 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.x = self.view.layer.frame.width - 35
+                }, completion: nil)
+            } else if self.micButton.frame.midX <= 35 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.micButton.center.x = 35
+                }, completion: nil)
+            }
+
+            let translation = gesture.translation(in: micButton)
+            micRightConstraint?.constant += translation.x
+            micBottomConstraint?.constant += translation.y
+            if micRightConstraint!.constant > -10 {
+                micRightConstraint?.constant = -10
+            } else if micRightConstraint!.constant < (-1 * self.view.frame.width) + 60 {
+                micRightConstraint?.constant = (-1 * self.view.frame.width) + 60
+            }
+            
+            if micBottomConstraint!.constant > -90 {
+                micBottomConstraint?.constant = -90
+            } else if micBottomConstraint!.constant < (-1 * self.view.frame.height) + 120 {
+                micBottomConstraint?.constant = (-1 * self.view.frame.height) + 120
+            }
+        }
     }
 
     @objc func micTapped() {

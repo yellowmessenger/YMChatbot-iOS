@@ -8,9 +8,8 @@
 import UIKit
 
 class MicButton: UIButton {
-    private let size: CGFloat = 24
-    private let color: UIColor
-
+    private let size: CGFloat = 50
+    
     var isListening = false {
         didSet {
             let imageName: String = isListening ? "stop" : "mic"
@@ -23,13 +22,12 @@ class MicButton: UIButton {
         CGSize(width: size, height: size)
     }
 
-    init(_ color: UIColor) {
-        self.color = color
+    init(_ enableSpeechConfig: YMEnableSpeechConfig) {
         super.init(frame: .zero)
         let image = UIImage(named: "mic", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
         setImage(image, for: .normal)
-        backgroundColor = .clear
-        tintColor = color
+        backgroundColor = enableSpeechConfig.fabBackgroundColor
+        tintColor = enableSpeechConfig.fabIconColor
         layer.cornerRadius = size / 2
     }
 
