@@ -89,13 +89,13 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
 
-        let url = URL(string: "https://app.yellow.ai/api/plugin/removeDeviceToken")!
+        let url = URL(string: "https://app.yellow.ai/api/mobile-backend/device-token")!
         var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         urlComponent.queryItems = [URLQueryItem(name: "bot", value: botId)]
 
         var request = URLRequest(url: urlComponent.url!)
 
-        request.httpMethod = "POST"
+        request.httpMethod = "DELETE"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
 
@@ -142,13 +142,13 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         do {
             try validateConfig(config: ymConfig)
             
-            let url = URL(string: ymConfig.customBaseUrl + "/api/plugin/removeDeviceToken")!
+            let url = URL(string: ymConfig.customBaseUrl + "/api/mobile-backend/device-token")!
             var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)!
             urlComponent.queryItems = [URLQueryItem(name: "bot", value: ymConfig.botId)]
             
             var request = URLRequest(url: urlComponent.url!)
             
-            request.httpMethod = "POST"
+            request.httpMethod = "DELETE"
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
             
