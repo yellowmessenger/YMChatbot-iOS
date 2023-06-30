@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.11.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.1) (2023-06-30)
+
+#### New Feature 🚀
+* Updated Unlink Device Token API
+
+---
+
 ## [v1.11.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.0) (2023-05-19)
 
 #### New Feature 🚀
