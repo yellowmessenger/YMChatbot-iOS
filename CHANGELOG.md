@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.11.2](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.2) (2023-07-04)
+
+#### Bug Fix 🐛
+* Console log removed from html file.
+
+---
+
 ## [v1.11.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.1) (2023-06-30)
 
 #### New Feature 🚀
