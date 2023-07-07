@@ -65,6 +65,25 @@ open class YMChatViewController: UIViewController {
         log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
     }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterInBackground(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterInForeground(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func applicationDidEnterInBackground(notification: Notification) {
+        delegate?.eventReceivedFromBot(code: "chatbot-in-background", data: nil)
+    }
+    
+    @objc func applicationWillEnterInForeground(notification: Notification) {
+        delegate?.eventReceivedFromBot(code: "chatbot-in-foreground", data: nil)
+    }
 
     func reloadWebView() {
         webView?.load(URLRequest(url: config.url))
