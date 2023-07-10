@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.12.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.12.0) (2023-07-10)
+
+#### New Feature 🚀
+* Added Foreground & Background Event when app goes in background or foreground
+
+---
+
 ## [v1.11.2](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.11.2) (2023-07-04)
 
 #### Bug Fix 🐛
