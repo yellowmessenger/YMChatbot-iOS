@@ -85,6 +85,13 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         viewController.reloadWebView()
     }
 
+    @objc public func revalidateToken(token: String) throws {
+        if token.isEmpty {
+            throw NSError(domain: "Token cannot be empty.", code: 0, userInfo: nil)
+        }
+        viewController?.handleInternalEvent(code: "revalidate-token", data: token)
+    }
+
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
     @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)

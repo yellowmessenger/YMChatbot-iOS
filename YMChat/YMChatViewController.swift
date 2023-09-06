@@ -205,7 +205,7 @@ open class YMChatViewController: UIViewController {
 
     func sendMessageInWebView(text: String) {
         log(#function, text)
-        webView?.evaluateJavaScript("sendEventFromiOS('\(text)');", completionHandler: nil)
+        webView?.evaluateJavaScript("sendEvent('\("send-voice-text"), \(text)');", completionHandler: nil)
     }
 }
 
@@ -243,7 +243,7 @@ extension YMChatViewController: SpeechDelegate {
         }
     }
 
-    func handleInternalEvent(code: String) {
+    func handleInternalEvent(code: String, data: String? = nil) {
         switch code {
         case "image-opened":
             closeButton.isHidden = true
@@ -257,8 +257,21 @@ extension YMChatViewController: SpeechDelegate {
             }
         case "close-bot":
             delegate?.eventReceivedFromBot(code: "bot-closed", data: nil)
+        case "revalidate-token":
+            if let data = data {
+                delegate?.eventReceivedFromBot(code: "ym-revalidate-token", data: getTokenObject(data))
+            }
         default: break
         }
+    }
+
+    private func getTokenObject(_ token: String) -> String? {
+        let dictionary = ["token": token]
+        let data = try? JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
+        if let data = data {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
     }
 }
 
