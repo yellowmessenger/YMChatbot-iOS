@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.13.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.13.0) (2023-09-08)
+
+#### New Feature 🚀
+* Added support for secure YMAuth
+
+---
+
 ## [v1.12.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.12.0) (2023-07-10)
 
 #### New Feature 🚀
