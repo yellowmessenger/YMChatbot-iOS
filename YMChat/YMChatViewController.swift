@@ -261,8 +261,6 @@ extension YMChatViewController: SpeechDelegate {
             delegate?.eventReceivedFromBot(code: "bot-closed", data: nil)
         case "ym-revalidate-token":
             if let data = data {
-//                let token = "{\"token\":\"\(data)\", \"refreshSession\" : false}"
-                print("Data: \(data)")
                 sendEventToWebView(code: "revalidate-token", data: data)
             }
         default: break
