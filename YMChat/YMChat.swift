@@ -85,11 +85,22 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         viewController.reloadWebView()
     }
 
-    @objc public func revalidateToken(token: String) throws {
+    @objc public func revalidateToken(token: String, refreshSession: Bool) throws {
         if token.isEmpty {
             throw NSError(domain: "Token cannot be empty.", code: 0, userInfo: nil)
         }
-        viewController?.handleInternalEvent(code: "revalidate-token", data: token)
+        viewController?.handleInternalEvent(code: "ym-revalidate-token", data: getTokenObject(token, refreshSession: refreshSession))
+    }
+    
+    private func getTokenObject(_ token: String, refreshSession: Bool) -> String? {
+        let dictionary: [String: Any] = ["token": token,
+                          "refreshSession": refreshSession]
+        let data = try? JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
+        
+        if let data = data {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
     }
 
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")

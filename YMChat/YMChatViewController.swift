@@ -92,7 +92,7 @@ open class YMChatViewController: UIViewController {
     private func addWebView() {
         let configuration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-        let js = "function sendEventFromiOS(s){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: 'send-voice-text', data: s }), '*');}"
+        let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
 
@@ -203,9 +203,11 @@ open class YMChatViewController: UIViewController {
         config.statusBarStyle
     }
 
-    func sendMessageInWebView(text: String) {
-        log(#function, text)
-        webView?.evaluateJavaScript("sendEvent('\("send-voice-text"), \(text)');", completionHandler: nil)
+    func sendEventToWebView(code: String, data: Any) {
+        log(#function, code, data)
+        DispatchQueue.main.async {
+            self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', '\(data)');", completionHandler: nil)
+        }
     }
 }
 
@@ -239,7 +241,7 @@ extension YMChatViewController: SpeechDelegate {
         micButton.isListening = false
         speechDisplayTextView.removeFromSuperview()
         if !speechDisplayTextView.text.isEmpty {
-            sendMessageInWebView(text: speechDisplayTextView.text)
+            sendEventToWebView(code: "send-voice-text", data: speechDisplayTextView.text)
         }
     }
 
@@ -257,21 +259,14 @@ extension YMChatViewController: SpeechDelegate {
             }
         case "close-bot":
             delegate?.eventReceivedFromBot(code: "bot-closed", data: nil)
-        case "revalidate-token":
+        case "ym-revalidate-token":
             if let data = data {
-                delegate?.eventReceivedFromBot(code: "ym-revalidate-token", data: getTokenObject(data))
+//                let token = "{\"token\":\"\(data)\", \"refreshSession\" : false}"
+                print("Data: \(data)")
+                sendEventToWebView(code: "revalidate-token", data: data)
             }
         default: break
         }
-    }
-
-    private func getTokenObject(_ token: String) -> String? {
-        let dictionary = ["token": token]
-        let data = try? JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
-        if let data = data {
-            return String(data: data, encoding: .utf8)
-        }
-        return nil
     }
 }
 
