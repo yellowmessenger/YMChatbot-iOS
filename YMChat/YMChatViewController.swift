@@ -92,7 +92,7 @@ open class YMChatViewController: UIViewController {
     private func addWebView() {
         let configuration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-        let js = "function sendEventFromiOS(s){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: 'send-voice-text', data: s }), '*');}"
+        let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
 
@@ -203,9 +203,11 @@ open class YMChatViewController: UIViewController {
         config.statusBarStyle
     }
 
-    func sendMessageInWebView(text: String) {
-        log(#function, text)
-        webView?.evaluateJavaScript("sendEventFromiOS('\(text)');", completionHandler: nil)
+    func sendEventToWebView(code: String, data: Any) {
+        log(#function, code, data)
+        DispatchQueue.main.async {
+            self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', '\(data)');", completionHandler: nil)
+        }
     }
 }
 
@@ -239,11 +241,11 @@ extension YMChatViewController: SpeechDelegate {
         micButton.isListening = false
         speechDisplayTextView.removeFromSuperview()
         if !speechDisplayTextView.text.isEmpty {
-            sendMessageInWebView(text: speechDisplayTextView.text)
+            sendEventToWebView(code: "send-voice-text", data: speechDisplayTextView.text)
         }
     }
 
-    func handleInternalEvent(code: String) {
+    func handleInternalEvent(code: String, data: String? = nil) {
         switch code {
         case "image-opened":
             closeButton.isHidden = true
@@ -257,6 +259,10 @@ extension YMChatViewController: SpeechDelegate {
             }
         case "close-bot":
             delegate?.eventReceivedFromBot(code: "bot-closed", data: nil)
+        case "ym-revalidate-token":
+            if let data = data {
+                sendEventToWebView(code: "revalidate-token", data: data)
+            }
         default: break
         }
     }
