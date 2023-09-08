@@ -36,6 +36,7 @@ open class YMConfig: NSObject {
     @objc public var version = 1
     @objc public var disableActionsOnLoad = false
     @objc public var useLiteVersion = false
+    @objc public var useSecureYmAuth = false
 
     @objc public init(botId: String) {
         self.botId = botId
@@ -60,6 +61,7 @@ open class YMConfig: NSObject {
         }
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
         queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
+        queryItems.append(URLQueryItem(name: "useSecureYmAuth", value: "\(useSecureYmAuth)"))
         
         urlComponents.queryItems = queryItems
 
