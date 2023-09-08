@@ -241,7 +241,7 @@ extension YMChatViewController: SpeechDelegate {
         micButton.isListening = false
         speechDisplayTextView.removeFromSuperview()
         if !speechDisplayTextView.text.isEmpty {
-            sendEventToWebView(code: "send-voice-text", data: speechDisplayTextView.text)
+            sendEventToWebView(code: "send-voice-text", data: speechDisplayTextView.text ?? "")
         }
     }
 
