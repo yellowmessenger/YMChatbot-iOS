@@ -92,6 +92,15 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         viewController?.handleInternalEvent(code: "ym-revalidate-token", data: YMHelper.getTokenObject(token, refreshSession: refreshSession))
     }
 
+    @objc public func sendEventToBot(event: YMEventModel) throws {
+        if event.code.isEmpty {
+            throw NSError(domain: "Event code cannot be null or empty, please pass valid code.", code: 0, userInfo: nil)
+        }
+        
+        let data = YMHelper.getStringFromObject(model: event)
+        viewController?.handleInternalEvent(code: "send-event-to-bot", data: YMHelper.getStringFromObject(model: event))
+    }
+
     @available(*, deprecated, renamed: "unlinkDeviceToken(apiKey:ymConfig:success:failure:)")
     @objc public func unlinkDeviceToken(botId: String, apiKey: String, deviceToken: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         precondition(!botId.isEmpty && !apiKey.isEmpty && !deviceToken.isEmpty)
