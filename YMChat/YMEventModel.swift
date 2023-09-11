@@ -12,7 +12,7 @@ public class YMEventModel: NSObject {
     var code: String
     var data: [String: Any]
     
-    init(code: String, data: [String : Any]) {
+    public init(code: String, data: [String : Any]) {
         self.code = code
         self.data = data
     }
