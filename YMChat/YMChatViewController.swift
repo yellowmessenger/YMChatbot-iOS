@@ -263,6 +263,10 @@ extension YMChatViewController: SpeechDelegate {
             if let data = data {
                 sendEventToWebView(code: "revalidate-token", data: data)
             }
+        case "send-event-to-bot":
+            if let data = data {
+                sendEventToWebView(code: "event-from-client", data: data)
+            }
         default: break
         }
     }

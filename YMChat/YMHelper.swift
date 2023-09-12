@@ -19,4 +19,15 @@ class YMHelper {
         }
         return nil
     }
+    
+    static func getStringFromObject(model: YMEventModel) -> String? {
+        let dictionary: [String: Any] = ["code": model.code,
+                                         "data": model.data]
+        let data = try? JSONSerialization.data(withJSONObject: dictionary, options: .fragmentsAllowed)
+        
+        if let data = data {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
 }

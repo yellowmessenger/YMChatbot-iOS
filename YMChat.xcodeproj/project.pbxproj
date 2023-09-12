@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F6E0FC52AAEC1F5003E0359 /* YMEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6E0FC42AAEC1F5003E0359 /* YMEventModel.swift */; };
 		7F73076A278F572B004ACFBD /* YMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */; };
 		7F73076B278F572B004ACFBD /* YMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917913B125DA4E78001F90CA /* YMChat.swift */; };
 		7F73076C278F572B004ACFBD /* YMChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919546A225D67F870042759F /* YMChatViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F6E0FC42AAEC1F5003E0359 /* YMEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMEventModel.swift; sourceTree = "<group>"; };
 		7F730769278F568A004ACFBD /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		7F97EEF528C20CD300EC6684 /* yellowLoader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yellowLoader.gif; sourceTree = "<group>"; };
 		7FE5178F2AAB0E2100115452 /* YMHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMHelper.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				917913B125DA4E78001F90CA /* YMChat.swift */,
 				919546A225D67F870042759F /* YMChatViewController.swift */,
 				7FE5178F2AAB0E2100115452 /* YMHelper.swift */,
+				7F6E0FC42AAEC1F5003E0359 /* YMEventModel.swift */,
 				91025FB925E4EFC800E1EC82 /* YMBotEventResponse.swift */,
 				91D25F2025DD213100FCCFA4 /* SpeechHelper.swift */,
 				91CEBE4225DBEA7D007AC38D /* MicButton.swift */,
@@ -261,6 +264,7 @@
 				7F73076F278F572B004ACFBD /* MicButton.swift in Sources */,
 				7FE517902AAB0E2100115452 /* YMHelper.swift in Sources */,
 				7F730770278F572B004ACFBD /* Bundle.swift in Sources */,
+				7F6E0FC52AAEC1F5003E0359 /* YMEventModel.swift in Sources */,
 				7F730771278F572B004ACFBD /* Debounce.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
