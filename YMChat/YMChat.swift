@@ -97,7 +97,6 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
             throw NSError(domain: "Event code cannot be null or empty, please pass valid code.", code: 0, userInfo: nil)
         }
         
-        let data = YMHelper.getStringFromObject(model: event)
         viewController?.handleInternalEvent(code: "send-event-to-bot", data: YMHelper.getStringFromObject(model: event))
     }
 
