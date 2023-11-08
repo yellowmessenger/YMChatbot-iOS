@@ -100,23 +100,13 @@ open class YMEnableSpeechConfig: NSObject {
 }
 
 @objc(YMTheme)
-open class YMTheme: NSObject, Codable {
+open class YMTheme: NSObject, Encodable {
     @objc public var botName: String?
     @objc public var primaryColor: String?
     @objc public var secondaryColor: String?
     @objc public var botIcon: String?
     @objc public var botDesc: String?
     @objc public var botClickIcon: String?
-    
-    required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.botName = try container.decodeIfPresent(String.self, forKey: .botName)
-        self.primaryColor = try container.decodeIfPresent(String.self, forKey: .primaryColor)
-        self.secondaryColor = try container.decodeIfPresent(String.self, forKey: .secondaryColor)
-        self.botIcon = try container.decodeIfPresent(String.self, forKey: .botIcon)
-        self.botDesc = try container.decodeIfPresent(String.self, forKey: .botDesc)
-        self.botClickIcon = try container.decodeIfPresent(String.self, forKey: .botClickIcon)
-    }
     
     enum CodingKeys: CodingKey {
         case botName
