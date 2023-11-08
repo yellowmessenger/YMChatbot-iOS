@@ -17,6 +17,8 @@
 		7F730770278F572B004ACFBD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE4925DBF528007AC38D /* Bundle.swift */; };
 		7F730771278F572B004ACFBD /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEBE3E25DBDF53007AC38D /* Debounce.swift */; };
 		7F97EEF628C20CD300EC6684 /* yellowLoader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F97EEF528C20CD300EC6684 /* yellowLoader.gif */; };
+		7FAC4B852AFB82EF007B298F /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAC4B842AFB82EF007B298F /* UIColor.swift */; };
+		7FAC4B872AFB832D007B298F /* YMTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAC4B862AFB832D007B298F /* YMTheme.swift */; };
 		7FE517902AAB0E2100115452 /* YMHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE5178F2AAB0E2100115452 /* YMHelper.swift */; };
 		7FEF988228BE268A0030224F /* yellow-index-lite.html in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF988128BE268A0030224F /* yellow-index-lite.html */; };
 		7FEF988428BE26A10030224F /* widget-min-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7FEF988328BE26A10030224F /* widget-min-style.css */; };
@@ -42,6 +44,8 @@
 		7F6E0FC42AAEC1F5003E0359 /* YMEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMEventModel.swift; sourceTree = "<group>"; };
 		7F730769278F568A004ACFBD /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		7F97EEF528C20CD300EC6684 /* yellowLoader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yellowLoader.gif; sourceTree = "<group>"; };
+		7FAC4B842AFB82EF007B298F /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		7FAC4B862AFB832D007B298F /* YMTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMTheme.swift; sourceTree = "<group>"; };
 		7FE5178F2AAB0E2100115452 /* YMHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMHelper.swift; sourceTree = "<group>"; };
 		7FEF988128BE268A0030224F /* yellow-index-lite.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "yellow-index-lite.html"; sourceTree = "<group>"; };
 		7FEF988328BE26A10030224F /* widget-min-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "widget-min-style.css"; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 				7F97EEF528C20CD300EC6684 /* yellowLoader.gif */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
 				9195468A25D67F4A0042759F /* Info.plist */,
+				7FAC4B842AFB82EF007B298F /* UIColor.swift */,
+				7FAC4B862AFB832D007B298F /* YMTheme.swift */,
 			);
 			path = YMChat;
 			sourceTree = "<group>";
@@ -261,8 +267,10 @@
 				7F73076C278F572B004ACFBD /* YMChatViewController.swift in Sources */,
 				7F73076D278F572B004ACFBD /* YMBotEventResponse.swift in Sources */,
 				7F73076E278F572B004ACFBD /* SpeechHelper.swift in Sources */,
+				7FAC4B872AFB832D007B298F /* YMTheme.swift in Sources */,
 				7F73076F278F572B004ACFBD /* MicButton.swift in Sources */,
 				7FE517902AAB0E2100115452 /* YMHelper.swift in Sources */,
+				7FAC4B852AFB82EF007B298F /* UIColor.swift in Sources */,
 				7F730770278F572B004ACFBD /* Bundle.swift in Sources */,
 				7F6E0FC52AAEC1F5003E0359 /* YMEventModel.swift in Sources */,
 				7F730771278F572B004ACFBD /* Debounce.swift in Sources */,
