@@ -98,32 +98,3 @@ open class YMEnableSpeechConfig: NSObject {
     @objc public var fabIconColor: UIColor = .white
     @objc public var fabBackgroundColor: UIColor = .blue
 }
-
-@objc(YMTheme)
-open class YMTheme: NSObject, Encodable {
-    @objc public var botName: String?
-    @objc public var primaryColor: String?
-    @objc public var secondaryColor: String?
-    @objc public var botIcon: String?
-    @objc public var botDesc: String?
-    @objc public var botClickIcon: String?
-    
-    enum CodingKeys: CodingKey {
-        case botName
-        case primaryColor
-        case secondaryColor
-        case botIcon
-        case botDesc
-        case botClickIcon
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.botName, forKey: .botName)
-        try container.encodeIfPresent(self.primaryColor, forKey: .primaryColor)
-        try container.encodeIfPresent(self.secondaryColor, forKey: .secondaryColor)
-        try container.encodeIfPresent(self.botIcon, forKey: .botIcon)
-        try container.encodeIfPresent(self.botDesc, forKey: .botDesc)
-        try container.encodeIfPresent(self.botClickIcon, forKey: .botClickIcon)
-    }
-}
