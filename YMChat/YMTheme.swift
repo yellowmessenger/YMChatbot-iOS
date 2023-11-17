@@ -8,7 +8,7 @@
 import UIKit
 
 @objc(YMTheme)
-open class YMTheme: NSObject, Encodable {
+public class YMTheme: NSObject, Encodable {
     @objc public var botName: String?
     @objc public var primaryColor: UIColor?
     @objc public var secondaryColor: UIColor?
