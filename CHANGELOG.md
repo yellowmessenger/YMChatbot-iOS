@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 -----
 
-## [v1.15.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.15.0) (2023-11-17)
+## [v1.15.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.15.0) (2023-11-22)
 
 #### New Feature 🚀
 * Exposing a theme variable in config to set bot name, description, icon image, primary and secondary color and others.

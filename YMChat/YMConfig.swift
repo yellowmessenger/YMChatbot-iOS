@@ -21,7 +21,7 @@ open class YMConfig: NSObject {
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
     @objc public var enableSpeechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
-    @objc public var theme: YMTheme?
+    @objc public var theme = YMTheme()
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
 
