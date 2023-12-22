@@ -43,6 +43,10 @@ open class YMConfig: NSObject {
         self.botId = botId
     }
 
+    @objc private var appId: String? {
+        Bundle.main.bundleIdentifier
+    }
+
     @objc open var url: URL {
         let localHtml = Bundle.assetBundle.url(forResource: useLiteVersion ? "yellow-index-lite" : "yellow-index", withExtension: "html")!
         var urlComponents = URLComponents(url: localHtml, resolvingAgainstBaseURL: false)!
@@ -51,6 +55,9 @@ open class YMConfig: NSObject {
         queryItems.append(URLQueryItem(name: "botId", value: botId))
         queryItems.append(URLQueryItem(name: "customBaseUrl", value: customBaseUrl))
         queryItems.append(URLQueryItem(name: "customLoaderUrl", value: customLoaderUrl))
+        if let appId = appId {
+            queryItems.append(URLQueryItem(name: "appId", value: appId))
+        }
         if let ymAuthToken = ymAuthenticationToken {
             queryItems.append(URLQueryItem(name: "ymAuthenticationToken", value: ymAuthToken))
         }

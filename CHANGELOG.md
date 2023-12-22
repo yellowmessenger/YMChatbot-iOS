@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.16.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.16.0) (2023-12-22)
+
+#### New Feature 🚀
+* Passing App Ids for App Whitelisting feature
+
+---
+
 ## [v1.15.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.15.0) (2023-11-22)
 
 #### New Feature 🚀
