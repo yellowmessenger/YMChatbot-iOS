@@ -21,6 +21,7 @@ open class YMConfig: NSObject {
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
     @objc public var enableSpeechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
+    @objc public var theme = YMTheme()
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
 
@@ -66,6 +67,9 @@ open class YMConfig: NSObject {
         if let decodedPayload = decodedPayload {
             queryItems.append(URLQueryItem(name: "ym.payload", value: decodedPayload))
         }
+        if let decodedTheme = decodedTheme {
+            queryItems.append(URLQueryItem(name: "ym.theme", value: decodedTheme))
+        }
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
         queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
         queryItems.append(URLQueryItem(name: "useSecureYmAuth", value: "\(useSecureYmAuth)"))
@@ -84,6 +88,14 @@ open class YMConfig: NSObject {
             return nil
         }
         return jsonString
+    }
+    
+    /// Theme → JSON string
+    var decodedTheme: String? {
+        let jsonEncoder = JSONEncoder()
+        let themeData = try? jsonEncoder.encode(theme)
+        guard let themeData = themeData, let themeString = String(data: themeData, encoding: .utf8) else { return nil }
+        return themeString
     }
 }
 
