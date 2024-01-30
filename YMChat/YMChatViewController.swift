@@ -109,6 +109,8 @@ open class YMChatViewController: UIViewController {
         webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        if #available(iOS 16.4, *) { webView!.isInspectable = true }
     }
 
     private let closeButton = UIButton()
