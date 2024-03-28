@@ -28,6 +28,7 @@
 		9195469725D67F4B0042759F /* YMChat.h in Headers */ = {isa = PBXBuildFile; fileRef = 9195468925D67F4A0042759F /* YMChat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91A321EE263AB95A008B4AF3 /* yellow-index.html in Resources */ = {isa = PBXBuildFile; fileRef = 91A321ED263AB95A008B4AF3 /* yellow-index.html */; };
 		91D25F2825DD41EE00FCCFA4 /* YMConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */; };
+		ADC610312BB1778C00603238 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = ADC610302BB1778C00603238 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		91D25F2725DD41EE00FCCFA4 /* YMConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfigTests.swift; sourceTree = "<group>"; };
 		91D25F2B25DD47C400FCCFA4 /* YMConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YMConfig.swift; sourceTree = "<group>"; };
 		91D8B56025E3BB79005E1405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ADC610302BB1778C00603238 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				7F97EEF528C20CD300EC6684 /* yellowLoader.gif */,
 				917913C925DA5CAB001F90CA /* Assets.xcassets */,
 				9195468A25D67F4A0042759F /* Info.plist */,
+				ADC610302BB1778C00603238 /* PrivacyInfo.xcprivacy */,
 				7FAC4B842AFB82EF007B298F /* UIColor.swift */,
 				7FAC4B862AFB832D007B298F /* YMTheme.swift */,
 			);
@@ -240,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADC610312BB1778C00603238 /* PrivacyInfo.xcprivacy in Resources */,
 				7FEF988228BE268A0030224F /* yellow-index-lite.html in Resources */,
 				7F97EEF628C20CD300EC6684 /* yellowLoader.gif in Resources */,
 				917913CA25DA5CAB001F90CA /* Assets.xcassets in Resources */,
