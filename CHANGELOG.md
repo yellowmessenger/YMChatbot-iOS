@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.17.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.17.0) (2024-03-28)
+
+#### New Feature 🚀
+* Privacy manifest file added.
+
+---
+
 ## [v1.16.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.16.0) (2023-12-22)
 
 #### New Feature 🚀

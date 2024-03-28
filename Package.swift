@@ -30,7 +30,8 @@ let package = Package(
                 .copy("yellow-index-lite.html"),
                 .copy("widget-min-style.css"),
                 .copy("yellowLoader.gif"),
-                .copy("Assets.xcassets")
+                .copy("Assets.xcassets"),
+                .process("PrivacyInfo.xcprivacy")
             ]),
         .testTarget(
             name: "YMChatTests",
