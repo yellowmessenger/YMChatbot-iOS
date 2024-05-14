@@ -4,13 +4,6 @@ All notable changes to this project will be documented in this file.
 
 -----
 
-## [v1.17.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.17.0) (2024-03-28)
-
-#### New Update 🚀
-* Added `botBubbleBackgroundColor` in YMTheme model to add background color for bot bubble
-
----
-
 ## [v1.17.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.17.0) (2024-03-28)
 
 #### New Feature 🚀
