@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 -----
 
-## [v1.18.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.17.0) (2024-03-28)
+## [v1.18.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.18.1) (2024-07-29)
+
+#### Bug Fix 🐛 
+* Email placeholder updated in html file
+
+---
+
+## [v1.18.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.18.0) (2024-05-14)
 
 #### New Update 🚀
 * Added `botBubbleBackgroundColor` in YMTheme model to add background color for bot bubble
