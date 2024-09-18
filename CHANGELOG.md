@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.19.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.19.0) (2024-09-18)
+
+#### New Update 🚀
+* Added `chatBotTheme` in YMTheme model to set theme for chat conatiner
+
+---
+
 ## [v1.18.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.18.1) (2024-07-29)
 
 #### Bug Fix 🐛 
