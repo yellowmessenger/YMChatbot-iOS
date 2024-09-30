@@ -330,6 +330,5 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     
     func botCloseButtonTapped() {
         delegate?.onBotClose?()
-        viewController = nil
     }
 }
