@@ -18,8 +18,9 @@ func log(_ items: Any...) {
 open class YMConfig: NSObject {
     let botId: String
 
+    @available(*, deprecated, renamed: "speechConfig.enableSpeech")
     @objc public var enableSpeech = false // TODO: Check for default value with Priyank
-    @objc public var enableSpeechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
+    @objc public var speechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
     @objc public var theme = YMTheme()
     @objc public var ymAuthenticationToken: String?
@@ -104,4 +105,6 @@ open class YMEnableSpeechConfig: NSObject {
     
     @objc public var fabIconColor: UIColor = .white
     @objc public var fabBackgroundColor: UIColor = .blue
+    @objc public var enableSpeech: Bool = false
+    @objc public var isButtonMovable: Bool = false
 }
