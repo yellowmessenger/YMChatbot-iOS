@@ -106,5 +106,5 @@ open class YMEnableSpeechConfig: NSObject {
     @objc public var fabIconColor: UIColor = .white
     @objc public var fabBackgroundColor: UIColor = .blue
     @objc public var enableSpeech: Bool = false
-    @objc public var isButtonMovable: Bool = false
+    @objc public var isButtonMovable: Bool = true
 }
