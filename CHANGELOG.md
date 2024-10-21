@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.21.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.21.0) (2024-10-21)
+
+#### New Update 🚀
+* updated `YMEnableSpeechConfig` to enable speech and added option to make floating mic button static
+
+---
+
 ## [v1.20.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.20.0) (2024-09-30)
 
 #### Bug Fix 🐛 
