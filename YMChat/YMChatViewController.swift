@@ -37,9 +37,9 @@ open class YMChatViewController: UIViewController {
 
     init(config: YMConfig) {
         self.config = config
-        self.micButton = MicButton(config.enableSpeechConfig)
+        self.micButton = MicButton(config.speechConfig)
         super.init(nibName: nil, bundle: nil)
-        if config.enableSpeech {
+        if speechEnabled {
             speechHelper = SpeechHelper()
             speechHelper?.delegate = self
         }
@@ -59,7 +59,7 @@ open class YMChatViewController: UIViewController {
         if config.showCloseButton {
             addCloseButton(tintColor: config.closeButtonColor)
         }
-        if config.enableSpeech {
+        if speechEnabled {
             addMicButton()
         }
         log("Loading URL: \(config.url)")
@@ -132,7 +132,9 @@ open class YMChatViewController: UIViewController {
         micRightConstraint = micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)
         NSLayoutConstraint.activate([micBottomConstraint!, micRightConstraint!])
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
-        micButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(micButtonDragged)))
+        if config.speechConfig.isButtonMovable {
+            micButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(micButtonDragged)))
+        }
     }
 
     @objc func micButtonDragged(gesture: UIPanGestureRecognizer){
@@ -211,6 +213,12 @@ open class YMChatViewController: UIViewController {
     }
 }
 
+private extension YMChatViewController {
+    private var speechEnabled: Bool {
+        config.enableSpeech || config.speechConfig.enableSpeech
+    }
+}
+
 extension YMChatViewController: SpeechDelegate {
     func micButtonTappedWithAuthorizationRestricted() {
         let alert = UIAlertController(title: "Restricted", message: "Your phone has restricted your app from performing speech recognition.", preferredStyle: .alert)
@@ -249,12 +257,12 @@ extension YMChatViewController: SpeechDelegate {
         switch code {
         case "image-opened":
             closeButton.isHidden = true
-            if config.enableSpeech {
+            if speechEnabled {
                 micButton.isHidden = true
             }
         case "image-closed":
             closeButton.isHidden = false
-            if config.enableSpeech {
+            if speechEnabled {
                 micButton.isHidden = false
             }
         case "close-bot":
