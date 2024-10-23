@@ -19,7 +19,13 @@ open class YMConfig: NSObject {
     let botId: String
 
     @available(*, deprecated, renamed: "speechConfig.enableSpeech")
-    @objc public var enableSpeech = false // TODO: Check for default value with Priyank
+    @objc public var enableSpeech = false
+    
+    @available(*, unavailable, renamed: "speechConfig")
+    @objc public var enableSpeechConfig: YMEnableSpeechConfig {
+        return speechConfig
+    }
+
     @objc public var speechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
     @objc public var theme = YMTheme()
