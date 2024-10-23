@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.21.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.21.1) (2024-10-23)
+
+#### Bug Fix 🐛 
+* added support for older `enableSpeechConfig` variable but marked as unavailable.
+
+---
+
 ## [v1.21.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.21.0) (2024-10-21)
 
 #### New Update 🚀
