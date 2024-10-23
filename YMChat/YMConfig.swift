@@ -18,8 +18,17 @@ func log(_ items: Any...) {
 open class YMConfig: NSObject {
     let botId: String
 
-    @available(*, deprecated, renamed: "speechConfig.enableSpeech")
-    @objc public var enableSpeech = false // TODO: Check for default value with Priyank
+    @available(*, unavailable, renamed: "speechConfig.enableSpeech")
+    @objc public var enableSpeech: Bool {
+        get { return false }
+        set {}
+    }
+    
+    @available(*, unavailable, renamed: "speechConfig")
+    @objc public var enableSpeechConfig: YMEnableSpeechConfig {
+        return speechConfig
+    }
+
     @objc public var speechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
     @objc public var theme = YMTheme()
