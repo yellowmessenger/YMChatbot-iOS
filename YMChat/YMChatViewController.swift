@@ -64,6 +64,9 @@ open class YMChatViewController: UIViewController {
         }
         log("Loading URL: \(config.url)")
         webView?.load(URLRequest(url: config.url))
+        if #available(iOS 16.4, *) {
+            webView?.isInspectable = true
+        }
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -250,6 +253,7 @@ extension YMChatViewController: SpeechDelegate {
         speechDisplayTextView.removeFromSuperview()
         if !speechDisplayTextView.text.isEmpty {
             sendEventToWebView(code: "send-voice-text", data: speechDisplayTextView.text ?? "")
+            sendEventToWebView(code: "end-speech-for-sdk", data: speechDisplayTextView.text ?? "")
         }
     }
 
@@ -271,6 +275,12 @@ extension YMChatViewController: SpeechDelegate {
             if let data = data {
                 sendEventToWebView(code: "revalidate-token", data: data)
             }
+        case "start-speech":
+            print("start-speech")
+            speechHelper?.micButtonTapped()
+        case "end-speech":
+            print("end-speech")
+            speechHelper?.micButtonTapped()
         case "send-event-to-bot":
             if let data = data {
                 sendEventToWebView(code: "event-from-client", data: data)
