@@ -313,6 +313,7 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                UIApplication.shared.canOpenURL(url) {
                 if !config.shouldOpenLinkExternally, let urlData = try? JSONSerialization.data(withJSONObject: ["url": url.absoluteString], options: .prettyPrinted), let urlString = String(data: urlData, encoding: .utf8) {
                     delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
+                    decisionHandler(.allow)
                 } else {
                     UIApplication.shared.open(url)
                     decisionHandler(.cancel)
