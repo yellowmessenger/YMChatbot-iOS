@@ -45,6 +45,7 @@ open class YMConfig: NSObject {
     @objc public var disableActionsOnLoad = false
     @objc public var useLiteVersion = false
     @objc public var useSecureYmAuth = false
+    @objc public var shouldOpenLinkExternally = true
 
     @objc public init(botId: String) {
         self.botId = botId

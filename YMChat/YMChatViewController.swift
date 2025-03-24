@@ -311,8 +311,12 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
         if navigationAction.navigationType == .linkActivated  {
             if let url = navigationAction.request.url,
                UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-                decisionHandler(.cancel)
+                if config.shouldOpenLinkExternally, let urlData = try? JSONSerialization.data(withJSONObject: ["url": url], options: .prettyPrinted), let urlString = String(data: urlData, encoding: .utf8) {
+                    delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
+                } else {
+                    UIApplication.shared.open(url)
+                    decisionHandler(.cancel)
+                }
             } else {
                 decisionHandler(.allow)
             }
