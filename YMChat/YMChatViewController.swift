@@ -327,7 +327,7 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
             }
             
             delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
-            decisionHandler(.allow)
+            decisionHandler(.cancel)
         }
     }
 }
