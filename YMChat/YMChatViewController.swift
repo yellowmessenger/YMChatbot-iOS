@@ -308,20 +308,25 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated  {
-            if let url = navigationAction.request.url,
-               UIApplication.shared.canOpenURL(url) {
-                if !config.shouldOpenLinkExternally, let urlData = try? JSONSerialization.data(withJSONObject: ["url": url.absoluteString], options: .prettyPrinted), let urlString = String(data: urlData, encoding: .utf8) {
-                    delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
-                    decisionHandler(.allow)
-                } else {
-                    UIApplication.shared.open(url)
-                    decisionHandler(.cancel)
-                }
-            } else {
-                decisionHandler(.allow)
-            }
+        guard navigationAction.navigationType == .linkActivated,
+              let url = navigationAction.request.url,
+              UIApplication.shared.canOpenURL(url) else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        if config.shouldOpenLinkExternally {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
         } else {
+            let urlPayload = ["url": url.absoluteString]
+            guard let urlData = try? JSONSerialization.data(withJSONObject: urlPayload),
+                  let urlString = String(data: urlData, encoding: .utf8) else {
+                decisionHandler(.cancel)
+                return
+            }
+            
+            delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
             decisionHandler(.allow)
         }
     }
