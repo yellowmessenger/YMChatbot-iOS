@@ -331,7 +331,7 @@ extension YMChatViewController: WKUIDelegate {
     // for <buttons> in html that have window.open
     // https://stackoverflow.com/questions/33190234/wkwebview-and-window-open
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
+        if config.shouldOpenLinkExternally, let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
         return nil
