@@ -17,6 +17,7 @@ public class YMTheme: NSObject, Encodable {
     @objc public var botDescription: String?
     @objc public var botClickIcon: String?
     @objc public var chatBotTheme: String?
+    @objc public var linkColor: UIColor?
     
     enum CodingKeys: CodingKey {
         case botName
@@ -27,6 +28,7 @@ public class YMTheme: NSObject, Encodable {
         case botDesc
         case botClickIcon
         case chatBotTheme
+        case linkColor
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -39,5 +41,6 @@ public class YMTheme: NSObject, Encodable {
         try container.encodeIfPresent(self.botDescription, forKey: .botDesc)
         try container.encodeIfPresent(self.botClickIcon, forKey: .botClickIcon)
         try container.encodeIfPresent(self.chatBotTheme, forKey: .chatBotTheme)
+        try container.encodeIfPresent(self.linkColor?.hex, forKey: .linkColor)
     }
 }
