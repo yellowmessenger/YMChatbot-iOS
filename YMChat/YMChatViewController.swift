@@ -308,16 +308,26 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated  {
-            if let url = navigationAction.request.url,
-               UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-                decisionHandler(.cancel)
-            } else {
-                decisionHandler(.allow)
-            }
-        } else {
+        guard navigationAction.navigationType == .linkActivated,
+              let url = navigationAction.request.url,
+              UIApplication.shared.canOpenURL(url) else {
             decisionHandler(.allow)
+            return
+        }
+        
+        if config.shouldOpenLinkExternally {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
+        } else {
+            let urlPayload = ["url": url.absoluteString]
+            guard let urlData = try? JSONSerialization.data(withJSONObject: urlPayload),
+                  let urlString = String(data: urlData, encoding: .utf8) else {
+                decisionHandler(.cancel)
+                return
+            }
+            
+            delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
+            decisionHandler(.cancel)
         }
     }
 }
@@ -326,7 +336,7 @@ extension YMChatViewController: WKUIDelegate {
     // for <buttons> in html that have window.open
     // https://stackoverflow.com/questions/33190234/wkwebview-and-window-open
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
+        if config.shouldOpenLinkExternally, let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
         return nil
