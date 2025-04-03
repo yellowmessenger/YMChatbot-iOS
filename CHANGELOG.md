@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.22.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.22.0) (2025-04-03)
+
+### New Update 🚀
+* Added an option that prevents links from opening in the browser. Set `shouldOpenLinkExternally` to false in config to prevent opening url in new window, and listen to `url-clicked` event in `onEventFromBot` to get the url of the link clicked.
+
+---
+
 ## [v1.21.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.21.1) (2024-10-23)
 
 #### Bug Fix 🐛 
