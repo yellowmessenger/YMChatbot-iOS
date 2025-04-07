@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.23.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.23.0) (2025-04-07)
+
+#### New Update 🚀
+* added support for `linkColor` in theme variable.
+
+---
+
 ## [v1.22.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.22.0) (2025-04-03)
 
-### New Update 🚀
+#### New Update 🚀
 * Added an option that prevents links from opening in the browser. Set `shouldOpenLinkExternally` to false in config to prevent opening url in new window, and listen to `url-clicked` event in `onEventFromBot` to get the url of the link clicked.
 
 ---
