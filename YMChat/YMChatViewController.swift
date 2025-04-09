@@ -321,6 +321,7 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                     }
                     webView?.isHidden = true
                     errorView.isHidden = false
+                    delegate?.eventReceivedFromBot(code: "bot-load-failed", data: nil)
                 }
             }
         }
