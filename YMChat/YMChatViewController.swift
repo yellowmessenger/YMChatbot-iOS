@@ -95,8 +95,13 @@ open class YMChatViewController: UIViewController {
         let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
-
         contentController.add(LeakAvoider(delegate:self), name: "ymHandler")
+        
+        let scriptSource = "window.addEventListener('error', function(event){ if(event.target.tagName === 'SCRIPT'){ window.webkit.messageHandlers.ymResourceError.postMessage(event.target.src);}}, true);"
+        let ymResourceErrorScript = WKUserScript(source: scriptSource, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        contentController.addUserScript(ymResourceErrorScript)
+        contentController.add(LeakAvoider(delegate:self), name: "ymResourceError")
+        
         configuration.userContentController = contentController
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
@@ -211,6 +216,15 @@ open class YMChatViewController: UIViewController {
             self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', '\(data)');", completionHandler: nil)
         }
     }
+
+    private var errorPathsToValidate = [
+        "/widget/mobile.js",
+        "/widget/v2/mobile.js",
+        "/plugin/latest/dist/mobile.min.js",
+        "/plugin/latest/dist/widget.min.js",
+        "/plugin/widget-v2/latest/dist/mobile.min.js",
+        "/plugin/widget-v2/latest/dist/widget.min.js"
+    ]
 }
 
 private extension YMChatViewController {
@@ -282,6 +296,13 @@ extension YMChatViewController: SpeechDelegate {
 
 extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "ymResourceError" {
+            guard let failedResourceUrl = message.body as? String else { return }
+            if (errorPathsToValidate.contains { failedResourceUrl.contains($0) }) {
+
+            }
+        }
+        
         if message.name == "ymHandler" {
             guard let dict = message.body as? [String: Any],
                   let code = dict["code"] as? String else {
