@@ -56,17 +56,15 @@ open class YMChatViewController: UIViewController {
     
     open override func viewDidLoad() {
         addWebView()
-        if config.showCloseButton {
-            addCloseButton(tintColor: config.closeButtonColor)
-        }
         if speechEnabled {
             addMicButton()
+        }
+        if config.showCloseButton {
+            addCloseButton(tintColor: config.closeButtonColor)
         }
         log("Loading URL: \(config.url)")
         if #available(iOS 16.4, *) {
             webView?.isInspectable = true
-        } else {
-            // Fallback on earlier versions
         }
         webView?.load(URLRequest(url: config.url))
     }
@@ -100,8 +98,13 @@ open class YMChatViewController: UIViewController {
         let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
-
         contentController.add(LeakAvoider(delegate:self), name: "ymHandler")
+        
+        let scriptSource = "window.addEventListener('error', function(event){ if(event.target.tagName === 'SCRIPT'){ window.webkit.messageHandlers.ymResourceError.postMessage(event.target.src);}}, true);"
+        let ymResourceErrorScript = WKUserScript(source: scriptSource, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        contentController.addUserScript(ymResourceErrorScript)
+        contentController.add(LeakAvoider(delegate:self), name: "ymResourceError")
+        
         configuration.userContentController = contentController
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
@@ -140,6 +143,18 @@ open class YMChatViewController: UIViewController {
         if config.speechConfig.isButtonMovable {
             micButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(micButtonDragged)))
         }
+    }
+    
+    private func addErrorView() {
+        let errorView = YMErrorView()
+        view.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            errorView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
     }
 
     @objc func micButtonDragged(gesture: UIPanGestureRecognizer){
@@ -216,6 +231,15 @@ open class YMChatViewController: UIViewController {
             self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', '\(data)');", completionHandler: nil)
         }
     }
+
+    private var errorPathsToValidate = [
+        "/widget/mobile.js",
+        "/widget/v2/mobile.js",
+        "/plugin/latest/dist/mobile.min.js",
+        "/plugin/latest/dist/widget.min.js",
+        "/plugin/widget-v2/latest/dist/mobile.min.js",
+        "/plugin/widget-v2/latest/dist/widget.min.js"
+    ]
 }
 
 private extension YMChatViewController {
@@ -287,6 +311,22 @@ extension YMChatViewController: SpeechDelegate {
 
 extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "ymResourceError" {
+            guard let failedResourceUrl = message.body as? String else { return }
+            if (errorPathsToValidate.contains { failedResourceUrl.contains($0) }) {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    addErrorView()
+                    if (config.showCloseButton && config.closeButtonColor == .white) {
+                        closeButton.tintColor = .black
+                    }
+                    self.view.bringSubviewToFront(closeButton)
+                    webView?.isHidden = true
+                    delegate?.eventReceivedFromBot(code: "bot-load-failed", data: nil)
+                }
+            }
+        }
+        
         if message.name == "ymHandler" {
             guard let dict = message.body as? [String: Any],
                   let code = dict["code"] as? String else {
@@ -361,5 +401,40 @@ fileprivate class LeakAvoider : NSObject, WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         self.delegate?.userContentController(userContentController, didReceive: message)
+    }
+}
+
+fileprivate class YMErrorView: UIView {
+    init() {
+        super.init(frame: .zero)
+        self.backgroundColor = .white
+        let imageView = UIImageView(image: UIImage(named: "ym_technical_issue", in: Bundle.assetBundle, compatibleWith: nil))
+        imageView.contentMode = .scaleAspectFit
+        
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = UIColor(red: 116/255, green: 123/255, blue: 127/255, alpha: 1.0)
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.text = "We are facing a technical issue right now. Please try again later."
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 24
+        stackView.alignment = .center
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(label)
+        
+        self.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            stackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8)
+        ])
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
