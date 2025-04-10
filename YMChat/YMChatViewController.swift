@@ -17,7 +17,6 @@ protocol YMChatViewControllerDelegate: AnyObject {
 @objc(YMChatViewController)
 open class YMChatViewController: UIViewController {
     private var micButton: MicButton
-    private var errorView: YMErrorView
     weak var delegate: YMChatViewControllerDelegate?
 
     private var speechDisplayTextView: UITextView = {
@@ -39,7 +38,6 @@ open class YMChatViewController: UIViewController {
     init(config: YMConfig) {
         self.config = config
         self.micButton = MicButton(config.speechConfig)
-        self.errorView = YMErrorView()
         super.init(nibName: nil, bundle: nil)
         if speechEnabled {
             speechHelper = SpeechHelper()
@@ -61,7 +59,6 @@ open class YMChatViewController: UIViewController {
         if speechEnabled {
             addMicButton()
         }
-        addErrorView()
         if config.showCloseButton {
             addCloseButton(tintColor: config.closeButtonColor)
         }
@@ -146,8 +143,8 @@ open class YMChatViewController: UIViewController {
     }
     
     private func addErrorView() {
+        let errorView = YMErrorView()
         view.addSubview(errorView)
-        errorView.isHidden = true
         errorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -316,11 +313,12 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
             if (errorPathsToValidate.contains { failedResourceUrl.contains($0) }) {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
+                    addErrorView()
                     if (config.showCloseButton && config.closeButtonColor == .white) {
                         closeButton.tintColor = .black
                     }
+                    self.view.bringSubviewToFront(closeButton)
                     webView?.isHidden = true
-                    errorView.isHidden = false
                     delegate?.eventReceivedFromBot(code: "bot-load-failed", data: nil)
                 }
             }
