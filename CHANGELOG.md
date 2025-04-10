@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.24.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.24.0) (2025-04-10)
+
+#### New Update 🚀
+* added `onBotLoadFailed` method in YMChatDelegate to let user know that bot load failed due to certain technical issue.
+
+---
+
 ## [v1.23.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.23.0) (2025-04-07)
 
 #### New Update 🚀
