@@ -63,6 +63,11 @@ open class YMChatViewController: UIViewController {
             addMicButton()
         }
         log("Loading URL: \(config.url)")
+        if #available(iOS 16.4, *) {
+            webView?.isInspectable = true
+        } else {
+            // Fallback on earlier versions
+        }
         webView?.load(URLRequest(url: config.url))
     }
     
