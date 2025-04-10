@@ -4,6 +4,7 @@ import UIKit
 public protocol YMChatDelegate {
     @objc optional func onEventFromBot(response: YMBotEventResponse)
     @objc optional func onBotClose()
+    @objc optional func onBotLoadFailed()
 }
 
 @objc(YMChat)
@@ -323,6 +324,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
     func eventReceivedFromBot(code: String, data: String?) {
         if code == "bot-closed" {
             delegate?.onBotClose?()
+        } else if code == "bot-load-failed" {
+            delegate?.onBotLoadFailed?()
         } else {
             delegate?.onEventFromBot?(response: YMBotEventResponse(code: code, data: data))
         }
