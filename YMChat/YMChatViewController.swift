@@ -60,7 +60,7 @@ open class YMChatViewController: UIViewController {
             addMicButton()
         }
         if config.showCloseButton {
-            addCloseButton(tintColor: config.closeButtonColor)
+            addCloseButton(tintColor: .black)
         }
         log("Loading URL: \(config.url)")
         if #available(iOS 16.4, *) {
@@ -341,6 +341,10 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                 handleInternalEvent(code: code)
             } else {
                 let data = dict["data"] as? String
+                print(code)
+                if code == "pwa-loaded" {
+                    closeButton.tintColor = config.closeButtonColor
+                }
                 delegate?.eventReceivedFromBot(code: code, data: data)
             }
         }
