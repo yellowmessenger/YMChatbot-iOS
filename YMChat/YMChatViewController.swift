@@ -341,7 +341,6 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                 handleInternalEvent(code: code)
             } else {
                 let data = dict["data"] as? String
-                print(code)
                 if code == "pwa-loaded" {
                     closeButton.tintColor = config.closeButtonColor
                 }
