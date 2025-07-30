@@ -60,7 +60,7 @@ open class YMChatViewController: UIViewController {
             addMicButton()
         }
         if config.showCloseButton {
-            addCloseButton(tintColor: config.closeButtonColor)
+            addCloseButton(tintColor: .black)
         }
         log("Loading URL: \(config.url)")
         if #available(iOS 16.4, *) {
@@ -116,7 +116,7 @@ open class YMChatViewController: UIViewController {
         webView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
     }
 
     private let closeButton = UIButton()
@@ -304,6 +304,10 @@ extension YMChatViewController: SpeechDelegate {
             if let data = data {
                 sendEventToWebView(code: "event-from-client", data: data)
             }
+        case "input-background-color":
+            if let data = data {
+                self.view.backgroundColor = UIColor(data)
+            }
         default: break
         }
     }
@@ -338,9 +342,12 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
             }
             let isInternal = dict["internal"] as? Bool ?? false
             if isInternal {
-                handleInternalEvent(code: code)
+                handleInternalEvent(code: code, data: dict["data"] as? String)
             } else {
                 let data = dict["data"] as? String
+                if code == "pwa-loaded" {
+                    closeButton.tintColor = config.closeButtonColor
+                }
                 delegate?.eventReceivedFromBot(code: code, data: data)
             }
         }
