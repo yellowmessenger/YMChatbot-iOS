@@ -116,7 +116,7 @@ open class YMChatViewController: UIViewController {
         webView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
     }
 
     private let closeButton = UIButton()
@@ -306,7 +306,6 @@ extension YMChatViewController: SpeechDelegate {
             }
         case "input-background-color":
             if let data = data {
-                print(code, data)
                 self.view.backgroundColor = UIColor(data)
             }
         default: break
