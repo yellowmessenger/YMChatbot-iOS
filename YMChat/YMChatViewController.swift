@@ -343,7 +343,7 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
             }
             let isInternal = dict["internal"] as? Bool ?? false
             if isInternal {
-                handleInternalEvent(code: code)
+                handleInternalEvent(code: code, data: dict["data"] as? String)
             } else {
                 let data = dict["data"] as? String
                 if code == "pwa-loaded" {
