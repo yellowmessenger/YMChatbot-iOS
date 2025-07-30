@@ -304,6 +304,12 @@ extension YMChatViewController: SpeechDelegate {
             if let data = data {
                 sendEventToWebView(code: "event-from-client", data: data)
             }
+        case "input-background-color":
+            if let data = data {
+                print(code, data)
+                self.view.backgroundColor = UIColor(data)
+                sendEventToWebView(code: "event-from-client", data: data)
+            }
         default: break
         }
     }
