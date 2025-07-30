@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.25.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.25.0) (2025-07-30)
+
+#### New Update 🚀
+* Close button visibility managed while bot is rendering
+* Safe area color as per the bot theme 
+
+---
+
 ## [v1.24.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.24.0) (2025-04-10)
 
 #### New Update 🚀
