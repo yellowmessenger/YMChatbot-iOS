@@ -95,7 +95,12 @@ open class YMChatViewController: UIViewController {
     private func addWebView() {
         let configuration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-        let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
+        let js: String
+        if config.version == 3 {
+            js = "function sendEventFromiOS(eventCode, eventData){ if(typeof ChatWidget !== 'undefined' && typeof ChatWidget.sendEvent === 'function'){ ChatWidget.sendEvent(eventCode, eventData); } }"
+        } else {
+            js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
+        }
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
         contentController.add(LeakAvoider(delegate:self), name: "ymHandler")
@@ -136,7 +141,8 @@ open class YMChatViewController: UIViewController {
     private func addMicButton() {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90)
+        let micBottomOffset: CGFloat = (config.version == 1) ? -70 : -90
+        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: micBottomOffset)
         micRightConstraint = micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)
         NSLayoutConstraint.activate([micBottomConstraint!, micRightConstraint!])
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
@@ -238,7 +244,8 @@ open class YMChatViewController: UIViewController {
         "/plugin/latest/dist/mobile.min.js",
         "/plugin/latest/dist/widget.min.js",
         "/plugin/widget-v2/latest/dist/mobile.min.js",
-        "/plugin/widget-v2/latest/dist/widget.min.js"
+        "/plugin/widget-v2/latest/dist/widget.min.js",
+        "/plugin/widget-v3/staging/dist/loader.umd.js"
     ]
 }
 
