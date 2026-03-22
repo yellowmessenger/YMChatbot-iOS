@@ -3,6 +3,16 @@
 ## Documentation
 For integration and usage refer documentation [https://docs.yellow.ai/docs/platform_concepts/mobile/chatbot/ios](https://docs.yellow.ai/docs/platform_concepts/mobile/chatbot/ios)
 
-## Demo App
-A demo has been created to better understand the integration of SDK in iOS app
-[https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp](https://github.com/yellowmessenger/YMChatbot-iOS-DemoApp)
+## Example App
+A minimal example app is included in the `Example/` directory. To run it:
+1. Open `Example/YMChatExample.xcodeproj` in Xcode
+2. Replace `YOUR_BOT_ID` in `ViewController.swift` with your bot ID
+3. Build and run
+
+The example app imports YMChat as a local SPM package. Alternatively, you can use CocoaPods:
+```bash
+cd Example && pod install
+```
+Then open `YMChatExample.xcworkspace` instead.
+
+> **Note:** The `Example/` directory is excluded from CocoaPods and SPM distribution — it is only available when cloning the repo directly.

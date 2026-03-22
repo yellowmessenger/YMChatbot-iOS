@@ -23,3 +23,7 @@ DerivedData/
 .build/
 pre-change.yml
 fastlane
+
+# Example app
+Example/Pods/
+Example/YMChatExample.xcworkspace/

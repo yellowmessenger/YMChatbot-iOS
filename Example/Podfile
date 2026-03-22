@@ -1,0 +1,6 @@
+platform :ios, '15.0'
+
+target 'YMChatExample' do
+  use_frameworks!
+  pod 'YMChat', :path => '../'
+end
