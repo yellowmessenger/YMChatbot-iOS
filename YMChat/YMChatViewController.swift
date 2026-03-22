@@ -400,6 +400,15 @@ extension YMChatViewController: WKUIDelegate {
         }
         return nil
     }
+
+    @available(iOS 15.0, *)
+    public func webView(_ webView: WKWebView,
+                        requestMediaCapturePermissionFor origin: WKSecurityOrigin,
+                        initiatedByFrame frame: WKFrameInfo,
+                        type: WKMediaCaptureType,
+                        decisionHandler: @escaping (WKPermissionDecision) -> Void) {
+        decisionHandler(.grant)
+    }
 }
 
 /// WKUserContentController retains its message handler.
