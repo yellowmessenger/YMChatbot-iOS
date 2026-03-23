@@ -253,7 +253,7 @@ open class YMChatViewController: UIViewController {
 
 private extension YMChatViewController {
     private var speechEnabled: Bool {
-        config.enableSpeech || config.speechConfig.enableSpeech
+        (config.version == 1 || config.version == 2) && (config.enableSpeech || config.speechConfig.enableSpeech)
     }
 }
 
