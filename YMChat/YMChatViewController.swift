@@ -63,9 +63,11 @@ open class YMChatViewController: UIViewController {
             addCloseButton(tintColor: .black)
         }
         log("Loading URL: \(config.url)")
+        #if DEBUG
         if #available(iOS 16.4, *) {
             webView?.isInspectable = true
         }
+        #endif
         webView?.load(URLRequest(url: config.url))
     }
     
