@@ -407,7 +407,12 @@ extension YMChatViewController: WKUIDelegate {
                         initiatedByFrame frame: WKFrameInfo,
                         type: WKMediaCaptureType,
                         decisionHandler: @escaping (WKPermissionDecision) -> Void) {
-        decisionHandler(.grant)
+        let trustedHosts = ["cloud.yellow.ai", "cdn.yellowmessenger.com", "app.yellowmessenger.com"]
+          if trustedHosts.contains(where: { origin.host.hasSuffix($0) }) {
+              decisionHandler(.grant)
+          } else {
+              decisionHandler(.prompt)
+          }
     }
 }
 
