@@ -80,12 +80,13 @@ open class YMChatViewController: UIViewController {
     open override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        sendEventToWebView(code: "chatbot-in-background", data: "")
     }
     
     @objc func applicationDidEnterInBackground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-background", data: nil)
     }
-    
+
     @objc func applicationWillEnterInForeground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-foreground", data: nil)
     }
@@ -227,6 +228,7 @@ open class YMChatViewController: UIViewController {
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.backgroundColor = config.statusBarColor
+        sendEventToWebView(code: "chatbot-in-foreground", data: "")
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
