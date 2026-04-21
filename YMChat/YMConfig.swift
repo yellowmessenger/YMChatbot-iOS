@@ -29,6 +29,7 @@ open class YMConfig: NSObject {
     @objc public var speechConfig: YMEnableSpeechConfig = YMEnableSpeechConfig()
 
     @objc public var theme = YMTheme()
+    private var _customBaseUrl: String?
     @objc public var ymAuthenticationToken: String?
     @objc public var deviceToken: String?
 
@@ -37,7 +38,18 @@ open class YMConfig: NSObject {
 
     @objc public var showCloseButton = true
     @objc public var closeButtonColor: UIColor = .white
-    @objc public var customBaseUrl = "https://app.yellowmessenger.com"
+    @objc public var customBaseUrl: String {
+        get {
+            if let custom = _customBaseUrl {
+                return custom
+            } else {
+                return version == 3 ? "https://cloud.yellow.ai" : "https://app.yellowmessenger.com"
+            }
+        }
+        set {
+            _customBaseUrl = newValue
+        }
+    }
     @objc public var customLoaderUrl = "yellowLoader.gif"
 
     @objc public var payload = [String: Any]()
