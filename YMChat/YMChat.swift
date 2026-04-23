@@ -30,8 +30,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         if config.customLoaderUrl.isEmpty || (URL(string: config.customLoaderUrl) == nil) {
             throw NSError(domain: "Please provide valid `customLoaderUrl`", code: 0, userInfo: nil)
         }
-        if !(config.version == 1 || config.version == 2) {
-            throw NSError(domain: "version can be either 1 or 2", code: 0, userInfo: nil)
+        if !(config.version == 1 || config.version == 2 || config.version == 3) {
+            throw NSError(domain: "version can be either 1, 2, or 3", code: 0, userInfo: nil)
         }
         try JSONSerialization.data(withJSONObject: config.payload, options: [])
     }
@@ -46,8 +46,8 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         if config.customLoaderUrl.isEmpty || (URL(string: config.customLoaderUrl) == nil) {
             throw NSError(domain: "Please provide valid `customLoaderUrl`", code: 0, userInfo: nil)
         }
-        if !(config.version == 1 || config.version == 2) {
-            throw NSError(domain: "version can be either 1 or 2", code: 0, userInfo: nil)
+        if !(config.version == 1 || config.version == 2 || config.version == 3) {
+            throw NSError(domain: "version can be either 1, 2, or 3", code: 0, userInfo: nil)
         }
         try JSONSerialization.data(withJSONObject: config.payload, options: [])
     }
