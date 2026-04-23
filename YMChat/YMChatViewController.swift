@@ -388,8 +388,22 @@ extension YMChatViewController: WKUIDelegate {
     // for <buttons> in html that have window.open
     // https://stackoverflow.com/questions/33190234/wkwebview-and-window-open
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if config.shouldOpenLinkExternally, let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
+        guard let url = navigationAction.request.url,
+              url.scheme != "javascript",
+              !url.absoluteString.isEmpty,
+              UIApplication.shared.canOpenURL(url) else {
+            return nil
+        }
+        
+        if config.shouldOpenLinkExternally {
             UIApplication.shared.open(url)
+        } else {
+            let urlPayload = ["url": url.absoluteString]
+            guard let urlData = try? JSONSerialization.data(withJSONObject: urlPayload),
+                  let urlString = String(data: urlData, encoding: .utf8) else {
+                return nil
+            }
+            delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
         }
         return nil
     }
