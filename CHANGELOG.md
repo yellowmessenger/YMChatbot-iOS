@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.27.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.27.0) (2026-04-30)
+
+#### New Update 🚀
+* `input-background-color` event now only updates the view background when `statusBarColor` is `.white`; custom host-app colors are no longer overridden by the bot.
+* Handle URL click events received from the bot (`dana-event-url-click`).
+
+---
+
+## [v1.26.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.26.0) (2026-04-23)
+
+#### New Update 🚀
+* Added support for sending state events to the bot.
+* Handle `window.open` links inside the WebView and delegate URL clicks to the host app.
+
+---
+
 ## [v1.25.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.25.0) (2025-07-30)
 
 #### New Update 🚀
