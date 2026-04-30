@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file.
 
 #### New Update 🚀
 * `input-background-color` event now only updates the view background when `statusBarColor` is `.white`; custom host-app colors are no longer overridden by the bot.
-* Handle URL click events received from the bot (`dana-event-url-click`).
 
 ---
 
