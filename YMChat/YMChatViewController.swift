@@ -34,6 +34,7 @@ open class YMChatViewController: UIViewController {
 
     private var micBottomConstraint: NSLayoutConstraint?
     private var micRightConstraint: NSLayoutConstraint?
+    private let statusBarView = UIView()
 
     init(config: YMConfig) {
         self.config = config
@@ -54,7 +55,20 @@ open class YMChatViewController: UIViewController {
         webView?.stopLoading()
     }
     
+    private func setupStatusBarView() {
+        statusBarView.backgroundColor = config.statusBarColor
+        view.addSubview(statusBarView)
+        statusBarView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            statusBarView.topAnchor.constraint(equalTo: view.topAnchor),
+            statusBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            statusBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            statusBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
     open override func viewDidLoad() {
+        setupStatusBarView()
         addWebView()
         if speechEnabled {
             addMicButton()
@@ -218,7 +232,6 @@ open class YMChatViewController: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.view.backgroundColor = config.statusBarColor
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -306,7 +319,7 @@ extension YMChatViewController: SpeechDelegate {
             }
         case "input-background-color":
             if let data = data, config.statusBarColor == .white {
-                self.view.backgroundColor = UIColor(data)
+                statusBarView.backgroundColor = UIColor(data)
             }
         default: break
         }
