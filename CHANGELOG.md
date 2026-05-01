@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v1.27.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.27.1) (2026-05-01)
+
+#### Bug Fix 🐛
+* Fixed `statusBarColor` incorrectly coloring the entire view background; it now applies only to a dedicated view covering the top safe area above the WebView.
+
+---
+
 ## [v1.27.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.27.0) (2026-04-30)
 
 #### New Update 🚀
