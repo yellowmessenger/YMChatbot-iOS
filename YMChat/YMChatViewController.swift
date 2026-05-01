@@ -232,6 +232,7 @@ open class YMChatViewController: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.view.backgroundColor = .white
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
