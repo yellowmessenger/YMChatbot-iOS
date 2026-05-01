@@ -77,9 +77,11 @@ open class YMChatViewController: UIViewController {
             addCloseButton(tintColor: .black)
         }
         log("Loading URL: \(config.url)")
+        #if DEBUG
         if #available(iOS 16.4, *) {
             webView?.isInspectable = true
         }
+        #endif
         webView?.load(URLRequest(url: config.url))
     }
     
@@ -92,12 +94,13 @@ open class YMChatViewController: UIViewController {
     open override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        sendEventToWebView(code: "chatbot-in-background", data: "")
     }
     
     @objc func applicationDidEnterInBackground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-background", data: nil)
     }
-    
+
     @objc func applicationWillEnterInForeground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-foreground", data: nil)
     }
@@ -109,7 +112,12 @@ open class YMChatViewController: UIViewController {
     private func addWebView() {
         let configuration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
-        let js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
+        let js: String
+        if config.version == 3 {
+            js = "function sendEventFromiOS(eventCode, eventData){ if(typeof ChatWidget !== 'undefined' && typeof ChatWidget.sendEvent === 'function'){ ChatWidget.sendEvent(eventCode, eventData); } }"
+        } else {
+            js = "function sendEventFromiOS(eventCode, eventData){document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({ event_code: eventCode, data: eventData }), '*');}"
+        }
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         contentController.addUserScript(userScript)
         contentController.add(LeakAvoider(delegate:self), name: "ymHandler")
@@ -150,7 +158,8 @@ open class YMChatViewController: UIViewController {
     private func addMicButton() {
         view.addSubview(micButton)
         micButton.translatesAutoresizingMaskIntoConstraints = false
-        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: config.version == 1 ? -70 : -90)
+        let micBottomOffset: CGFloat = (config.version == 1) ? -70 : -90
+        micBottomConstraint = micButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: micBottomOffset)
         micRightConstraint = micButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)
         NSLayoutConstraint.activate([micBottomConstraint!, micRightConstraint!])
         micButton.addTarget(self, action: #selector(micTapped), for: .touchUpInside)
@@ -233,6 +242,7 @@ open class YMChatViewController: UIViewController {
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.backgroundColor = .white
+        sendEventToWebView(code: "chatbot-in-foreground", data: "")
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -252,13 +262,14 @@ open class YMChatViewController: UIViewController {
         "/plugin/latest/dist/mobile.min.js",
         "/plugin/latest/dist/widget.min.js",
         "/plugin/widget-v2/latest/dist/mobile.min.js",
-        "/plugin/widget-v2/latest/dist/widget.min.js"
+        "/plugin/widget-v2/latest/dist/widget.min.js",
+        "/plugin/widget-v3/prod/dist/loader.umd.js"
     ]
 }
 
 private extension YMChatViewController {
     private var speechEnabled: Bool {
-        config.enableSpeech || config.speechConfig.enableSpeech
+        (config.version == 1 || config.version == 2) && (config.enableSpeech || config.speechConfig.enableSpeech)
     }
 }
 
@@ -420,6 +431,20 @@ extension YMChatViewController: WKUIDelegate {
             delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
         }
         return nil
+    }
+
+    @available(iOS 15.0, *)
+    public func webView(_ webView: WKWebView,
+                        requestMediaCapturePermissionFor origin: WKSecurityOrigin,
+                        initiatedByFrame frame: WKFrameInfo,
+                        type: WKMediaCaptureType,
+                        decisionHandler: @escaping (WKPermissionDecision) -> Void) {
+        let trustedHosts = ["cloud.yellow.ai", "cdn.yellowmessenger.com", "app.yellowmessenger.com"]
+          if trustedHosts.contains(where: { origin.host.hasSuffix($0) }) {
+              decisionHandler(.grant)
+          } else {
+              decisionHandler(.prompt)
+          }
     }
 }
 
