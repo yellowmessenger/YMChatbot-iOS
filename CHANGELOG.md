@@ -9,11 +9,6 @@ All notable changes to this project will be documented in this file.
 #### New Update 🚀
 * Added `activationMode` config parameter (`"chat"` | `"voice"`) to control the default mode the bot opens in. Defaults to `"chat"` for full backward compatibility.
 
-#### Bug Fix 🐛
-* Fixed media capture permission not re-prompting after the user initially denied it. The WebView is now recreated when the user returns from Settings having granted camera or microphone access, clearing WKWebView's cached permission decision.
-
----
-
 ## [v2.0.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.0.1) (2026-04-21)
 
 #### New Update 🚀
