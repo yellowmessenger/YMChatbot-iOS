@@ -14,7 +14,7 @@ func log(_ items: Any...) {
     }
 }
 
-@objc open enum YMActivationMode: Int {
+@objc public enum YMActivationMode: Int {
     case chat = 0
     case voice = 1
 
@@ -106,7 +106,7 @@ open class YMConfig: NSObject {
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
         queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
         queryItems.append(URLQueryItem(name: "useSecureYmAuth", value: "\(useSecureYmAuth)"))
-        queryItems.append(URLQueryItem(name: "defaultOpenMode", value: defaultOpenMode.stringValue))
+        queryItems.append(URLQueryItem(name: "defaultOpenMode", value: activationMode.stringValue))
 
         urlComponents.queryItems = queryItems
 
