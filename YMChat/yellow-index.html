@@ -57,6 +57,7 @@
         var imageLink = "url(" + customLoaderUrl + ")";
         document.getElementById("se-pre-con").style.backgroundImage = imageLink;
         var appId = getParams(window.location.href)["appId"];
+        var activationMode = getParams(window.location.href)["activationMode"];
 
         var payloadJSON = {};
         try{
@@ -79,7 +80,8 @@
                     triggerJourneyOnEnableHistory: payloadJSON.JourneySlug ? true : false,
                     triggerJourney: payloadJSON.JourneySlug,
                     appId: appId,
-                    theme: JSON.parse(theme)
+                    theme: JSON.parse(theme),
+                    defaultOpenMode: activationMode
                 },
                 sdk: true,
                 handlers: {

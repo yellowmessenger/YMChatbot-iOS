@@ -14,6 +14,18 @@ func log(_ items: Any...) {
     }
 }
 
+@objc public enum YMActivationMode: Int {
+    case chat = 0
+    case voice = 1
+
+    var stringValue: String {
+        switch self {
+        case .chat:  return "chat"
+        case .voice: return "voice"
+        }
+    }
+}
+
 @objc(YMConfig)
 open class YMConfig: NSObject {
     let botId: String
@@ -58,6 +70,7 @@ open class YMConfig: NSObject {
     @objc public var useLiteVersion = false
     @objc public var useSecureYmAuth = false
     @objc public var shouldOpenLinkExternally = true
+    @objc public var activationMode: YMActivationMode = .chat
 
     @objc public init(botId: String) {
         self.botId = botId
@@ -93,7 +106,8 @@ open class YMConfig: NSObject {
         queryItems.append(URLQueryItem(name: "version", value: "\(version)"))
         queryItems.append(URLQueryItem(name: "disableActionsOnLoad", value: "\(disableActionsOnLoad)"))
         queryItems.append(URLQueryItem(name: "useSecureYmAuth", value: "\(useSecureYmAuth)"))
-        
+        queryItems.append(URLQueryItem(name: "activationMode", value: activationMode.stringValue))
+
         urlComponents.queryItems = queryItems
 
         return urlComponents.url!
