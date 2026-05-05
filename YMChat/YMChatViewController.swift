@@ -5,6 +5,7 @@
 //  Created by Kauntey Suryawanshi on 12/02/21.
 //
 
+import AVFoundation
 import Foundation
 import UIKit
 import WebKit
@@ -440,11 +441,61 @@ extension YMChatViewController: WKUIDelegate {
                         type: WKMediaCaptureType,
                         decisionHandler: @escaping (WKPermissionDecision) -> Void) {
         let trustedHosts = ["cloud.yellow.ai", "cdn.yellowmessenger.com", "app.yellowmessenger.com"]
-          if trustedHosts.contains(where: { origin.host.hasSuffix($0) }) {
-              decisionHandler(.grant)
-          } else {
-              decisionHandler(.prompt)
-          }
+        guard trustedHosts.contains(where: { origin.host.hasSuffix($0) }) else {
+            decisionHandler(.prompt)
+            return
+        }
+        requestAVPermission(for: type, decisionHandler: decisionHandler)
+    }
+
+    @available(iOS 15.0, *)
+    private func requestAVPermission(for type: WKMediaCaptureType,
+                                     decisionHandler: @escaping (WKPermissionDecision) -> Void) {
+        let mediaTypes: [AVMediaType] = {
+            switch type {
+            case .microphone: return [.audio]
+            case .camera:     return [.video]
+            default:          return [.audio, .video]
+            }
+        }()
+
+        let isDenied = mediaTypes.contains {
+            let s = AVCaptureDevice.authorizationStatus(for: $0)
+            return s == .denied || s == .restricted
+        }
+        if isDenied {
+            DispatchQueue.main.async { self.showMediaPermissionDeniedAlert() }
+            decisionHandler(.deny)
+            return
+        }
+
+        let group = DispatchGroup()
+        var allGranted = true
+        for mediaType in mediaTypes where AVCaptureDevice.authorizationStatus(for: mediaType) == .notDetermined {
+            group.enter()
+            AVCaptureDevice.requestAccess(for: mediaType) { granted in
+                if !granted { allGranted = false }
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            decisionHandler(allGranted ? .grant : .deny)
+        }
+    }
+
+    private func showMediaPermissionDeniedAlert() {
+        let alert = UIAlertController(
+            title: "Permission Required",
+            message: "Camera or microphone access is disabled. Please enable it in Settings to continue.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Settings", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        })
+        present(alert, animated: true)
     }
 }
 
