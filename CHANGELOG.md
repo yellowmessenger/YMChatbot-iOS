@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.1.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.1.0) (2026-05-05)
+
+#### New Update 🚀
+* Added `activationMode` config parameter (`"chat"` | `"voice"`) to control the default mode the bot opens in. Defaults to `"chat"` for full backward compatibility.
+
+## [v2.0.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.0.1) (2026-04-21)
+
+#### New Update 🚀
+* WebView is now notified when the app enters background or foreground via `chatbot-in-background` and `chatbot-in-foreground` state events.
+
+---
+
+## [v2.0.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.0.0) (2026-04-21)
+
+#### New Update 🚀
+* Added widget v3 support. Set `version = 3` in `YMConfig` to use the new `cloud.yellow.ai` platform.
+* `customBaseUrl` is now version-aware — defaults to `https://cloud.yellow.ai` for v3 and `https://app.yellowmessenger.com` for v1/v2.
+* Speech input is disabled for widget v3 (`version = 3`).
+* WKWebView media capture permissions (iOS 15+) are now restricted to trusted Yellow.ai hosts; all other origins are prompted via the standard system dialog.
+* WebView inspector enabled in DEBUG builds on iOS 16.4+.
+
+---
+
 ## [v1.27.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/1.27.1) (2026-05-01)
 
 #### Bug Fix 🐛
