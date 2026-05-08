@@ -73,6 +73,10 @@ public class YMChat: NSObject, YMChatViewControllerDelegate {
         try startChatbot(on: vc, animated: animated, completion: completion)
     }
 
+    @objc public func stopVoiceMode() {
+        viewController?.stopVoiceMode()
+    }
+
     @objc public func closeBot() {
         viewController?.dismiss(animated: false)
         viewController = nil

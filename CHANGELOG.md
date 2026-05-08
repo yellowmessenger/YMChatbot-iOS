@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.2.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.2.0) (2026-05-08)
+
+#### New Update 🚀
+* Added `stopVoiceMode()` public API on `YMChat` to allow host apps to explicitly stop voice mode — useful when presenting a modal (e.g. `.formSheet`) over the chatbot where `viewWillDisappear` is not called.
+
+---
+
 ## [v2.1.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.1.0) (2026-05-05)
 
 #### New Update 🚀
