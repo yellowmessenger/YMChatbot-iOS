@@ -94,7 +94,7 @@ open class YMChatViewController: UIViewController {
     open override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-        sendEventToWebView(code: "chatbot-in-background", data: "")
+        self.stopVoiceMode()
     }
     
     @objc func applicationDidEnterInBackground(notification: Notification) {
@@ -222,7 +222,11 @@ open class YMChatViewController: UIViewController {
     @objc func micTapped() {
         speechHelper?.micButtonTapped()
     }
-    
+
+    public func stopVoiceMode() {
+        sendEventToWebView(code: "chatbot-in-background", data: "")
+    }
+
     private func showSpeechDisplayTextView() {
         self.view.insertSubview(speechDisplayTextView, belowSubview: micButton)
         speechDisplayTextView.translatesAutoresizingMaskIntoConstraints = false
