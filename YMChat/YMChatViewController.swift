@@ -389,27 +389,56 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard navigationAction.navigationType == .linkActivated,
-              let url = navigationAction.request.url,
-              UIApplication.shared.canOpenURL(url) else {
+        guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
             return
         }
-        
+
+        let scheme = url.scheme?.lowercased()
+        let isWebScheme = scheme == "http" || scheme == "https"
+
+        if !isWebScheme && !isTrustedLocalAsset(url) {
+            // javascript:, file:, data: and any other non-http(s) navigation must never be
+            // allowed to load inside the WebView itself, whether it comes from a tapped link,
+            // a script-driven navigation, or a redirect.
+            if navigationAction.navigationType == .linkActivated {
+                if config.shouldOpenLinkExternally {
+                    if UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                } else {
+                    forwardUrlClicked(url)
+                }
+            }
+            decisionHandler(.cancel)
+            return
+        }
+
+        guard navigationAction.navigationType == .linkActivated else {
+            decisionHandler(.allow)
+            return
+        }
+
         if config.shouldOpenLinkExternally {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            decisionHandler(.cancel)
         } else {
-            let urlPayload = ["url": url.absoluteString]
-            guard let urlData = try? JSONSerialization.data(withJSONObject: urlPayload),
-                  let urlString = String(data: urlData, encoding: .utf8) else {
-                decisionHandler(.cancel)
-                return
-            }
-            
-            delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
-            decisionHandler(.cancel)
+            forwardUrlClicked(url)
         }
+        decisionHandler(.cancel)
+    }
+
+    private func isTrustedLocalAsset(_ url: URL) -> Bool {
+        guard url.isFileURL else { return false }
+        return url.path.hasPrefix(Bundle.assetBundle.bundlePath)
+    }
+
+    private func forwardUrlClicked(_ url: URL) {
+        let urlPayload = ["url": url.absoluteString]
+        guard let urlData = try? JSONSerialization.data(withJSONObject: urlPayload),
+              let urlString = String(data: urlData, encoding: .utf8) else {
+            return
+        }
+        delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
     }
 }
 
