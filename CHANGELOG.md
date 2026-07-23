@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.2.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.2.1) (2026-07-23)
+
+#### Security 🔒
+* Enforced an `http`/`https`-only scheme allowlist in the WebView's navigation policy, covering all navigation types (not just tapped links). Blocks `javascript:`, `file:`, and other non-http(s) URLs from loading directly in the WebView.
+
+---
+
 ## [v2.2.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.2.0) (2026-05-08)
 
 #### New Update 🚀
