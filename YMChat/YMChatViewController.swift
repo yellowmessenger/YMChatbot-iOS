@@ -36,6 +36,8 @@ open class YMChatViewController: UIViewController {
     private var micRightConstraint: NSLayoutConstraint?
     private let statusBarView = UIView()
 
+    private var isVoiceIdleTimerLockActive = false
+
     init(config: YMConfig) {
         self.config = config
         self.micButton = MicButton(config.speechConfig)
@@ -53,6 +55,22 @@ open class YMChatViewController: UIViewController {
 
     deinit {
         webView?.stopLoading()
+        releaseVoiceIdleTimerLock()
+    }
+
+    /// Keeps the screen awake while Voice Mode is active, driven by "voice-mode-started"/
+    /// "voice-mode-ended" events from the web widget. `isIdleTimerDisabled` is a global,
+    /// app-wide flag, so we track our own state and only ever toggle it from our own transitions.
+    private func acquireVoiceIdleTimerLock() {
+        guard !isVoiceIdleTimerLockActive else { return }
+        UIApplication.shared.isIdleTimerDisabled = true
+        isVoiceIdleTimerLockActive = true
+    }
+
+    private func releaseVoiceIdleTimerLock() {
+        guard isVoiceIdleTimerLockActive else { return }
+        UIApplication.shared.isIdleTimerDisabled = false
+        isVoiceIdleTimerLockActive = false
     }
     
     private func setupStatusBarView() {
@@ -95,6 +113,7 @@ open class YMChatViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         self.stopVoiceMode()
+        releaseVoiceIdleTimerLock()
     }
     
     @objc func applicationDidEnterInBackground(notification: Notification) {
@@ -337,6 +356,10 @@ extension YMChatViewController: SpeechDelegate {
             if let data = data, config.statusBarColor == .white {
                 statusBarView.backgroundColor = UIColor(data)
             }
+        case "voice-mode-started":
+            acquireVoiceIdleTimerLock()
+        case "voice-mode-ended":
+            releaseVoiceIdleTimerLock()
         default: break
         }
     }
