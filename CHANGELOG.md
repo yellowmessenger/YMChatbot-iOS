@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [Unreleased]
+
+#### Fix 🐛
+* Fixed the WebView not resizing when the software keyboard opens: the SDK now observes `keyboardWillShow`/`keyboardWillHide` and adjusts the WKWebView's bottom constraint accordingly, so the web content's `visualViewport` correctly fires resize events and can react to the keyboard (e.g. keeping the input field visible above it).
+
+---
+
 ## [v2.3.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.3.0) (2026-08-06)
 
 #### New Update 🚀

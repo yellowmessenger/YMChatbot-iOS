@@ -34,6 +34,7 @@ open class YMChatViewController: UIViewController {
 
     private var micBottomConstraint: NSLayoutConstraint?
     private var micRightConstraint: NSLayoutConstraint?
+    private var webViewBottomConstraint: NSLayoutConstraint?
     private let statusBarView = UIView()
 
     private var isVoiceIdleTimerLockActive = false
@@ -107,11 +108,16 @@ open class YMChatViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterInBackground(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterInForeground(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         self.stopVoiceMode()
         releaseVoiceIdleTimerLock()
     }
@@ -122,6 +128,40 @@ open class YMChatViewController: UIViewController {
 
     @objc func applicationWillEnterInForeground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-foreground", data: nil)
+    }
+
+    /// WKWebView does not, on its own, tell its web content when the software keyboard
+    /// appears or disappears -- the web layer's `visualViewport` stays silent unless the
+    /// native side resizes the WKWebView's own frame. Observing the keyboard notifications
+    /// here and shrinking/restoring the webView's bottom constraint makes WKWebView
+    /// re-layout, which in turn causes an accurate `visualViewport` resize event to fire
+    /// inside the web content.
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
+        let keyboardFrameInView = view.convert(keyboardFrameValue.cgRectValue, from: nil)
+        let overlap = max(0, view.bounds.maxY - keyboardFrameInView.origin.y)
+        // The webView's bottom is already pinned to the safe-area margin, so only the
+        // portion of the keyboard beyond the existing safe-area inset needs to be subtracted.
+        let adjustedOverlap = max(0, overlap - view.safeAreaInsets.bottom)
+        animateWebViewBottomConstraint(to: -adjustedOverlap, userInfo: userInfo)
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        animateWebViewBottomConstraint(to: 0, userInfo: notification.userInfo)
+    }
+
+    private func animateWebViewBottomConstraint(to constant: CGFloat, userInfo: [AnyHashable: Any]?) {
+        guard webViewBottomConstraint?.constant != constant else { return }
+        webViewBottomConstraint?.constant = constant
+        let duration = (userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double) ?? 0.25
+        let curveRawValue = (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt) ?? UIView.AnimationCurve.easeInOut.rawValue
+        let options = UIView.AnimationOptions(rawValue: curveRawValue << 16)
+        UIView.animate(withDuration: duration, delay: 0, options: options, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
 
     func reloadWebView() {
@@ -157,7 +197,9 @@ open class YMChatViewController: UIViewController {
         webView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        let bottomConstraint = webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
+        bottomConstraint.isActive = true
+        webViewBottomConstraint = bottomConstraint
     }
 
     private let closeButton = UIButton()
