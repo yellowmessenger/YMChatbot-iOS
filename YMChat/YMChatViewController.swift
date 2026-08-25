@@ -157,7 +157,7 @@ open class YMChatViewController: UIViewController {
         guard webViewBottomConstraint?.constant != constant else { return }
         webViewBottomConstraint?.constant = constant
         let duration = (userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double) ?? 0.25
-        let curveRawValue = (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt) ?? UIView.AnimationCurve.easeInOut.rawValue
+        let curveRawValue = (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt) ?? UInt(UIView.AnimationCurve.easeInOut.rawValue)
         let options = UIView.AnimationOptions(rawValue: curveRawValue << 16)
         UIView.animate(withDuration: duration, delay: 0, options: options, animations: {
             self.view.layoutIfNeeded()
