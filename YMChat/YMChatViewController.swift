@@ -37,6 +37,8 @@ open class YMChatViewController: UIViewController {
     private let statusBarView = UIView()
 
     private var isVoiceIdleTimerLockActive = false
+    private var isWebViewReady = false
+    private var hasSentInitialUserMessage = false
 
     init(config: YMConfig) {
         self.config = config
@@ -274,9 +276,30 @@ open class YMChatViewController: UIViewController {
 
     func sendEventToWebView(code: String, data: Any) {
         log(#function, code, data)
-        DispatchQueue.main.async {
-            self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', '\(data)');", completionHandler: nil)
+        let stringData = "\(data)"
+        let safeData: String
+        // Wrap in a single-element array (a valid top-level JSON value on all supported
+        // iOS versions) then strip the brackets, rather than relying on
+        // JSONSerialization's .fragmentsAllowed option, which needs iOS 13+.
+        if let jsonData = try? JSONSerialization.data(withJSONObject: [stringData]),
+           let jsonArrayLiteral = String(data: jsonData, encoding: .utf8) {
+            safeData = String(jsonArrayLiteral.dropFirst().dropLast())
+        } else {
+            safeData = "\"\(stringData)\""
         }
+        DispatchQueue.main.async {
+            self.webView?.evaluateJavaScript("sendEventFromiOS('\(code)', \(safeData));", completionHandler: nil)
+        }
+    }
+
+    private func sendInitialUserMessageIfNeeded() {
+        guard !hasSentInitialUserMessage else { return }
+        guard let message = config.initialUserMessage,
+              !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        hasSentInitialUserMessage = true
+        guard let payloadData = try? JSONSerialization.data(withJSONObject: ["message": message]),
+              let payloadString = String(data: payloadData, encoding: .utf8) else { return }
+        sendEventToWebView(code: "send-initial-user-message", data: payloadString)
     }
 
     private var errorPathsToValidate = [
@@ -399,6 +422,8 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
                 let data = dict["data"] as? String
                 if code == "pwa-loaded" {
                     closeButton.tintColor = config.closeButtonColor
+                    isWebViewReady = true
+                    sendInitialUserMessageIfNeeded()
                 }
                 delegate?.eventReceivedFromBot(code: code, data: data)
             }
