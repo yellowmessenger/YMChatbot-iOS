@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.4.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.0) (2026-08-31)
+
+#### New Update 🚀
+* Added `YMConfig.initialUserMessage`: when set, the SDK automatically sends the configured text as a user message immediately after the chat widget loads, rendering it as a real outgoing chat bubble without the end user needing to type anything.
+
+---
+
 ## [v2.3.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.3.0) (2026-08-06)
 
 #### New Update 🚀
