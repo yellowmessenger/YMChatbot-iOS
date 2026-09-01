@@ -34,6 +34,7 @@ open class YMChatViewController: UIViewController {
 
     private var micBottomConstraint: NSLayoutConstraint?
     private var micRightConstraint: NSLayoutConstraint?
+    private var webViewBottomConstraint: NSLayoutConstraint?
     private let statusBarView = UIView()
 
     private var isVoiceIdleTimerLockActive = false
@@ -107,23 +108,52 @@ open class YMChatViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterInBackground(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterInForeground(notification:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        // WKWebView does not resize itself or expose the keyboard to its web content
+        // on its own; without this, the page's `visualViewport` never fires resize
+        // events when the keyboard opens inside this native wrapper.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChangeFrame(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
+
     open override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         self.stopVoiceMode()
         releaseVoiceIdleTimerLock()
     }
-    
+
     @objc func applicationDidEnterInBackground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-background", data: nil)
     }
 
     @objc func applicationWillEnterInForeground(notification: Notification) {
         delegate?.eventReceivedFromBot(code: "chatbot-in-foreground", data: nil)
+    }
+
+    @objc func keyboardWillChangeFrame(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let endFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt,
+              let window = view.window else {
+            return
+        }
+
+        // Compare against the layout margins guide's frame, not the web view's own
+        // frame, so this stays correct across repeated calls even while a previous
+        // keyboard animation is still resolving the bottom constraint's constant.
+        let keyboardFrameInWindow = endFrameValue.cgRectValue
+        let marginsFrameInWindow = view.convert(view.layoutMarginsGuide.layoutFrame, to: window)
+        let overlap = max(0, marginsFrameInWindow.maxY - keyboardFrameInWindow.origin.y)
+
+        webViewBottomConstraint?.constant = -overlap
+        let options = UIView.AnimationOptions(rawValue: curveRaw << 16).union(.beginFromCurrentState)
+        UIView.animate(withDuration: duration, delay: 0, options: options, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
 
     func reloadWebView() {
@@ -159,7 +189,8 @@ open class YMChatViewController: UIViewController {
         webView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView!.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         webView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        webViewBottomConstraint = webView!.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
+        webViewBottomConstraint?.isActive = true
     }
 
     private let closeButton = UIButton()
