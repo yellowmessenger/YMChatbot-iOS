@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.4.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.1) (2026-09-01)
+
+#### Bug Fix 🐛
+* Fixed the embedded WKWebView not resizing when the on-screen keyboard opens: the widget now observes keyboard frame changes and adjusts the web view's bottom constraint accordingly, so input fields stay visible instead of being covered by the keyboard.
+
+---
+
 ## [v2.4.0](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.0) (2026-08-31)
 
 #### New Update 🚀
