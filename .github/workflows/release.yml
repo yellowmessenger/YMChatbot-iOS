@@ -3,19 +3,34 @@ name: Release
 # Reproduces this repo's existing manual release process: whenever a push to
 # main carries a version in YMChat.podspec that hasn't been tagged yet, tag
 # that commit and publish a GitHub Release whose body is the matching
-# CHANGELOG.md section. A push to main that isn't a release (its podspec
-# version is already tagged) is a no-op.
+# CHANGELOG.md section, then push the podspec to CocoaPods trunk. A push to
+# main that isn't a release (its podspec version is already tagged) is a
+# no-op.
+#
+# Tag/release creation and the CocoaPods push are gated independently: tag+
+# release only happen for a not-yet-tagged version, but `pod trunk push` is
+# retried on every run (including a manual workflow_dispatch, e.g. to
+# recover from a publish failure) as long as that version isn't on trunk
+# yet — this is what closes the gap where 2.4.0 was tagged/released on
+# GitHub but never made it to CocoaPods.
+#
+# Requires a COCOAPODS_TRUNK_TOKEN repo secret (from `cat
+# ~/.netrc | grep -A2 trunk.cocoapods.org` on a machine with a registered
+# trunk session, or `pod trunk register` to create one) for the trunk push
+# step. Runs on macos-latest because `pod trunk push` builds the pod as part
+# of validation, which needs Xcode.
 
 on:
   push:
     branches: [main]
+  workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,6 +53,12 @@ jobs:
             echo "already_tagged=true" >> "$GITHUB_OUTPUT"
           else
             echo "already_tagged=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if curl -sf "https://trunk.cocoapods.org/api/v1/pods/YMChat" | grep -q "\"name\":\"${{ steps.version.outputs.version }}\""; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Verify Info.plist files match the podspec version
@@ -83,3 +104,9 @@ jobs:
           gh release create "$VERSION" \
             --title "$VERSION" \
             --notes-file "${{ steps.changelog.outputs.notes_file }}"
+
+      - name: Push to CocoaPods trunk
+        if: steps.check.outputs.already_published == 'false'
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: pod trunk push YMChat.podspec

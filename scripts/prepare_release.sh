@@ -146,4 +146,4 @@ git commit -m "Add changelog entry for v${NEW_VERSION}"
 
 echo ""
 echo "Done. Push this branch and open the PR as usual — merging to main will"
-echo "automatically tag ${NEW_VERSION} and publish the GitHub Release."
+echo "automatically tag ${NEW_VERSION}, publish the GitHub Release, and push to CocoaPods trunk."
