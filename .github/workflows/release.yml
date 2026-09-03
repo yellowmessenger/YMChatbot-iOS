@@ -1,0 +1,85 @@
+name: Release
+
+# Reproduces this repo's existing manual release process: whenever a push to
+# main carries a version in YMChat.podspec that hasn't been tagged yet, tag
+# that commit and publish a GitHub Release whose body is the matching
+# CHANGELOG.md section. A push to main that isn't a release (its podspec
+# version is already tagged) is a no-op.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version from YMChat.podspec
+        id: version
+        run: |
+          VERSION="$(sed -n 's/.*spec\.version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' YMChat.podspec)"
+          if [[ -z "$VERSION" ]]; then
+            echo "::error::could not read spec.version from YMChat.podspec"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether this version is already released
+        id: check
+        run: |
+          if git rev-parse -q --verify "refs/tags/${{ steps.version.outputs.version }}" >/dev/null; then
+            echo "already_tagged=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already_tagged=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify Info.plist files match the podspec version
+        if: steps.check.outputs.already_tagged == 'false'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          for plist in YMChat/Info.plist YMChatTests/Info.plist; do
+            PLIST_VERSION="$(sed -n '/CFBundleShortVersionString/{n;s/.*<string>\(.*\)<\/string>.*/\1/p;}' "$plist")"
+            if [[ "$PLIST_VERSION" != "$VERSION" ]]; then
+              echo "::error::$plist is at $PLIST_VERSION, expected $VERSION (YMChat.podspec). Version sources are out of sync."
+              exit 1
+            fi
+          done
+
+      - name: Extract CHANGELOG section
+        if: steps.check.outputs.already_tagged == 'false'
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          NOTES_FILE="$(mktemp)"
+          if ! ./scripts/extract_changelog_section.sh "$VERSION" CHANGELOG.md > "$NOTES_FILE"; then
+            echo "::error::no CHANGELOG.md section found for v$VERSION"
+            exit 1
+          fi
+          echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag
+        if: steps.check.outputs.already_tagged == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION" -m "$VERSION"
+          git push origin "$VERSION"
+
+      - name: Create GitHub Release
+        if: steps.check.outputs.already_tagged == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes-file "${{ steps.changelog.outputs.notes_file }}"
