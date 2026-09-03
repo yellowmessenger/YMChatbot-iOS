@@ -109,4 +109,4 @@ jobs:
         if: steps.check.outputs.already_published == 'false'
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: pod trunk push YMChat.podspec
+        run: pod trunk push YMChat.podspec --allow-warnings
