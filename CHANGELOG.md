@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.4.2](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.2) (2026-09-03)
+
+#### Bug Fix 🐛
+* No functional change — validates the automated tag/CHANGELOG/GitHub Release pipeline end-to-end (see #88).
+
+---
+
 ## [v2.4.1](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.1) (2026-09-01)
 
 #### Bug Fix 🐛
