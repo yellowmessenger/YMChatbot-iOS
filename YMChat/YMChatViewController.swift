@@ -195,15 +195,25 @@ open class YMChatViewController: UIViewController {
 
     private let closeButton = UIButton()
     private func addCloseButton(tintColor: UIColor) {
-        let closeImage = UIImage(named: "close", in: Bundle.assetBundle, compatibleWith: nil) ?? UIImage()
-        closeButton.setImage(closeImage, for: .normal)
+        var closeImage = UIImage(named: "close", in: Bundle.assetBundle, compatibleWith: nil)
+        if closeImage == nil, #available(iOS 13.0, *) {
+            log("Close icon not found in asset bundle, falling back to SF Symbol")
+            closeImage = UIImage(systemName: "xmark")
+        }
+        closeButton.setImage(closeImage?.withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = tintColor
         view.addSubview(closeButton)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         let margins = view.layoutMarginsGuide
-        closeButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
-        closeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
-        
+        // Explicit 40pt size so the button never collapses to zero when the image is missing;
+        // the 20pt icon stays centered at the same 10pt inset as before.
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: margins.topAnchor),
+            closeButton.rightAnchor.constraint(equalTo: view.rightAnchor),
+            closeButton.widthAnchor.constraint(equalToConstant: 40),
+            closeButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+
         closeButton.addTarget(self, action: #selector(botCloseButtonTapped), for: .touchUpInside)
     }
     
