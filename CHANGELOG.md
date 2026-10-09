@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.4.3](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.3) (2026-10-09)
+
+#### Bug Fix 🐛
+* Fixed the close button not appearing on iOS 27: the button now has a fixed 40×40 size instead of relying on its image, falls back to the `xmark` SF Symbol if the bundled icon can't be loaded, and the asset catalog is now processed (rather than copied raw) in the Swift Package so the icon resolves correctly.
+
+---
+
 ## [v2.4.2](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.2) (2026-09-03)
 
 #### Bug Fix 🐛
