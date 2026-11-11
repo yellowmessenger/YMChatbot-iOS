@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 -----
 
+## [v2.4.4](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.4) (2026-11-11)
+
+#### Bug Fix 🐛
+* Fixed `+` in payload values (e.g. `name+tag@gmail.com`) arriving as a space: the chat URL query now encodes `+` as `%2B`, since `URLQueryItem` leaves it unencoded. This matches the Android SDK.
+
+---
+
 ## [v2.4.3](https://github.com/yellowmessenger/YMChatbot-iOS/releases/tag/2.4.3) (2026-10-09)
 
 #### Bug Fix 🐛
