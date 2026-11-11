@@ -529,6 +529,22 @@ extension YMChatViewController: WKNavigationDelegate, WKScriptMessageHandler {
         }
         delegate?.eventReceivedFromBot(code: "url-clicked", data: urlString)
     }
+
+    // The system can kill the WebContent process (e.g. under memory pressure while the
+    // photo picker is open). WKWebView then stays blank until it is reloaded, and a
+    // white close button would be invisible on it, leaving the user stuck.
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        log(#function)
+        isWebViewReady = false
+        if config.showCloseButton {
+            closeButton.isHidden = false
+            if config.closeButtonColor == .white {
+                closeButton.tintColor = .black
+            }
+            view.bringSubviewToFront(closeButton)
+        }
+        reloadWebView()
+    }
 }
 
 extension YMChatViewController: WKUIDelegate {
