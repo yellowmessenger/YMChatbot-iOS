@@ -110,6 +110,10 @@ open class YMConfig: NSObject {
         queryItems.append(URLQueryItem(name: "defaultOpenMode", value: activationMode.stringValue))
 
         urlComponents.queryItems = queryItems
+        // URLQueryItem leaves "+" unencoded, and query parsers read a bare "+" as a space
+        // (e.g. "a+b@x.com" in the payload arrives as "a b@x.com"). Encode it explicitly.
+        urlComponents.percentEncodedQuery = urlComponents.percentEncodedQuery?
+            .replacingOccurrences(of: "+", with: "%2B")
 
         return urlComponents.url!
     }
